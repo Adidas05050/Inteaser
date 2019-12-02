@@ -5,9 +5,4 @@ compiler:
     - gcc
 
 os:
-    - linux
-    - os
-    
-script:
-    - cd build
-    - make
+    - windows
