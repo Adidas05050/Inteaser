@@ -1,1 +1,13 @@
 language: cpp
+
+compiler:
+    - clang
+    - gcc
+
+os:
+    - linux
+    - os
+    
+script:
+    - cd build
+    - make
