@@ -7,5 +7,4 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 
-
 #endif

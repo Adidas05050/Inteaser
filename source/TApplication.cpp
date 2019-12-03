@@ -1,5 +1,5 @@
 #include "TApplication.hpp"
-
+#define nullptr NULL
 
 TApplication::TApplication(): Window(nullptr), MapWidget (nullptr)
 {}
@@ -17,37 +17,35 @@ void TApplication::Run()
 	font.loadFromFile("font/Cartoonic.otf");
 	sf::Text text("", font, 54);
 	text.setColor(sf::Color::Black);
-	while (Window->isOpen()) 
-	{
+	
+	while (Window->isOpen()) {
 		sf::Event event;
-		while (Window->pollEvent(event)) 
-		{
-			if (event.type == sf::Event::Closed)
+		
+		while (Window->pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
             		Window->close();
+            }
 		}
 		
 		Window->clear(sf::Color::White);
-		
 		MapWidget->Draw(Window);
-
-		text.setString(L"DEMO");
+		text.setString("DEMO");
 		text.setPosition(340, 190);
 		Window->draw(text);
-
 		Window->display();
 	}
 }
 
 void TApplication::End() 
 {
-    if (Window != nullptr)
-    {
+    if (Window != nullptr) {
     	delete Window;
+    	
     	Window = nullptr;
     }
-    if (MapWidget != nullptr)
-    {
+    if (MapWidget != nullptr) {
     	delete MapWidget;
+    	
     	MapWidget = nullptr;
 	}
 }
