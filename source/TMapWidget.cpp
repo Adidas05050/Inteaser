@@ -4,7 +4,7 @@
 TMapWidget::TMapWidget(int aX, int aY, int aWidth, int aHeight): 
 		X(aX), Y(aY), Width(aWidth), Height(aHeight)
 {
-	texture.loadFromFile("media/background/0.gif");
+	texture.loadFromFile("media/background/isoBg.jpg");
 }
 
 void TMapWidget::Draw(sf::RenderWindow *Window)

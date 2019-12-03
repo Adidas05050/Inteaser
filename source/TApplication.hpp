@@ -3,7 +3,7 @@
  
 #include "SFML.hpp"
 #include "TMapWidget.h"
-
+#include "Player.h"
 
 
 class TApplication {
@@ -11,6 +11,7 @@ class TApplication {
      protected:
         sf::RenderWindow *Window;
         TMapWidget *MapWidget;
+        Player *player;
 
      public:
 		TApplication();
