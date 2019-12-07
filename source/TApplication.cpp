@@ -16,7 +16,6 @@ void TApplication::Run()
 {
 	int alpha = 255;
 	bool isClick = false;
-	
 	sf::Font font;
 	font.loadFromFile("font/Cartoonic.otf");
 	sf::Text text("", font, 54);
@@ -51,6 +50,19 @@ void TApplication::Run()
 			text.setPosition (340, 190);
 			Window->draw (text);
 		}
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			player->move(0);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			player->move(1);
+		else
+			player->move(4);
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			player->move(2);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			player->move(3);
+		
 		Window->display();
 	}
 }
