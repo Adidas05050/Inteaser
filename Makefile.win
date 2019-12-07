@@ -1,0 +1,40 @@
+# Project: GameD
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = source/main.o source/TApplication.o source/TMapWidget.o source/Entity.o source/Player.o
+LINKOBJ  = source/main.o source/TApplication.o source/TMapWidget.o source/Entity.o source/Player.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/SFML/lib" -lbgi -lgdi32 -Icomdlg32 -luuid -loleaut32 -lole32 -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/SFML/include"
+BIN      = GameD.exe
+CXXFLAGS = $(CXXINCS) -m32 -std=c++11
+CFLAGS   = $(INCS) -m32 -std=c++11
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+source/main.o: source/main.cpp
+	$(CPP) -c source/main.cpp -o source/main.o $(CXXFLAGS)
+
+source/TApplication.o: source/TApplication.cpp
+	$(CPP) -c source/TApplication.cpp -o source/TApplication.o $(CXXFLAGS)
+
+source/TMapWidget.o: source/TMapWidget.cpp
+	$(CPP) -c source/TMapWidget.cpp -o source/TMapWidget.o $(CXXFLAGS)
+
+source/Entity.o: source/Entity.cpp
+	$(CPP) -c source/Entity.cpp -o source/Entity.o $(CXXFLAGS)
+
+source/Player.o: source/Player.cpp
+	$(CPP) -c source/Player.cpp -o source/Player.o $(CXXFLAGS)

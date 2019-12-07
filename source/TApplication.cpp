@@ -15,10 +15,10 @@ void TApplication::Run()
 {
 	int alpha = 255;
 	bool isClick = false;
+	float time;
 	sf::Font font;
 	font.loadFromFile("font/Cartoonic.otf");
 	sf::Text text("", font, 54);
-	
 	
 	while (Window->isOpen()) {
 		sf::Color color(0, 0 , 0, alpha);
@@ -34,7 +34,7 @@ void TApplication::Run()
 		
 		Window->clear(sf::Color::White);
 		MapWidget->Draw(Window);
-		player->draw(Window, 1, 1);
+		player->draw(Window, 5, 5);
 		if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			isClick = true;
 		if(isClick and alpha > 0)
@@ -46,6 +46,18 @@ void TApplication::Run()
 			text.setPosition (340, 190);
 			Window->draw (text);
 		}
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			player->move(0);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			player->move(1);
+		else
+			player->move(4);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			player->move(2);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			player->move(3);
+		
 		Window->display();
 	}
 }
