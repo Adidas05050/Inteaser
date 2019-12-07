@@ -1,16 +1,18 @@
 #ifndef TAPPLICATION_HEADER
 #define TAPPLICATION_HEADER
- 
-#include "SFML.hpp"
-#include "TMapWidget.h"
-#include "Player.h"
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "SFML.hpp"
+#include "Tile.h"
+#include "Player.h"
 
 class TApplication {
 	
      protected:
         sf::RenderWindow *Window;
-        TMapWidget *MapWidget;
+        Tile *tiles[TOTAL_TILES];
         Player *player;
 
      public:

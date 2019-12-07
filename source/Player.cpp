@@ -6,58 +6,20 @@ Player::Player(int x, int y, int health, int speed) {
 	setHealth(health);
 	setSpeed(speed);
 	setHeight(24);
-	setWidth(48);
-	sPlayer.setPosition(getX(), getY());
-	sPlayer.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+	setWidth(24);
 	texture.loadFromFile("media/hero/Player.png");
-	sPlayer.setTexture(texture);
 }
 
 void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
+	sf::Sprite sPlayer;
+	sPlayer.setTexture(texture);
+	sPlayer.setTextureRect(sf::IntRect(0, 0, 24, 24));
 	float width = scaleX * getWidth(); 
 	float height = scaleY * getHeight();
+	sPlayer.setPosition(getX(), getY());
 	float playerWidth = width / (float) texture.getSize().x;
-	float playerHeight = height / (float) texture.getSize().y;
-	sPlayer.setScale(playerWidth*2, playerHeight*2);
+	float playerHeight = height / (float) texture.getSize().y;	
+	sPlayer.setScale(playerWidth, playerHeight);
 	Window->draw(sPlayer);
 }
 
-void Player::move(int direction) {
-	if (direction == 0) //left
-	{
-		sPlayer.move(-0.1, 0);
-		if(frame % 100 == 0)
-		{
-			sPlayer.setTextureRect(sf::IntRect(spriteTile, 48, PLAYER_WIDTH, PLAYER_HEIGHT));
-			spriteTile += 24;
-		}
-		else if(frame > 800)
-		{
-			spriteTile = 0;
-			frame = 0;
-		}
-		frame++;
-	}
-
-	if (direction == 1) //Right
-	{
-		sPlayer.move(0.1, 0);
-		if(frame % 100 == 0)
-		{
-			sPlayer.setTextureRect(sf::IntRect(spriteTile, 24, PLAYER_WIDTH, PLAYER_HEIGHT));
-			spriteTile += 24;
-		}
-		else if(frame > 800)
-		{
-			spriteTile = 0;
-			frame = 0;
-		}
-		frame++;
-	}
-	if (direction == 2) //Up
-		sPlayer.move(0, -0.1);
-	if (direction == 3) //Down
-		sPlayer.move(0, 0.1);
-	if (direction == 4) //Stop
-		sPlayer.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
-}

@@ -2,16 +2,16 @@
 
 //-------------//
 void Entity::setX(int x) {
-	mX = x;
+	mX += x;
 }
 void Entity::setY(int y) {
-	mY = y;
+	mY += y;
 }
 void Entity::setHealth(int health) {
-	mHealth = health;
+	mHealth += health;
 }
 void Entity::setSpeed(int speed) {
-	mSpeed = speed;
+	mSpeed += speed;
 }
 void Entity::setWidth(int width) {
 	mWidth = width;
