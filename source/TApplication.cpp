@@ -20,13 +20,10 @@ void TApplication::Init() {
 }
 
 void TApplication::Run() {
-	int alpha = 255;
-	bool isShowInventory = false;
-
 
 	int viewX = SCREEN_WIDTH / 2, viewY = SCREEN_HEIGHT / 2;
 	while (Window->isOpen()) {
-		sf::Color color(0, 0 , 0, alpha);
+		sf::Color color(0, 0 , 0, 255);
 		textMission.setColor(color);
 		sf::Event event;
 		Window->setFramerateLimit(30);
@@ -62,9 +59,6 @@ void TApplication::Run() {
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 			setInventory();
-			isShowInventory = false;
-		} else if(!isShowInventory) {
-			isShowInventory = true;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -80,12 +74,11 @@ void TApplication::Run() {
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			player->move(4);
 
-
-
 		//-----------MiniMap--------------
 		Window->setView(miniMap);
 		for(int i = 0; i < TOTAL_TILES; i++)
-			tiles[i]->draw(Window);
+				tiles[i]->draw(Window);
+		
 		player->draw(Window, 3, 3);
 		Window->setView(heroView);
 		//--------------------------------
