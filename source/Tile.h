@@ -8,7 +8,8 @@ const int TILE_HEIGHT = 32;
 const int TOTAL_TILES = 600;
 const int LEVEL_WIDTH = 960;
 const int LEVEL_HEIGHT = 640;
-
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 const int TILE_WOOD = 0;
 const int TILE_STONE = 1;
 const int TILE_DESERT = 2;

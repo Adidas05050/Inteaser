@@ -9,8 +9,8 @@ Tile::Tile(int x, int y, int tileType) {
 	mType = tileType;
 }
 
-void Tile::draw(sf::RenderWindow *Window)
-{
+void Tile::draw(sf::RenderWindow *Window) {
+	
 	sf::Sprite sBackground;
 	sBackground.setTexture(tBackground);
 	sBackground.setTextureRect(gTileClips[mType]);

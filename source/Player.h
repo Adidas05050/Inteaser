@@ -12,10 +12,12 @@ class Player : public Entity
 		Player(int x, int y, int health, int speed);
 		void draw(sf::RenderWindow* Window, int scaleX, int scaleY);
 		void move(int direction);
+		int frame;
+		int	spriteTile;
+		int direction;
 	private:
 		sf::Sprite sPlayer;		
-		int frame = 0;
-		int	spriteTile = 24;
+		
 };
 
 #endif

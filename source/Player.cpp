@@ -1,64 +1,63 @@
 #include "Player.h"
-
+#include "iostream"
 Player::Player(int x, int y, int health, int speed) {
-	setX(x);
-	setY(y);
-	setHealth(health);
-	setSpeed(speed);
-	setHeight(24);
-	setWidth(48);
+	mBox.left = x;
+	mBox.top = y;
+	mHealth = health;
+	mSpeed = speed;
+	mBox.width = 48;
+	mBox.height = 24;
 	sPlayer.setPosition(getX(), getY());
 	sPlayer.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	texture.loadFromFile("media/hero/Player.png");
 	sPlayer.setTexture(texture);
+	direction = 0;
+	frame = 0;
+	spriteTile = 0;
 }
 
 void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
-	float width = scaleX * getWidth(); 
-	float height = scaleY * getHeight();
-	float playerWidth = width / (float) texture.getSize().x;
-	float playerHeight = height / (float) texture.getSize().y;
-	sPlayer.setScale(playerWidth*2, playerHeight*2);
+	float width = scaleX * mBox.width; 
+	float height = scaleY * mBox.height;
+	float playerWidth = width / (float) mBox.width;
+	float playerHeight = height / (float) mBox.height;
+	sPlayer.setTextureRect(sf::IntRect(spriteTile*24, 24*direction, PLAYER_WIDTH, PLAYER_HEIGHT));
+	sPlayer.setScale(playerWidth, playerHeight);
+	sPlayer.setPosition(mBox.left, mBox.top);
 	Window->draw(sPlayer);
 }
 
 void Player::move(int direction) {
-	if (direction == 0) //left
+	if (direction == 2) //left
 	{
-		sPlayer.move(-0.1, 0);
-		if(frame % 100 == 0)
+		mBox.left -= mSpeed; 
+		if(frame % 4 == 0)
 		{
-			sPlayer.setTextureRect(sf::IntRect(spriteTile, 48, PLAYER_WIDTH, PLAYER_HEIGHT));
-			spriteTile += 24;
+			frame = 0;
+			spriteTile++;
 		}
-		else if(frame > 800)
+		if(spriteTile > 7)
 		{
 			spriteTile = 0;
-			frame = 0;
 		}
 		frame++;
 	}
 	if (direction == 1) //Right
 	{
-		sPlayer.move(0.1, 0);
-		if(frame % 100 == 0)
+		mBox.left += mSpeed;
+		if(frame % 4 == 0)
 		{
-			sPlayer.setTextureRect(sf::IntRect(spriteTile, 24, PLAYER_WIDTH, PLAYER_HEIGHT));
-			spriteTile += 24;
+			frame = 0;
+			spriteTile++;
 		}
-		else if(frame > 800)
+		if(spriteTile > 7)
 		{
 			spriteTile = 0;
-			frame = 0;
 		}
 		frame++;
 	}
-	if (direction == 2) //Up
-		sPlayer.move(0, -0.1);
-	if (direction == 3) //Down
-		sPlayer.move(0, 0.1);
-	if (direction == 4) //Stop
-	{
-		sPlayer.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
-	}
+	if (direction == 3) //Up
+		mBox.top -= mSpeed;
+	if (direction == 4) //Down
+		mBox.top += mSpeed;
 }

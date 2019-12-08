@@ -14,6 +14,8 @@ class TApplication {
         sf::RenderWindow *Window;
         Tile *tiles[TOTAL_TILES];
         Player *player;
+        sf::View heroView;
+        sf::View miniMap;
 
      public:
 		TApplication();

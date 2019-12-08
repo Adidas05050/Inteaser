@@ -1,30 +1,17 @@
 #include "Entity.h"
-
-//-------------//
-void Entity::setX(int x) {
-	mX += x;
+float Entity::getCenterX(){
+	float centerX = (mBox.width / 2) + mBox.left;
+	return centerX;
 }
-void Entity::setY(int y) {
-	mY += y;
+float Entity::getCenterY(){
+	float centerY = (mBox.height / 2) + mBox.top;
+	return centerY;
 }
-void Entity::setHealth(int health) {
-	mHealth += health;
-}
-void Entity::setSpeed(int speed) {
-	mSpeed += speed;
-}
-void Entity::setWidth(int width) {
-	mWidth = width;
-}
-void Entity::setHeight(int height) {
-	mHeight = height;
-}
-//-------------//
 int Entity::getX() {
-	return mX;
+	return mBox.left;
 }
 int Entity::getY() {
-	return mY;
+	return mBox.top;
 }
 int Entity::getHealth() {
 	return mHealth;
@@ -33,8 +20,8 @@ int Entity::getSpeed() {
 	return mSpeed;
 }
 int Entity::getWidth() {
-	return mWidth;
+	return mBox.width;
 }
 int Entity::getHeight() {
-	return mHeight;
+	return mBox.height;
 }
