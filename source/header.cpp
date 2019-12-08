@@ -2,28 +2,23 @@
 
 extern sf::IntRect gTileClips[];
 
-bool setTiles( Tile* tiles[], std::string path )
-{
+bool setTiles( Tile* tiles[], std::string path ) {
 	//Success flag
 	bool tilesLoaded = true;
 
-    //The tile offsets
-    int x = 0, y = 0;
+	//The tile offsets
+	int x = 0, y = 0;
 
-    //Open the map
-    std::ifstream map( path );
+	//Open the map
+	std::ifstream map( path );
 
-    //If the map couldn't be loaded
-    if( map.fail() )
-    {
+	//If the map couldn't be loaded
+	if( map.fail() ) {
 		std::cout << "Unable to load map file!\n";
 		tilesLoaded = false;
-    }
-	else
-	{
+	} else {
 		//Initialize the tiles
-		for( int i = 0; i < TOTAL_TILES; ++i )
-		{
+		for( int i = 0; i < TOTAL_TILES; ++i ) {
 			//Determines what kind of tile will be made
 			int tileType = -1;
 
@@ -31,8 +26,7 @@ bool setTiles( Tile* tiles[], std::string path )
 			map >> tileType;
 
 			//If the was a problem in reading the map
-			if( map.fail() )
-			{
+			if( map.fail() ) {
 				//Stop loading map
 				std::cout << "Error loading map: Unexpected end of file!\n";
 				tilesLoaded = false;
@@ -40,38 +34,34 @@ bool setTiles( Tile* tiles[], std::string path )
 			}
 
 			//If the number is a valid tile number
-			if( ( tileType >= 0 ) && ( tileType < TILE_END ) )
-			{
+			if( ( tileType >= 0 ) && ( tileType < TILE_END ) ) {
 				tiles[ i ] = new Tile( x, y, tileType );
 			}
 			//If we don't recognize the tile type
-			else
-			{
+			else {
 				//Stop loading map
-				std::cout << "Error loading map: Invalid tile type at " << i <<"! \n"; 
+				std::cout << "Error loading map: Invalid tile type at " << i <<"! \n";
 				tilesLoaded = false;
 				break;
 			}
 
 			//Move to next tile spot
 			x += TILE_WIDTH;
-		//	std::cout << x << " ";
+			//	std::cout << x << " ";
 			//If we've gone too far
-			if( x >= LEVEL_WIDTH )
-			{
+			if( x >= LEVEL_WIDTH ) {
 				//Move back
 				x = 0;
-				
+
 				//Move to the next row
 				y += TILE_HEIGHT;
 				std::cout << y << std::endl;
 			}
 		}
-		
+
 		//Clip the sprite sheet
-		if( tilesLoaded )
-		{
-			
+		if( tilesLoaded ) {
+
 			gTileClips[ TILE_WOOD ].left = 0;
 			gTileClips[ TILE_WOOD ].top = 0;
 			gTileClips[ TILE_WOOD ].width = 32;
@@ -91,9 +81,9 @@ bool setTiles( Tile* tiles[], std::string path )
 		}
 	}
 
-    //Close the file
-    map.close();
+	//Close the file
+	map.close();
 
-    //If the map was loaded fine
-    return tilesLoaded;
+	//If the map was loaded fine
+	return tilesLoaded;
 }

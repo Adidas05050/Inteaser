@@ -1,9 +1,9 @@
 #include "Entity.h"
-float Entity::getCenterX(){
+float Entity::getCenterX() {
 	float centerX = (mBox.width / 2) + mBox.left;
 	return centerX;
 }
-float Entity::getCenterY(){
+float Entity::getCenterY() {
 	float centerY = (mBox.height / 2) + mBox.top;
 	return centerY;
 }

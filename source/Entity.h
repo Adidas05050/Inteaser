@@ -3,8 +3,7 @@
 
 #include "SFML.hpp"
 
-class Entity
-{
+class Entity {
 	public:
 		int getX();
 		int getY();
@@ -14,14 +13,14 @@ class Entity
 		int getHeight();
 		float getCenterX();
 		float getCenterY();
-		
-		
+
+
 	protected:
 		sf::Texture texture;
 		sf::IntRect mBox;
 		int mHealth;
 		int mSpeed;
-		
+
 };
 
 #endif

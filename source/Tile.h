@@ -21,12 +21,12 @@ extern sf::Texture tBackground;
 class Tile  {
 	public:
 		Tile(int x, int y, int tileType);
-	
+
 		void draw(sf::RenderWindow *Window);
-		
+
 		int getType();
 		sf::IntRect getBox();
-		
+
 	private:
 		int mType;
 		sf::IntRect mBox;

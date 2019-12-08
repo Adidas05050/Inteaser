@@ -10,7 +10,7 @@ Tile::Tile(int x, int y, int tileType) {
 }
 
 void Tile::draw(sf::RenderWindow *Window) {
-	
+
 	sf::Sprite sBackground;
 	sBackground.setTexture(tBackground);
 	sBackground.setTextureRect(gTileClips[mType]);
@@ -21,10 +21,10 @@ void Tile::draw(sf::RenderWindow *Window) {
 	Window->draw(sBackground);
 }
 
-int Tile::getType(){
-    return mType;
+int Tile::getType() {
+	return mType;
 }
 
-sf::IntRect Tile::getBox(){
-    return mBox;
+sf::IntRect Tile::getBox() {
+	return mBox;
 }

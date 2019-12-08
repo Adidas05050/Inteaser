@@ -11,53 +11,69 @@ Player::Player(int x, int y, int health, int speed) {
 	sPlayer.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	texture.loadFromFile("media/hero/Player.png");
 	sPlayer.setTexture(texture);
-	direction = 0;
-	frame = 0;
-	spriteTile = 0;
+	mDirection = 0;
+	mFrame = 0;
+	mSpriteTile = 0;
 }
 
 void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
-	float width = scaleX * mBox.width; 
+	float width = scaleX * mBox.width;
 	float height = scaleY * mBox.height;
 	float playerWidth = width / (float) mBox.width;
 	float playerHeight = height / (float) mBox.height;
-	sPlayer.setTextureRect(sf::IntRect(spriteTile*24, 24*direction, PLAYER_WIDTH, PLAYER_HEIGHT));
-	sPlayer.setScale(playerWidth, playerHeight);
-	sPlayer.setPosition(mBox.left, mBox.top);
+	if(mDirection == 5)
+		sPlayer.setTextureRect(sf::IntRect(mSpriteTile*24, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+	else
+		sPlayer.setTextureRect(sf::IntRect(mSpriteTile*24, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT));
+	if(mDirection == 2) {
+		sPlayer.setScale(playerWidth * (-1), playerHeight);
+		sPlayer.setPosition(mBox.left + PLAYER_WIDTH*3, mBox.top);
+
+	} else {
+		sPlayer.setScale(playerWidth, playerHeight);
+		sPlayer.setPosition(mBox.left, mBox.top);
+	}
 	Window->draw(sPlayer);
 }
 
 void Player::move(int direction) {
-	if (direction == 2) //left
-	{
-		mBox.left -= mSpeed; 
-		if(frame % 4 == 0)
-		{
-			frame = 0;
-			spriteTile++;
+	mDirection = direction;
+	if (mDirection == 2) { //left
+		mBox.left -= mSpeed;
+		if(mFrame % 4 == 0) {
+			mFrame = 0;
+			mSpriteTile++;
 		}
-		if(spriteTile > 7)
-		{
-			spriteTile = 0;
+		if(mSpriteTile > 7) {
+			mSpriteTile = 0;
 		}
-		frame++;
-	}
-	if (direction == 1) //Right
-	{
+		mFrame++;
+	} else if (mDirection == 1) { //Right
 		mBox.left += mSpeed;
-		if(frame % 4 == 0)
-		{
-			frame = 0;
-			spriteTile++;
+		if(mFrame % 4 == 0) {
+			mFrame = 0;
+			mSpriteTile++;
 		}
-		if(spriteTile > 7)
-		{
-			spriteTile = 0;
+		if(mSpriteTile > 7) {
+			mSpriteTile = 0;
 		}
-		frame++;
+		mFrame++;
 	}
-	if (direction == 3) //Up
+	if (mDirection == 3) //Up
 		mBox.top -= mSpeed;
-	if (direction == 4) //Down
+	else if (mDirection == 4) //Down
 		mBox.top += mSpeed;
+
+	if(mDirection == 5) {
+		if(mFrame % 8 == 0) {
+			mFrame = 0;
+			mSpriteTile++;
+		}
+		if(mSpriteTile > 3) {
+			mSpriteTile = 0;
+		}
+		mFrame++;
+	}
+
+
 }

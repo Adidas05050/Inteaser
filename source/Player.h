@@ -6,18 +6,19 @@
 const int PLAYER_WIDTH = 24;
 const int PLAYER_HEIGHT = 24;
 
-class Player : public Entity
-{
+class Player : public Entity {
+
 	public:
 		Player(int x, int y, int health, int speed);
 		void draw(sf::RenderWindow* Window, int scaleX, int scaleY);
 		void move(int direction);
-		int frame;
-		int	spriteTile;
-		int direction;
-	private:
-		sf::Sprite sPlayer;		
 		
+	private:
+		sf::Sprite sPlayer;
+		int mFrame;
+		int	mSpriteTile;
+		int mDirection;
+
 };
 
 #endif
