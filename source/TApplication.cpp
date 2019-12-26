@@ -24,7 +24,7 @@ void TApplication::Run() {
 	int viewX = SCREEN_WIDTH / 2, viewY = SCREEN_HEIGHT / 2;
 	while (Window->isOpen()) {
 		sf::Color color(0, 0 , 0, 255);
-		textMission.setColor(color);
+		textMission.setFillColor(color);
 		sf::Event event;
 		Window->setFramerateLimit(30);
 		Window->setVerticalSyncEnabled(true);

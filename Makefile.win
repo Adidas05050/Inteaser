@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = source/main.o source/TApplication.o source/Tile.o source/Entity.o source/Player.o source/header.o
-LINKOBJ  = source/main.o source/TApplication.o source/Tile.o source/Entity.o source/Player.o source/header.o
+OBJ      = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o
+LINKOBJ  = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o
 LIBS     = -L"E:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"E:/Lab/SDL/SDL2_ttf/i686-w64-mingw32/lib" -L"E:/Lab/SDL/SDL2_image-2.0.4/i686-w64-mingw32/lib" -L"E:/Lab/SDL/SDL2/i686-w64-mingw32/lib" -L"E:/Lab/SFML-2.4.2/lib" -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
 INCS     = -I"E:/Dev-Cpp/MinGW64/include" -I"E:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"E:/Dev-Cpp/MinGW64/include" -I"E:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"E:/Lab/SDL/SDL2/i686-w64-mingw32/include/SDL2" -I"E:/Lab/SDL/SDL2_ttf/i686-w64-mingw32/include/SDL2" -I"E:/Lab/SDL/SDL2_image-2.0.4/i686-w64-mingw32/include/SDL2" -I"E:/Lab/SFML-2.4.2/include"
@@ -30,9 +30,6 @@ source/main.o: source/main.cpp
 source/TApplication.o: source/TApplication.cpp
 	$(CPP) -c source/TApplication.cpp -o source/TApplication.o $(CXXFLAGS)
 
-source/Tile.o: source/Tile.cpp
-	$(CPP) -c source/Tile.cpp -o source/Tile.o $(CXXFLAGS)
-
 source/Entity.o: source/Entity.cpp
 	$(CPP) -c source/Entity.cpp -o source/Entity.o $(CXXFLAGS)
 
@@ -41,3 +38,9 @@ source/Player.o: source/Player.cpp
 
 source/header.o: source/header.cpp
 	$(CPP) -c source/header.cpp -o source/header.o $(CXXFLAGS)
+
+source/Tile.o: source/Tile.cpp
+	$(CPP) -c source/Tile.cpp -o source/Tile.o $(CXXFLAGS)
+
+source/Inventory.o: source/Inventory.cpp
+	$(CPP) -c source/Inventory.cpp -o source/Inventory.o $(CXXFLAGS)
