@@ -14,12 +14,12 @@ class Entity {
 		float getCenterX();
 		float getCenterY();
 
+		int mSpeed;
+		sf::IntRect mBox;
 
 	protected:
 		sf::Texture texture;
-		sf::IntRect mBox;
 		int mHealth;
-		int mSpeed;
 
 };
 

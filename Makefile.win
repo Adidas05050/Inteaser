@@ -6,9 +6,9 @@ CC       = gcc.exe
 WINDRES  = windres.exe
 OBJ      = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o
 LINKOBJ  = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o
-LIBS     = -L"E:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"E:/Lab/SDL/SDL2_ttf/i686-w64-mingw32/lib" -L"E:/Lab/SDL/SDL2_image-2.0.4/i686-w64-mingw32/lib" -L"E:/Lab/SDL/SDL2/i686-w64-mingw32/lib" -L"E:/Lab/SFML-2.4.2/lib" -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
-INCS     = -I"E:/Dev-Cpp/MinGW64/include" -I"E:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"E:/Dev-Cpp/MinGW64/include" -I"E:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"E:/Lab/SDL/SDL2/i686-w64-mingw32/include/SDL2" -I"E:/Lab/SDL/SDL2_ttf/i686-w64-mingw32/include/SDL2" -I"E:/Lab/SDL/SDL2_image-2.0.4/i686-w64-mingw32/include/SDL2" -I"E:/Lab/SFML-2.4.2/include"
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/SFML/lib" -lbgi -lgdi32 -Icomdlg32 -luuid -loleaut32 -lole32 -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/SFML/include"
 BIN      = GameD.exe
 CXXFLAGS = $(CXXINCS) -m32 -std=c++11
 CFLAGS   = $(INCS) -m32 -std=c++11

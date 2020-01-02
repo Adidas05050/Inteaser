@@ -74,6 +74,6 @@ void Player::move(int direction) {
 		}
 		mFrame++;
 	}
-
+	
 
 }

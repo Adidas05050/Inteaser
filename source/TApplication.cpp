@@ -68,11 +68,32 @@ void TApplication::Run() {
 		} else {
 			player->move(5);
 		}
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			player->move(3);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			player->move(4);
+		
+		//-----------Collision------------	
+		for(int i = 0; i < TOTAL_TILES; i++) {
+			if(tiles[i]->getType() == 1) {
+				if(tiles[i]->getBox().intersects(sf::IntRect(player->getX()+24, player->getY()+player->getHeight()*2, player->getWidth()-24, player->getHeight()))) {
+					player->move(5);
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+						player->mBox.top += player->mSpeed;
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+						player->mBox.left -= player->mSpeed;
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+						player->mBox.left += player->mSpeed;
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))	{
+						player->mBox.top -= player->mSpeed;
+					}
+				}
+			}
+		}
+		//--------------------------------
 
 		//-----------MiniMap--------------
 		Window->setView(miniMap);
