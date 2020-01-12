@@ -13,9 +13,9 @@ class TApplication {
 
 	protected:
 		sf::RenderWindow *Window;
-		Tile *tiles[TOTAL_TILES];
 		Player *player;
 		Inventory *inventory;
+		Tile *level;
 		sf::View heroView;
 		sf::View miniMap;
 		sf::Font font;

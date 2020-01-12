@@ -7,21 +7,12 @@ float Entity::getCenterY() {
 	float centerY = (mBox.height / 2) + mBox.top;
 	return centerY;
 }
-int Entity::getX() {
-	return mBox.left;
-}
-int Entity::getY() {
-	return mBox.top;
+sf::FloatRect Entity::getRect() {
+	return mBox;
 }
 int Entity::getHealth() {
 	return mHealth;
 }
 int Entity::getSpeed() {
 	return mSpeed;
-}
-int Entity::getWidth() {
-	return mBox.width;
-}
-int Entity::getHeight() {
-	return mBox.height;
 }

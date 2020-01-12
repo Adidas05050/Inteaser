@@ -1,19 +1,20 @@
 #include "Player.h"
 #include "iostream"
-Player::Player(int x, int y, int health, int speed) {
+Player::Player(int x, int y, int health, int speed, Tile *level) {
 	mBox.left = x;
 	mBox.top = y;
 	mHealth = health;
 	mSpeed = speed;
 	mBox.width = 48;
 	mBox.height = 24;
-	sPlayer.setPosition(getX(), getY());
+	sPlayer.setPosition(2500, 2000);
 	sPlayer.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	texture.loadFromFile("media/hero/Player.png");
 	sPlayer.setTexture(texture);
 	mDirection = 0;
 	mFrame = 0;
 	mSpriteTile = 0;
+	obj = level->GetAllObjects("wall");
 }
 
 void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
@@ -36,44 +37,32 @@ void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
 	Window->draw(sPlayer);
 }
 
-void Player::move(int direction) {
-	mDirection = direction;
-	if (mDirection == 2) { //left
-		mBox.left -= mSpeed;
-		if(mFrame % 4 == 0) {
-			mFrame = 0;
-			mSpriteTile++;
-		}
-		if(mSpriteTile > 7) {
-			mSpriteTile = 0;
-		}
-		mFrame++;
-	} else if (mDirection == 1) { //Right
-		mBox.left += mSpeed;
-		if(mFrame % 4 == 0) {
-			mFrame = 0;
-			mSpriteTile++;
-		}
-		if(mSpriteTile > 7) {
-			mSpriteTile = 0;
-		}
-		mFrame++;
-	}
-	if (mDirection == 3) //Up
+void Player::move() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		mBox.top -= mSpeed;
-	else if (mDirection == 4) //Down
-		mBox.top += mSpeed;
-
-	if(mDirection == 5) {
-		if(mFrame % 8 == 0) {
-			mFrame = 0;
-			mSpriteTile++;
-		}
-		if(mSpriteTile > 3) {
-			mSpriteTile = 0;
-		}
-		mFrame++;
 	}
-	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		mBox.left-= mSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		mBox.left += mSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		mBox.top += mSpeed;
+	}
+}
 
+void Player::collision() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		mBox.top += mSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		mBox.left += mSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		mBox.left -= mSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		mBox.top -= mSpeed;
+	}
 }

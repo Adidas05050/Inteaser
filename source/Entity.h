@@ -2,24 +2,23 @@
 #define ENTITY_H
 
 #include "SFML.hpp"
+#include "Tile.h"
 
 class Entity {
 	public:
-		int getX();
-		int getY();
 		int getHealth();
 		int getSpeed();
-		int getWidth();
-		int getHeight();
+		sf::FloatRect getRect();
 		float getCenterX();
 		float getCenterY();
 
-		int mSpeed;
-		sf::IntRect mBox;
-
+		std::vector<TmxObject> obj;
 	protected:
-		sf::Texture texture;
+		int mFrame;
+		int mSpeed;
 		int mHealth;
+		sf::FloatRect mBox;
+		sf::Texture texture;
 
 };
 

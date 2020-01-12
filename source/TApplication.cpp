@@ -3,13 +3,14 @@
 sf::Texture tBackground;
 TApplication::TApplication(): Window(nullptr) {
 	tBackground.loadFromFile("media/background/map.png");
-	setTiles(tiles, "map/map.map");
 }
 
 void TApplication::Init() {
-	Window = new sf::RenderWindow(sf::VideoMode(LEVEL_WIDTH, LEVEL_HEIGHT), "Menu");
-	player = new Player(200, 200, 200, 3);
+	Window = new sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Menu");
 	inventory = new Inventory(10, 10);
+	level = new Tile();
+	level->LoadFromFile("map/testMap.tmx");
+	player = new Player(200, 200, 200, 10, level);
 	heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 	miniMap.reset(sf::FloatRect(0, 0, LEVEL_WIDTH, LEVEL_HEIGHT));
 	font.loadFromFile("font/Cartoonic.otf");
@@ -48,12 +49,7 @@ void TApplication::Run() {
 			}
 		}
 
-		for(int i = 0; i < TOTAL_TILES; i++) {
-			if(tiles[i]->getBox().intersects(sf::IntRect(viewX - (SCREEN_WIDTH / 2) - 5, viewY - (SCREEN_HEIGHT / 2) - 5, SCREEN_WIDTH + 10, SCREEN_HEIGHT + 10))) {
-				Window->setView(heroView);
-				tiles[i]->draw(Window);
-			}
-		}
+		level->Draw(*Window);
 
 		player->draw(Window, 3, 3);
 
@@ -61,48 +57,15 @@ void TApplication::Run() {
 			setInventory();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			player->move(2);
-		} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			player->move(1);
-		} else {
-			player->move(5);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			player->move(3);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			player->move(4);
-		
-		//-----------Collision------------	
-		for(int i = 0; i < TOTAL_TILES; i++) {
-			if(tiles[i]->getType() == 1) {
-				if(tiles[i]->getBox().intersects(sf::IntRect(player->getX()+24, player->getY()+player->getHeight()*2, player->getWidth()-24, player->getHeight()))) {
-					player->move(5);
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-						player->mBox.top += player->mSpeed;
-					}
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-						player->mBox.left -= player->mSpeed;
-					}
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-						player->mBox.left += player->mSpeed;
-					}
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))	{
-						player->mBox.top -= player->mSpeed;
-					}
+		player->move();
+			
+			//-----------Collision------------	
+		for(int i = 0; i < player->obj.size(); i++) {
+			if(player->getRect().intersects(player->obj[i].rect)) {
+					player->collision();
 				}
 			}
-		}
-		//--------------------------------
-
-		//-----------MiniMap--------------
-		Window->setView(miniMap);
-		for(int i = 0; i < TOTAL_TILES; i++)
-				tiles[i]->draw(Window);
-		
-		player->draw(Window, 3, 3);
-		Window->setView(heroView);
-		//--------------------------------
+	
 		Window->display();
 	}
 }
@@ -110,7 +73,7 @@ void TApplication::Run() {
 void TApplication::setInventory() {
 	inventory->draw(Window, &heroView);
 	int mission;
-	mission = inventory->getCurrentMission(player->getX());
+	mission = inventory->getCurrentMission(player->getRect().left);
 	std::string currentTask;
 	currentTask = inventory->getTextMission(mission);
 	textMission.setString("Health: " + std::to_string(player->getHealth()) + "\n\n\n" + currentTask);
