@@ -14,9 +14,9 @@ class Entity {
 
 		std::vector<TmxObject> obj;
 	protected:
-		int mFrame;
-		int mSpeed;
-		int mHealth;
+		int mFrame = 0;
+		int mSpeed = 0;
+		int mHealth = 0;
 		sf::FloatRect mBox;
 		sf::Texture texture;
 

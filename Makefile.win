@@ -4,11 +4,11 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/TMapWidget.o source/tinyxml2.o
-LINKOBJ  = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/TMapWidget.o source/tinyxml2.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/SFML/lib" -lbgi -lgdi32 -Icomdlg32 -luuid -loleaut32 -lole32 -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
-INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/SFML/include"
+OBJ      = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/tinyxml2.o
+LINKOBJ  = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/tinyxml2.o
+LIBS     = -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"D:/Lab/SFML-2.4.2/lib" -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
+INCS     = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"D:/Lab/SFML-2.4.2/include"
 BIN      = GameD.exe
 CXXFLAGS = $(CXXINCS) -m32 -std=c++11
 CFLAGS   = $(INCS) -m32 -std=c++11
@@ -44,9 +44,6 @@ source/Tile.o: source/Tile.cpp
 
 source/Inventory.o: source/Inventory.cpp
 	$(CPP) -c source/Inventory.cpp -o source/Inventory.o $(CXXFLAGS)
-
-source/TMapWidget.o: source/TMapWidget.cpp
-	$(CPP) -c source/TMapWidget.cpp -o source/TMapWidget.o $(CXXFLAGS)
 
 source/tinyxml2.o: source/tinyxml2.cpp
 	$(CPP) -c source/tinyxml2.cpp -o source/tinyxml2.o $(CXXFLAGS)

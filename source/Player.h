@@ -3,8 +3,7 @@
 
 #include "Entity.h"
 
-const int PLAYER_WIDTH = 24;
-const int PLAYER_HEIGHT = 24;
+
 
 class Player : public Entity {
 
@@ -13,12 +12,16 @@ class Player : public Entity {
 		void draw(sf::RenderWindow* Window, int scaleX, int scaleY);
 		void move();
 		void collision();
-		
+
+		const int PLAYER_WIDTH = 24;
+		const int PLAYER_HEIGHT = 24;
+		const int PLAYER_FRAME = 8;
+
 	private:
 		sf::Sprite sPlayer;
 		int	mSpriteTile;
-		int mDirection;
-
+		bool isLeftDirection = false;
+		bool isStay = true;
 };
 
 #endif

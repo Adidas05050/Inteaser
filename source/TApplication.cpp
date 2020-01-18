@@ -51,21 +51,15 @@ void TApplication::Run() {
 
 		level->Draw(*Window);
 
-		player->draw(Window, 3, 3);
+
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 			setInventory();
 		}
 
 		player->move();
-			
-			//-----------Collision------------	
-		for(int i = 0; i < player->obj.size(); i++) {
-			if(player->getRect().intersects(player->obj[i].rect)) {
-					player->collision();
-				}
-			}
-	
+		player->collision();
+		player->draw(Window, 3, 3);
 		Window->display();
 	}
 }
