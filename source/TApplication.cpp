@@ -17,6 +17,9 @@ void TApplication::Init() {
 	textMission.setString("");
 	textMission.setFont(font);
 	textMission.setCharacterSize(24);
+	musicControl = new Music();
+	player->loadSound();
+	musicControl->loadMusic("sounds/music/theme.wav");
 
 }
 
@@ -56,9 +59,14 @@ void TApplication::Run() {
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 			setInventory();
 		}
-
+		if(!musicControl->mainMusic.getStatus()){
+			musicControl->mainMusic.setVolume(5.f);
+			musicControl->mainMusic.play();
+		}
+		player->collisionSound();
 		player->move();
 		player->collision();
+		
 		player->draw(Window, 3, 3);
 		Window->display();
 	}

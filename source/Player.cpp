@@ -13,7 +13,8 @@ Player::Player(int x, int y, int health, int speed, Tile *level) {
 	sPlayer.setTexture(texture);
 	mFrame = 0;
 	mSpriteTile = 0;
-	obj = level->GetAllObjects("wall");
+	objSolid = level->GetAllObjects("wall");
+	mObjectSound = level->GetAllObjects("sound");
 }
 
 void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
@@ -76,35 +77,54 @@ void Player::move() {
 				mSpriteTile++;
 			else
 				mSpriteTile = 0;
+			if(!stepSound[currentNumberSound].getStatus()) {
+				stepSound[currentNumberSound].setPitch(1.5f);
+				stepSound[currentNumberSound].play();
+			}
 		}
 	}
-	std::cout << mSpriteTile << std::endl;
+
+}
+
+void Player::collisionSound() {
+	for(int i = 0; i < mObjectSound.size(); i++) {
+		if( getRect().intersects(mObjectSound[i].rect) and (previousNameSound != mObjectSound[i].type)) {
+			previousNameSound = mObjectSound[i].type;
+			for(it = tileMap.begin(); it != tileMap.end(); it++){
+				if(it->second == previousNameSound){
+					currentNumberSound = it->first;
+					break;
+				}
+			}
+			std::cout << currentNumberSound << " " << previousNameSound;
+		}
+	}
 }
 
 void Player::collision() {
 
-	for(int i = 0; i < obj.size(); i++) {
+	for(int i = 0; i < objSolid.size(); i++) {
 
 		mBox.top += mSpeed;
-		if(getRect().intersects(obj[i].rect)) {
+		if( getRect().intersects(objSolid[i].rect) ) {
 			mBox.top -= mSpeed;
 		}
 		mBox.top -= mSpeed;
 
 		mBox.left += mSpeed;
-		if(getRect().intersects(obj[i].rect)) {
+		if( getRect().intersects(objSolid[i].rect) ) {
 			mBox.left -= mSpeed;
 		}
 		mBox.left -= mSpeed;
 
 		mBox.left -= mSpeed;
-		if(getRect().intersects(obj[i].rect)) {
+		if( getRect().intersects(objSolid[i].rect) ) {
 			mBox.left += mSpeed;
 		}
 		mBox.left += mSpeed;
 
 		mBox.top -= mSpeed;
-		if(getRect().intersects(obj[i].rect)) {
+		if( getRect().intersects(objSolid[i].rect) ) {
 			mBox.top += mSpeed;
 		}
 		mBox.top += mSpeed;

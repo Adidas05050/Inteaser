@@ -12,7 +12,7 @@ class Entity {
 		float getCenterX();
 		float getCenterY();
 
-		std::vector<TmxObject> obj;
+		std::vector<TmxObject> objSolid;
 	protected:
 		int mFrame = 0;
 		int mSpeed = 0;

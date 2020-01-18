@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="79">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="92">
  <tileset firstgid="1" name="map" tilewidth="32" tileheight="32" tilecount="16" columns="16">
   <image source="../media/background/map.png" width="512" height="32"/>
  </tileset>
@@ -10012,5 +10012,10 @@
   <object id="75" name="wall" type="solid" x="5" y="75" width="180" height="3120"/>
   <object id="76" name="wall" type="solid" x="15" y="3055" width="3185" height="135"/>
   <object id="77" name="wall" type="solid" x="3055" y="75" width="140" height="3115"/>
+  <object id="85" name="sound" type="wood" x="188.723" y="102.94" width="2859.44" height="949.334"/>
+  <object id="86" name="sound" type="wood" x="194.442" y="2481.99" width="2859.44" height="554.731"/>
+  <object id="87" name="sound" type="wood" x="2436.24" y="1029.4" width="611.92" height="1469.75"/>
+  <object id="88" name="sound" type="wood" x="188.723" y="1035.12" width="486.105" height="1452.6"/>
+  <object id="89" name="sound" type="gravel" x="669.109" y="1040.84" width="1778.57" height="1441.16"/>
  </objectgroup>
 </map>
