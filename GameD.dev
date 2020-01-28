@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=0000000100000000000000000
-UnitCount=17
+UnitCount=19
 
 [VersionInfo]
 Major=1
@@ -201,7 +201,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit18]
-FileName=source\tinyxmlerror.cpp
+FileName=source\Interface.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -211,7 +211,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=source\tinyxmlparser.cpp
+FileName=source\Interface.cpp
 CompileCpp=1
 Folder=
 Compile=1

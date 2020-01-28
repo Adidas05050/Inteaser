@@ -11,6 +11,7 @@ void TApplication::Init() {
 	level = new Tile();
 	level->LoadFromFile("map/testMap.tmx");
 	player = new Player(200, 200, 200, 10, level);
+	interface = new Interface();
 	heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 	miniMap.reset(sf::FloatRect(0, 0, LEVEL_WIDTH, LEVEL_HEIGHT));
 	font.loadFromFile("font/Cartoonic.otf");
@@ -68,10 +69,11 @@ void TApplication::Run() {
 		player->collision();
 		
 		player->draw(Window, 3, 3);
+		interface->draw(Window, player->getRect(), &heroView);
 		Window->display();
 	}
 }
-
+//----------------------------------?????????????????????????????????--------------------------
 void TApplication::setInventory() {
 	inventory->draw(Window, &heroView);
 	int mission;
@@ -82,7 +84,7 @@ void TApplication::setInventory() {
 	textMission.setPosition(inventory->getX()+10, inventory->getY()+10);
 	Window->draw(textMission);
 }
-
+//----------------------------------------------------------------------------------------------
 void TApplication::End() {
 	if (Window != nullptr) {
 		delete Window;

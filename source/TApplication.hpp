@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Inventory.h"
 #include "Music.h"
+#include "Interface.h"
 
 class TApplication {
 
@@ -18,6 +19,7 @@ class TApplication {
 		Inventory *inventory;
 		Tile *level;
 		Music *musicControl;
+		Interface *interface;
 		sf::View heroView;
 		sf::View miniMap;
 		sf::Font font;
