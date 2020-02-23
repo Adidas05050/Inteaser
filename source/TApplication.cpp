@@ -19,15 +19,17 @@ void TApplication::Init() {
 	textMission.setFont(font);
 	textMission.setCharacterSize(24);
 	musicControl = new Music();
+	Interaction = new Interactions();
 	player->loadSound();
 	musicControl->loadMusic("sounds/music/theme.wav");
 
 }
 
 void TApplication::Run() {
-
 	int viewX = SCREEN_WIDTH / 2, viewY = SCREEN_HEIGHT / 2;
 	while (Window->isOpen()) {
+		
+		
 		sf::Color color(0, 0 , 0, 255);
 		textMission.setFillColor(color);
 		sf::Event event;
@@ -43,9 +45,9 @@ void TApplication::Run() {
 		if((player->getCenterY() - (SCREEN_HEIGHT / 2) > 0) and (player->getCenterY() + (SCREEN_HEIGHT / 2) < LEVEL_HEIGHT))
 			viewY = player->getCenterY();
 		heroView.setCenter(viewX, viewY);
-
-
+		
 		Window->clear(sf::Color::White);
+		
 		while (Window->pollEvent(event)) {
 
 			if (event.type == sf::Event::Closed) {
@@ -54,8 +56,6 @@ void TApplication::Run() {
 		}
 
 		level->Draw(*Window);
-
-
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 			setInventory();
@@ -70,6 +70,12 @@ void TApplication::Run() {
 		
 		player->draw(Window, 3, 3);
 		interface->draw(Window, player->getRect(), &heroView);
+		
+		Interaction->Interact(player, level);// Calculation interactable objects
+		Window->draw(Interaction->item);// for test
+		Window->draw(Interaction->circ);// for test
+		Window->draw(Interaction->recta);// for test
+		Window->draw(Interaction->textForInteractibleObject);
 		Window->display();
 	}
 }

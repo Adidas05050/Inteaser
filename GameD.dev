@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=0000000100000000000000000
-UnitCount=19
+UnitCount=21
 
 [VersionInfo]
 Major=1
@@ -221,7 +221,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=source\TMapWidget.cpp
+FileName=source\Interactions.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -231,7 +231,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit21]
-FileName=source\TMapWidget.h
+FileName=source\Interactions.cpp
 CompileCpp=1
 Folder=
 Compile=1

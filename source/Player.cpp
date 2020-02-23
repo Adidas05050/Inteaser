@@ -96,7 +96,7 @@ void Player::collisionSound() {
 					break;
 				}
 			}
-			std::cout << currentNumberSound << " " << previousNameSound;
+			//std::cout << currentNumberSound << " " << previousNameSound;
 		}
 	}
 }

@@ -10,16 +10,18 @@
 #include "Inventory.h"
 #include "Music.h"
 #include "Interface.h"
+#include "Interactions.h"
 
 class TApplication {
 
 	protected:
 		sf::RenderWindow *Window;
-		Player *player;
 		Inventory *inventory;
 		Tile *level;
+		Player *player;
 		Music *musicControl;
 		Interface *interface;
+		Interactions *Interaction;
 		sf::View heroView;
 		sf::View miniMap;
 		sf::Font font;

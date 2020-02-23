@@ -4,11 +4,11 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/tinyxml2.o source/Music.o source/Interface.o
-LINKOBJ  = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/tinyxml2.o source/Music.o source/Interface.o
-LIBS     = -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"D:/Lab/SFML-2.4.2/lib" -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
-INCS     = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"D:/Lab/SFML-2.4.2/include"
+OBJ      = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/tinyxml2.o source/Music.o source/Interface.o source/Interactions.o
+LINKOBJ  = source/main.o source/TApplication.o source/Entity.o source/Player.o source/header.o source/Tile.o source/Inventory.o source/tinyxml2.o source/Music.o source/Interface.o source/Interactions.o
+LIBS     = -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"D:/Dev-Cpp/MinGW64/lib" -L"D:/Dev-Cpp/SFML-2.4.2/lib" -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system -m32
+INCS     = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/SFML-2.4.2/include"
+CXXINCS  = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"D:/Dev-Cpp/SFML-2.4.2/include"
 BIN      = GameD.exe
 CXXFLAGS = $(CXXINCS) -m32 -std=c++11
 CFLAGS   = $(INCS) -m32 -std=c++11
@@ -53,3 +53,6 @@ source/Music.o: source/Music.cpp
 
 source/Interface.o: source/Interface.cpp
 	$(CPP) -c source/Interface.cpp -o source/Interface.o $(CXXFLAGS)
+
+source/Interactions.o: source/Interactions.cpp
+	$(CPP) -c source/Interactions.cpp -o source/Interactions.o $(CXXFLAGS)
