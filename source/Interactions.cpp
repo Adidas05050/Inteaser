@@ -6,8 +6,8 @@ Interactions::Interactions() {
 	circ.setRadius(4);
 	circ.setOrigin(2, 2);
 	
-	item.setRadius(4);
-	item.setOrigin(2, 2);
+	item.setRadius(2);
+	item.setOrigin(1, 1);
 	item.setFillColor(sf::Color(0, 255, 0));
 	
 	fontForInteractibleObject.loadFromFile("font/single_day.ttf");
@@ -25,7 +25,7 @@ void Interactions::Interact(Player* player, Tile *level) {
 	}
 	
 	interactTrigger.left = player->getRect().left + player->getRect().width / 2 - (INTERACT_TRIGGER_WIDTH / 2);
-	interactTrigger.top = player->getRect().top + player->getRect().height / 2 - (INTERACT_TRIGGER_HEIGHT / 3) + (INTERACT_TRIGGER_HEIGHT / 32);
+	interactTrigger.top = player->getRect().top + player->getRect().height / 2 - (INTERACT_TRIGGER_HEIGHT / 2);
 	interactTrigger.width = INTERACT_TRIGGER_WIDTH;
 	interactTrigger.height = INTERACT_TRIGGER_HEIGHT;
 	
@@ -57,10 +57,11 @@ void Interactions::Interact(Player* player, Tile *level) {
 	for(int i = 0; i < interactingObjects[idLocation].size(); i++) {
 		if(interactTrigger.intersects(interactingObjects[idLocation][i].rect)) {
 				
-			temp = sqrt((interactingObjects[idLocation][i].rect.left + interactingObjects[idLocation][i].rect.width / 2 - (player->getRect().left + player->getRect().width / 2)) *
+			temp = sqrt(
+			(interactingObjects[idLocation][i].rect.left + interactingObjects[idLocation][i].rect.width / 2 - (player->getRect().left + player->getRect().width / 2)) *
 			(interactingObjects[idLocation][i].rect.left + interactingObjects[idLocation][i].rect.width / 2 - (player->getRect().left + player->getRect().width / 2)) +
-			(interactingObjects[Interactions::idLocation][i].rect.top - interactingObjects[idLocation][i].rect.height * 1.5 - (player->getRect().top + player->getRect().height / 2)) *
-			(interactingObjects[Interactions::idLocation][i].rect.top - interactingObjects[idLocation][i].rect.height * 1.5 - (player->getRect().top + player->getRect().height / 2)));
+			(interactingObjects[Interactions::idLocation][i].rect.top + interactingObjects[idLocation][i].rect.height / 2 - (player->getRect().top + player->getRect().height / 2)) *
+			(interactingObjects[Interactions::idLocation][i].rect.top + interactingObjects[idLocation][i].rect.height / 2 - (player->getRect().top + player->getRect().height / 2)));
 			
 			if(temp_distance == -1 && close_object == -1 || temp_distance > temp) {
 				temp_distance = temp;
@@ -72,12 +73,12 @@ void Interactions::Interact(Player* player, Tile *level) {
 	
 	if(close_object != -1) {
 		item.setPosition(interactingObjects[idLocation][close_object].rect.left + interactingObjects[idLocation][close_object].rect.width / 2,
-		interactingObjects[idLocation][close_object].rect.top - interactingObjects[idLocation][close_object].rect.height * 1.5 );
+		interactingObjects[idLocation][close_object].rect.top + interactingObjects[idLocation][close_object].rect.height / 2 );
 		
 		textForInteractibleObject.setFillColor(sf::Color(235, 235, 235, 255));
 		
 		textForInteractibleObject.setPosition(interactingObjects[idLocation][close_object].rect.left + interactingObjects[idLocation][close_object].rect.width / 2 - 60,
-		interactingObjects[idLocation][close_object].rect.top - interactingObjects[idLocation][close_object].rect.height * 1.5 - 45);
+		interactingObjects[idLocation][close_object].rect.top - interactingObjects[idLocation][close_object].rect.height / 2 - 20);
 
 		//approximate coordinates of the nearest object in the interaction zone || NEED MORE TESTS!
 		// X = interactingObjects[idLocation][close_object].rect.left + interactingObjects[idLocation][close_object].rect.width / 2
