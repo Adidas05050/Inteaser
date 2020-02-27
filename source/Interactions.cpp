@@ -14,7 +14,7 @@ Interactions::Interactions() {
 	
 	textForInteractibleObject.setFont(fontForInteractibleObject);
 	textForInteractibleObject.setString("Look (Press \"E\")");
-	textForInteractibleObject.setColor(sf::Color(235, 235, 235, 0));
+	textForInteractibleObject.setFillColor(sf::Color(235, 235, 235, 0));
 	textForInteractibleObject.setCharacterSize(20);
 }
 
@@ -48,7 +48,7 @@ void Interactions::Interact(Player* player, Tile *level) {
 	recta.setOutlineColor(sf::Color(255, 0, 0));
 	recta.setPosition(sf::Vector2f(player->getRect().left + player->getRect().width / 2, player->getRect().top + player->getRect().height / 2));
 
-	textForInteractibleObject.setColor(sf::Color(235, 235, 235, 0));
+	textForInteractibleObject.setFillColor(sf::Color(235, 235, 235, 0));
 	//======================================================================================================================================
 	
 	float temp_distance = -1, temp = -1;
@@ -74,7 +74,7 @@ void Interactions::Interact(Player* player, Tile *level) {
 		item.setPosition(interactingObjects[idLocation][close_object].rect.left + interactingObjects[idLocation][close_object].rect.width / 2,
 		interactingObjects[idLocation][close_object].rect.top - interactingObjects[idLocation][close_object].rect.height * 1.5 );
 		
-		textForInteractibleObject.setColor(sf::Color(235, 235, 235, 255));
+		textForInteractibleObject.setFillColor(sf::Color(235, 235, 235, 255));
 		
 		textForInteractibleObject.setPosition(interactingObjects[idLocation][close_object].rect.left + interactingObjects[idLocation][close_object].rect.width / 2 - 60,
 		interactingObjects[idLocation][close_object].rect.top - interactingObjects[idLocation][close_object].rect.height * 1.5 - 45);

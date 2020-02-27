@@ -1,41 +1,43 @@
 #include "Interface.h"
 
-Interface::Interface() {
-	renderTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT);
-	tLight.loadFromFile("media/background/light.png");
-	mBoxLight.width = tLight.getSize().x;
-	mBoxLight.height = tLight.getSize().y;
-	tLight.setSmooth(true);
-	sLight.setTexture(tLight);
-	sMouseLight.setTexture(tLight);
+Interface::Interface(Tile *level) {
+	renderTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT); 
+	tLight.loadFromFile("media/background/lightWh.png"); //можно поменять на light, lightRev, LightWh 
+	tLight.setSmooth(true);								 //Стандарт light
+	mObjectLight = level->GetAllObjects("light"); 
+	count = mObjectLight.size();
+	mBoxLight = new sf::FloatRect [count];
+	sLight = new sf::Sprite [count];
+
+	for(int i = 0; i < count; i++) {
+		mBoxLight[i].width = mObjectLight[i].rect.width;
+		mBoxLight[i].height = mObjectLight[i].rect.height;
+		sLight[i].setTexture(tLight);
+	}
+
 }
 
 void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view) {
-	sf::Vector2f mouse_world =  Window->mapPixelToCoords(sf::Mouse::getPosition( *Window ) );
 
-	sMouseLight.setPosition(mouse_world);
-	
-	mBoxLight.left = playerBox.left;
-	mBoxLight.top = playerBox.top;
-	sLight.setScale(2.f, 2.f);
-	
-	//Слишком огромная, надо оптимизировать
-	sLight.setPosition( mBoxLight.left - playerBox.width/2 + (mBoxLight.width / 2) - ((mBoxLight.width * sLight.getScale().x) / 2), //выравнивание по центру игрока по Х
-						mBoxLight.top - playerBox.height/2 + (mBoxLight.height / 2) - ((mBoxLight.height * sLight.getScale().y) / 2) ); //выравнивание по центру игрока по У
-	//---------------------------------------
-	
-	
 	renderTexture.clear(sf::Color(0, 0, 0, 100));
-	renderTexture.draw(sLight, sf::BlendMultiply);
-	renderTexture.draw(sMouseLight, sf::BlendMultiply);
+	for(int i = 0; i < count; i++) {
+		mBoxLight[i].left = mObjectLight[i].rect.left;
+		mBoxLight[i].top = mObjectLight[i].rect.top;
+		sLight[i].setScale(2.f, 2.f);
+		float alphaRed = 100, alphaTorch = 100, alphaLamp = 200; //Для стандарта ставить на 255
+		sLight[i].setPosition( mBoxLight[i].left - 76, mBoxLight[i].top - 76);
+		if(mObjectLight[i].type == "torch") {
+			sLight[i].setColor(sf::Color(222, 125, 55, alphaTorch));
+		} else if (mObjectLight[i].type == "lamp") {
+			sLight[i].setColor(sf::Color(140, 196, 209, alphaLamp));
+		} else {
+			sLight[i].setColor(sf::Color(255.f, 0.f, 0.f, alphaRed));
+		}
+		renderTexture.draw(sLight[i], sf::BlendAlpha); //sf::BlendAdd, sf::BlendAlpha, sf::BlendMultiply - стандарт, sf::BlendNone
+	}
+
 	renderTexture.display();
 	
-	
-	
 	sf::Sprite sprite(renderTexture.getTexture());
-	//float luminosity = 200.0f;
-  	//sprite.setColor(sf::Color(10.0f, 10.0f, 10.0f, luminosity));
 	Window->draw(sprite);
-
-
 }

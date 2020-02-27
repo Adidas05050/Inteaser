@@ -11,7 +11,7 @@ void TApplication::Init() {
 	level = new Tile();
 	level->LoadFromFile("map/testMap.tmx");
 	player = new Player(200, 200, 200, 10, level);
-	interface = new Interface();
+	interface = new Interface(level);
 	heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 	miniMap.reset(sf::FloatRect(0, 0, LEVEL_WIDTH, LEVEL_HEIGHT));
 	font.loadFromFile("font/Cartoonic.otf");
