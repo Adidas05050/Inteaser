@@ -16,8 +16,12 @@ class Interface {
 	protected:
 		std::vector<TmxObject> mObjectLight;
 		sf::RenderTexture renderTexture;
+		sf::RenderTexture renderColorTexture;
 		sf::FloatRect *mBoxLight;
+		sf::FloatRect *mBoxColorLight;
 		sf::Texture tLight;
+		sf::Texture tColorLight;
+		sf::Sprite *sColorLight;
 		sf::Sprite *sLight;
 		int count; // сомнительная польза, пока чисто для удоства
 };
