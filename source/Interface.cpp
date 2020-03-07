@@ -2,7 +2,7 @@
 
 Interface::Interface(Tile *level) {
 	renderTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT); 
-	tLight.loadFromFile("media/background/lightWh.png"); //можно помен€ть на light, lightRev, LightWh 
+	tLight.loadFromFile("media/background/light.png"); //можно помен€ть на light, lightRev, LightWh 
 	tLight.setSmooth(true);								 //—тандарт light
 	mObjectLight = level->GetAllObjects("light"); 
 	count = mObjectLight.size();
@@ -24,7 +24,7 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 		mBoxLight[i].left = mObjectLight[i].rect.left;
 		mBoxLight[i].top = mObjectLight[i].rect.top;
 		sLight[i].setScale(2.f, 2.f);
-		float alphaRed = 100, alphaTorch = 100, alphaLamp = 200; //ƒл€ стандарта ставить на 255
+		float alphaRed = 255, alphaTorch = 255, alphaLamp = 255; //ƒл€ стандарта ставить на 255
 		sLight[i].setPosition( mBoxLight[i].left - 76, mBoxLight[i].top - 76);
 		if(mObjectLight[i].type == "torch") {
 			sLight[i].setColor(sf::Color(222, 125, 55, alphaTorch));
@@ -33,7 +33,7 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 		} else {
 			sLight[i].setColor(sf::Color(255.f, 0.f, 0.f, alphaRed));
 		}
-		renderTexture.draw(sLight[i], sf::BlendAlpha); //sf::BlendAdd, sf::BlendAlpha, sf::BlendMultiply - стандарт, sf::BlendNone
+		renderTexture.draw(sLight[i], sf::BlendMultiply); //sf::BlendAdd, sf::BlendAlpha, sf::BlendMultiply - стандарт, sf::BlendNone
 	}
 
 	renderTexture.display();
