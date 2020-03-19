@@ -23,6 +23,10 @@ class Player : public Entity, public Music {
 		
 		sf::Sprite sPlayer;
 		int	mSpriteTile;
+		float mScale;
+		sf::Vector2i forJump;
+		bool canJump = true;
+		bool inAir = false;
 		bool isLeftDirection = false;
 		bool isStay = true;
 };
