@@ -26,7 +26,8 @@ void TApplication::Init() {
 }
 
 void TApplication::Run() {
-	int viewX = SCREEN_WIDTH / 2, viewY = SCREEN_HEIGHT / 2;
+	float viewX = SCREEN_WIDTH / 2, viewY = SCREEN_HEIGHT / 2;
+	
 	while (Window->isOpen()) {
 		
 		
@@ -41,9 +42,26 @@ void TApplication::Run() {
 
 
 		if((player->getCenterX() - (SCREEN_WIDTH / 2) > 0 ) and (player->getCenterX() + (SCREEN_WIDTH / 2) < LEVEL_WIDTH ))
-			viewX = player->getCenterX();
+		{
+			if(player->getCenterX() - viewX > 0)
+			{
+				viewX += ((player->getCenterX() - viewX) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
+			} else {
+				viewX -= ((viewX - player->getCenterX()) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
+			}
+		}
+
 		if((player->getCenterY() - (SCREEN_HEIGHT / 2) > 0) and (player->getCenterY() + (SCREEN_HEIGHT / 2) < LEVEL_HEIGHT))
-			viewY = player->getCenterY();
+		{
+			if(player->getCenterY() - viewY > 0)
+			{
+				viewY += ((player->getCenterY() - viewY) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
+			} else {
+				viewY -= ((viewY - player->getCenterY()) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
+			}
+		}
+		
+		
 		heroView.setCenter(viewX, viewY);
 		
 		Window->clear(sf::Color::White);

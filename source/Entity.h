@@ -6,6 +6,7 @@
 
 class Entity {
 	public:
+		int mSpeed = 0;
 		int getHealth();
 		int getSpeed();
 		sf::FloatRect getRect();
@@ -15,7 +16,6 @@ class Entity {
 		std::vector<TmxObject> objSolid;
 	protected:
 		int mFrame = 0;
-		int mSpeed = 0;
 		int mHealth = 0;
 		sf::FloatRect mBox;
 		sf::Texture texture;
