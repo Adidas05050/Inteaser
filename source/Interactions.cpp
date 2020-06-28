@@ -18,10 +18,10 @@ Interactions::Interactions() {
 	textForInteractibleObject.setCharacterSize(20);
 }
 
-void Interactions::Interact(Player* player, Tile *level) {
+int Interactions::Interact(Player* player, Tile *level) {
 	
 	if(Interactions::idLocation == -1) {
-		return;
+		return -1;
 	}
 	
 	interactTrigger.left = player->getRect().left + player->getRect().width / 2 - (INTERACT_TRIGGER_WIDTH / 2);
@@ -89,25 +89,24 @@ void Interactions::Interact(Player* player, Tile *level) {
 			switch(close_object) {
 				case 0: {	// don't touch this, because I did it to show you how each object can be unique !!!!!!!!!
 					std::cout << "You are looking at the object with ID 0\n";
-					break;
+					return 0;
 				}
 				case 1: {
 					std::cout << "You are looking at the object with ID 1\n";
-					break;
+					return 1;
 				}
 				case 2: {
 					std::cout << "You are looking at the object with ID 2\n";
-					break;
+					return 2;
 				}
 				case 3: {
 					std::cout << "You are looking at the object with ID 3\n";
-					break;
+					return 3;
 				}
 			}
 		} else {
 			if(press_check && !sf::Keyboard::isKeyPressed(sf::Keyboard::E)) press_check = false;
 		}
 	}
-	
-	return;
+	return -1;
 }

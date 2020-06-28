@@ -13,7 +13,7 @@ class Interactions {
 		const float INTERACT_TRIGGER_HEIGHT = 300;// TRIGGER ZONE HEIGHT
 		const float INTERACT_TRIGGER_WIDTH = 300;// TRIGGER ZONE WIDTH
 		
-		void Interact(Player* player, Tile *level);
+		int Interact(Player* player, Tile *level);
 		
 		Interactions();
 		

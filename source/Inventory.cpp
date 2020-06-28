@@ -1,23 +1,63 @@
 #include "Inventory.h"
 
-Inventory::Inventory(int x, int y) {
-	mBox.left = x;
-	mBox.top = y;
-
-	texture.loadFromFile("media/background/missionbg.jpg");
-	mBox.width = texture.getSize().x;
-	mBox.height = texture.getSize().y;
-	sInventory.setTexture(texture);
+Inventory::Inventory() {
+	countItem = 0;
+	//Mission init
+	tMission.loadFromFile("media/background/missionbg.jpg");
+	mBoxMission.width = tMission.getSize().x;
+	mBoxMission.height = tMission.getSize().y;
+	sMission.setTexture(tMission);
+	//Inventory init
+	tInventory.loadFromFile("media/background/inventory.png");
+	mBoxInventory.width = tInventory.getSize().x;
+	mBoxInventory.height = tInventory.getSize().y;
+	sInventory.setTexture(tInventory);
 }
 
-void Inventory::draw(sf::RenderWindow* Window, sf::View* view) {
+void Inventory::counterItem(int id) {
+	if(id == -1)
+		return;
+	if(countItem < 9) {
+		auto it = itemMap.find(id);
+		if(it !=itemMap.end()) {
+			tItem[countItem].loadFromFile("media/item/" + it->second + ".png");
+			std::cout << it->second << '\n';
+		} else {
+			std::cout << "Item ID not found: " << id << std::endl;
+		}
+		sItem[countItem].setTexture(tItem[countItem]);
+		sItem[countItem].setScale(0.06f, 0.06f);
+		countItem++;
+	}
 
+}
+
+void Inventory::drawInventory(sf::RenderWindow* Window, sf::View* view) {
+	//draw Inventory
 	sInventory.setScale(0.7f, 0.7f);
-	mBox.left = view->getCenter().x - 200;
-	mBox.top = view->getCenter().y - 200;
-	sInventory.setPosition(mBox.left, mBox.top);
+	mBoxInventory.left = view->getCenter().x + 100;
+	mBoxInventory.top = view->getCenter().y - 220;
+	sInventory.setPosition(mBoxInventory.left, mBoxInventory.top);
 
 	Window->draw(sInventory);
+	for(int i = 0; i < countItem; i++) {
+		mBoxItem[i].left = mBoxInventory.left + mBoxInventory.width - 19.5f*i - 93;
+		mBoxItem[i].top = mBoxInventory.top + mBoxInventory.height - 28;
+		sItem[i].setPosition(mBoxItem[i].left, mBoxItem[i].top);
+		Window->draw(sItem[i]);
+	}
+}
+
+
+void Inventory::drawMission(sf::RenderWindow* Window, sf::View* view) {
+	//draw Mission
+	sMission.setScale(0.7f, 0.7f);
+	mBoxMission.left = view->getCenter().x - 300;
+	mBoxMission.top = view->getCenter().y - 230;
+	sMission.setPosition(mBoxMission.left, mBoxMission.top);
+
+	Window->draw(sMission);
+
 }
 
 int Inventory::getCurrentMission(int x) {
@@ -38,11 +78,4 @@ std::string Inventory::getTextMission(int mission) {
 	if(mission == 2)
 		textMission = "Mission: \nFind other mission\n";
 	return textMission;
-}
-
-int Inventory::getX() {
-	return mBox.left;
-}
-int Inventory::getY() {
-	return mBox.top;
 }

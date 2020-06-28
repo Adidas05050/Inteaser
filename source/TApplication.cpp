@@ -7,7 +7,7 @@ TApplication::TApplication(): Window(nullptr) {
 
 void TApplication::Init() {
 	Window = new sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Menu");
-	inventory = new Inventory(10, 10);
+	inventory = new Inventory();
 	level = new Tile();
 	level->LoadFromFile("map/testMap.tmx");
 	player = new Player(200, 200, 200, 10, level);
@@ -85,11 +85,13 @@ void TApplication::Run() {
 		player->collisionSound();
 		player->move();
 		player->collision();
+		inventory->counterItem(Interaction->Interact(player, level));// Calculation interactable objects and give ID for inventory
 		
 		player->draw(Window, 3, 3);
+		inventory->drawInventory(Window, &heroView);
 		interface->draw(Window, player->getRect(), &heroView);
 		
-		Interaction->Interact(player, level);// Calculation interactable objects
+		
 		Window->draw(Interaction->item);// for test
 		Window->draw(Interaction->circ);// for test
 		Window->draw(Interaction->recta);// for test
@@ -99,13 +101,13 @@ void TApplication::Run() {
 }
 //----------------------------------?????????????????????????????????--------------------------
 void TApplication::setInventory() {
-	inventory->draw(Window, &heroView);
+	inventory->drawMission(Window, &heroView);
 	int mission;
 	mission = inventory->getCurrentMission(player->getRect().left);
 	std::string currentTask;
 	currentTask = inventory->getTextMission(mission);
 	textMission.setString("Health: " + std::to_string(player->getHealth()) + "\n\n\n" + currentTask);
-	textMission.setPosition(inventory->getX()+10, inventory->getY()+10);
+	textMission.setPosition(heroView.getCenter().x - 250, heroView.getCenter().y - 220);
 	Window->draw(textMission);
 }
 //----------------------------------------------------------------------------------------------

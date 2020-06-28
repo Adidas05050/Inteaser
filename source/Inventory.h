@@ -4,17 +4,34 @@
 
 class Inventory {
 	public:
-		Inventory(int x, int y);
-		void draw(sf::RenderWindow* Window, sf::View* view);
+		Inventory();
+		void drawMission(sf::RenderWindow* Window, sf::View* view);
+		void drawInventory(sf::RenderWindow* Window, sf::View* view);
+		void counterItem(int id);
 		int getCurrentMission(int x);
 		std::string getTextMission(int mission);
-		int getX();
-		int getY();
 
 	private:
-		sf::IntRect mBox;
-		sf::Texture texture;
+		int countItem;
+		sf::Sprite sItem[9];
+		sf::Texture tItem[9];
+		sf::IntRect mBoxItem[9];
+		
+		sf::IntRect mBoxMission;
+		sf::Texture tMission;
+		sf::Sprite sMission;
+		
+		sf::IntRect mBoxInventory;
+		sf::Texture tInventory;
 		sf::Sprite sInventory;
+		
+		std::map<int, std::string> itemMap = 
+		{
+			{0, "lemon"},
+			{1, "cs"},
+			{2, "hammer"},
+			{3, "coin"}
+		};
 };
 
 #endif
