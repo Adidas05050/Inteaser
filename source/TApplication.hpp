@@ -11,6 +11,7 @@
 #include "Music.h"
 #include "Interface.h"
 #include "Interactions.h"
+#include "Skelet.h"
 
 class TApplication {
 
@@ -19,6 +20,7 @@ class TApplication {
 		Inventory *inventory;
 		Tile *level;
 		Player *player;
+		Skelet *skelet;
 		Music *musicControl;
 		Interface *interface;
 		Interactions *Interaction;

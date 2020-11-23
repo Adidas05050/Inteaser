@@ -4,16 +4,23 @@
 #include "SFML.hpp"
 #include "Tile.h"
 #include <vector>
-
+#include <fstream>
+#include <cstring>
+#include <iostream> //DEBUG
 extern const int LEVEL_WIDTH;
 extern const int LEVEL_HEIGHT;
 
 class Interface {
 	public:
 		Interface(Tile *level);
-		void draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view);
+		void draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog);
+		void dialog(int id, bool *draw);
+		sf::Font fontForDraw;
+		sf::Text textForDraw;
+		sf::Text textPlayer;
 
 	protected:
+		std::ifstream file;
 		std::vector<TmxObject> mObjectLight;
 		sf::RenderTexture renderTexture;
 		sf::RenderTexture renderColorTexture;
@@ -23,6 +30,10 @@ class Interface {
 		sf::Texture tColorLight;
 		sf::Sprite *sColorLight;
 		sf::Sprite *sLight;
+		sf::Sprite sDialog;
+		sf::Texture tDialog;
+		sf::FloatRect mBoxDialog;
+		
 		int count; // сомнительная польза, пока чисто для удоства
 };
 

@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=0000000100000000000000000
-UnitCount=21
+UnitCount=23
 
 [VersionInfo]
 Major=1
@@ -252,6 +252,26 @@ BuildCmd=
 
 [Unit16]
 FileName=source\Music.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=source\skelet.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit23]
+FileName=source\skelet.cpp
 CompileCpp=1
 Folder=
 Compile=1

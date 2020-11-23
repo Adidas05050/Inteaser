@@ -5,8 +5,10 @@ Interface::Interface(Tile *level) {
 	renderColorTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT);
 	tLight.loadFromFile("media/background/light.png"); //можно поменять на light, lightRev, LightWh; Стандарт light
 	tColorLight.loadFromFile("media/background/lightWh.png");//
-	tLight.setSmooth(true);								 
-	mObjectLight = level->GetAllObjects("light"); 
+	tLight.setSmooth(true);
+	tDialog.loadFromFile("media/background/dialog.png");
+	sDialog.setTexture(tDialog);
+	mObjectLight = level->GetAllObjects("light");
 	count = mObjectLight.size();
 	mBoxLight = new sf::FloatRect [count];
 	mBoxColorLight = new sf::FloatRect [count];//
@@ -23,7 +25,41 @@ Interface::Interface(Tile *level) {
 
 }
 
-void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view) {
+void Interface::dialog(int id, bool *draw) {
+	if(!*draw) {
+		file.open("dialogs/skelet/1.txt");
+		std::string text;
+		std::getline(file, text);
+		file.close();
+
+
+		fontForDraw.loadFromFile("font/single_day.ttf");
+		textForDraw.setFont(fontForDraw);
+		textForDraw.setString(text);
+		textForDraw.setFillColor(sf::Color(235, 235, 235, 255));
+		textForDraw.setCharacterSize(20);
+		textForDraw.setPosition(mBoxDialog.left + 60, mBoxDialog.top + 40);
+
+		textPlayer.setString("1. *Leave* ");
+		textPlayer.setFont(fontForDraw);
+		textPlayer.setFillColor(sf::Color(235, 235, 235, 255));
+		textPlayer.setCharacterSize(20);
+		textPlayer.setPosition(mBoxDialog.left + 60, mBoxDialog.top + 80);
+		*draw = true;
+	}
+
+
+}
+
+void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {
+	if(dialog) {
+		sDialog.setScale(0.5f, 0.3f);
+		mBoxDialog.left = view->getCenter().x - 240;
+		mBoxDialog.top = view->getCenter().y + 50;
+		sDialog.setPosition(mBoxDialog.left, mBoxDialog.top);
+		sDialog.setColor(sf::Color(255, 255, 255, 150));
+		Window->draw(sDialog);
+	}
 
 	renderTexture.clear(sf::Color(0, 0, 0, 100));
 	renderColorTexture.clear(sf::Color(0, 0, 0, 100));
@@ -49,7 +85,7 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 		}
 		renderColorTexture.draw(sColorLight[i], sf::BlendAlpha);
 		renderTexture.draw(sLight[i], sf::BlendMultiply); //sf::BlendAdd, sf::BlendAlpha, sf::BlendMultiply - стандарт, sf::BlendNone
-		
+
 	}
 
 	renderTexture.display();
@@ -59,5 +95,6 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 	Window->draw(sprite);
 	sprite.setTexture(renderTexture.getTexture());
 	Window->draw(sprite);
-	
+
+
 }

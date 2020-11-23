@@ -8,14 +8,17 @@ class Inventory {
 		void drawMission(sf::RenderWindow* Window, sf::View* view);
 		void drawInventory(sf::RenderWindow* Window, sf::View* view);
 		void counterItem(int id);
+		int checkInventory(int id, int count);
 		int getCurrentMission(int x);
 		std::string getTextMission(int mission);
-
+		const int MAX_ITEM = 9;
 	private:
+		
 		int countItem;
-		sf::Sprite sItem[9];
-		sf::Texture tItem[9];
-		sf::IntRect mBoxItem[9];
+		int *itemInventory = new int [MAX_ITEM];
+		sf::Sprite *sItem = new sf::Sprite [MAX_ITEM];
+		sf::Texture *tItem = new sf::Texture [MAX_ITEM];
+		sf::IntRect *mBoxItem= new sf::IntRect [MAX_ITEM];
 		
 		sf::IntRect mBoxMission;
 		sf::Texture tMission;

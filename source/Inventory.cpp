@@ -14,10 +14,19 @@ Inventory::Inventory() {
 	sInventory.setTexture(tInventory);
 }
 
+int Inventory::checkInventory(int id, int count) {
+	int needItem = 0;
+	for(int i = 0; i < MAX_ITEM; i++) {
+		if(itemInventory[i] == id)
+			needItem++;
+	}
+	
+	return (needItem >= count? true: false);
+}
 void Inventory::counterItem(int id) {
 	if(id == -1)
 		return;
-	if(countItem < 9) {
+	if(countItem < MAX_ITEM) {
 		auto it = itemMap.find(id);
 		if(it !=itemMap.end()) {
 			tItem[countItem].loadFromFile("media/item/" + it->second + ".png");
@@ -27,6 +36,7 @@ void Inventory::counterItem(int id) {
 		}
 		sItem[countItem].setTexture(tItem[countItem]);
 		sItem[countItem].setScale(0.06f, 0.06f);
+		itemInventory[countItem] = id;
 		countItem++;
 	}
 

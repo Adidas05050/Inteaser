@@ -12,7 +12,8 @@ class Entity {
 		sf::FloatRect getRect();
 		float getCenterX();
 		float getCenterY();
-
+		bool alive();
+		
 		std::vector<TmxObject> objSolid;
 	protected:
 		int mFrame = 0;

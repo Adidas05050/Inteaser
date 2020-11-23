@@ -104,7 +104,7 @@ void Player::move() {
 				mSpriteTile = 0;
 			if(!stepSound[currentNumberSound].getStatus()) {
 				stepSound[currentNumberSound].setPitch(1.5f);
-				stepSound[currentNumberSound].play();
+				//stepSound[currentNumberSound].play(); //MUSIC
 			}
 		}
 	}
@@ -126,12 +126,12 @@ void Player::collisionSound() {
 	}
 }
 
-void Player::collision() {
+void Player::collision(sf::FloatRect enemyRect) { //ѕока только один потом массив надо сделать TODO
 
 	for(int i = 0; i < objSolid.size(); i++) {
 
 		mBox.top += mSpeed;
-		if( getRect().intersects(objSolid[i].rect) ) {
+		if( getRect().intersects(objSolid[i].rect)) {
 			mBox.top -= mSpeed;
 		}
 		mBox.top -= mSpeed;
@@ -154,4 +154,32 @@ void Player::collision() {
 		}
 		mBox.top += mSpeed;
 	}
+	
+	for(int i = 0; i < 1; i++) {
+
+		mBox.top += mSpeed;
+		if( getRect().intersects(enemyRect) ) {
+			mBox.top -= mSpeed;
+		}
+		mBox.top -= mSpeed;
+
+		mBox.left += mSpeed;
+		if( getRect().intersects(enemyRect) ) {
+			mBox.left -= mSpeed;
+		}
+		mBox.left -= mSpeed;
+
+		mBox.left -= mSpeed;
+		if( getRect().intersects(enemyRect) ) {
+			mBox.left += mSpeed;
+		}
+		mBox.left += mSpeed;
+
+		mBox.top -= mSpeed;
+		if( getRect().intersects(enemyRect) ) {
+			mBox.top += mSpeed;
+		}
+		mBox.top += mSpeed;
+	}
+	
 }
