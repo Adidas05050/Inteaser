@@ -9,7 +9,7 @@
 #include <iostream> //DEBUG
 extern const int LEVEL_WIDTH;
 extern const int LEVEL_HEIGHT;
-
+const int MAX_LINE_IN_DIALOG = 5;
 class Interface {
 	public:
 		Interface(Tile *level);
@@ -17,7 +17,7 @@ class Interface {
 		void dialog(int id, bool *draw);
 		sf::Font fontForDraw;
 		sf::Text textForDraw;
-		sf::Text textPlayer;
+		sf::Text textPlayer[MAX_LINE_IN_DIALOG];
 
 	protected:
 		std::ifstream file;
