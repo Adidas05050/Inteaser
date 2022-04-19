@@ -26,15 +26,15 @@ Interface::Interface(Tile *level) {
 }
 
 void Interface::dialog(int id, bool *draw) {
-	if(!*draw) {
+	/*if (!*draw) {
 		file.open("dialogs/skelet/1.txt");
 		std::string line;
 		std::getline(file, line);
 		file.close();
-		int n = atoi(line);
+		int n = atoi(line.c_str());
 		int numberLine = 0;
 		bool *flags = new bool [n];
-		string *text = new string [n];
+		std::string *text = new std::string [n];
 		for(int i = 0; i < n; n++) {
 			std::getline(file, text[i]);
 			flags[i] = false;
@@ -68,7 +68,7 @@ void Interface::dialog(int id, bool *draw) {
 
 	}
 
-
+	*/
 }
 
 void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {

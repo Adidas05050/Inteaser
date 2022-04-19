@@ -1,8 +1,9 @@
 #include "TApplication.hpp"
-#define nullptr NULL
-sf::Texture tBackground;
 TApplication::TApplication(): Window(nullptr) {
-	tBackground.loadFromFile("media/background/map.png");
+	sf::Image img;
+	img.loadFromFile("media/background/map.png");
+	sf::Texture tBackground;
+	tBackground.loadFromImage(img);
 }
 
 void TApplication::Init() {
@@ -78,7 +79,7 @@ void TApplication::Run() {
 		}
 		if(!musicControl->mainMusic.getStatus()) {
 			musicControl->mainMusic.setVolume(5.f);
-			//	musicControl->mainMusic.play();//MUSIC
+				musicControl->mainMusic.play();//MUSIC
 		}
 
 		if(!dialog) {
@@ -107,7 +108,7 @@ void TApplication::Run() {
 			}
 			
 			Window->draw(interface->textForDraw);
-			Window->draw(interface->textPlayer);
+			Window->draw(interface->textPlayer[0]);
 		}
 		
 		if(!dialog) {

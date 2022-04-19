@@ -8,8 +8,6 @@ const int LEVEL_HEIGHT = 3200;
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-extern sf::Texture tBackground;
-
 struct TmxObject
 {
     int GetPropertyInt(const std::string &propertyName);

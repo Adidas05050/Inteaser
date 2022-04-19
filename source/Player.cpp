@@ -104,7 +104,7 @@ void Player::move() {
 				mSpriteTile = 0;
 			if(!stepSound[currentNumberSound].getStatus()) {
 				stepSound[currentNumberSound].setPitch(1.5f);
-				//stepSound[currentNumberSound].play(); //MUSIC
+				stepSound[currentNumberSound].play(); //MUSIC
 			}
 		}
 	}
