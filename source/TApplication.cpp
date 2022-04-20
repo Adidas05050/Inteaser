@@ -11,7 +11,7 @@ void TApplication::Init() {
 	inventory = new Inventory();
 	level = new Tile();
 	level->LoadFromFile("map/testMap.tmx");
-	player = new Player(200, 200, 200, 10, level);
+	player = new Player(200, 200, 200, 10, level, Window);
 	skelet = new Skelet(0, 10, level);
 	interface = new Interface(level);
 	heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -117,6 +117,7 @@ void TApplication::Run() {
 			Window->draw(Interaction->recta);// for test
 			Window->draw(Interaction->textForInteractibleObject);
 		}
+		player->OnFrame(Window, &heroView);
 		Window->display();
 	}
 }

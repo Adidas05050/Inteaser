@@ -24,51 +24,48 @@ Interface::Interface(Tile *level) {
 	}
 
 }
-
+//-------------------------------------------------------
 void Interface::dialog(int id, bool *draw) {
-	/*if (!*draw) {
-		file.open("dialogs/skelet/1.txt");
-		std::string line;
-		std::getline(file, line);
-		file.close();
-		int n = atoi(line.c_str());
-		int numberLine = 0;
-		bool *flags = new bool [n];
-		std::string *text = new std::string [n];
-		for(int i = 0; i < n; n++) {
-			std::getline(file, text[i]);
-			flags[i] = false;
+	if (*draw)
+		return;
+	file.open("dialogs/skelet/1.txt");
+	std::string line;
+	std::getline(file, line);
+	file.close();
+	int n = atoi(line.c_str());
+	int numberLine = 0;
+	bool *flags = new bool [n];
+	std::string *text = new std::string [n];
+	for(int i = 0; i < n; n++) {
+		std::getline(file, text[i]);
+		flags[i] = false;
+	}
+	int currentLine = atoi(text[numberLine].c_str());
+	int character = atoi(text[numberLine].c_str());
+	int nextLine = atoi(text[numberLine].c_str());
+	int intervalDown = atoi(text[numberLine].c_str());
+	int howManyLine = atoi(text[numberLine].c_str());
+
+	fontForDraw.loadFromFile("font/single_day.ttf"); //TODO
+	for(int i = 0; i < MAX_LINE_IN_DIALOG; i++ ) {
+		if(character == 1) {
+			textForDraw.setFont(fontForDraw);
+			textForDraw.setString(text[i]);
+			textForDraw.setFillColor(sf::Color(235, 235, 235, 255));
+			textForDraw.setCharacterSize(20);
+			textForDraw.setPosition(mBoxDialog.left + 60, mBoxDialog.top + 40);
 		}
-		int currentLine = atoi(text[numberLine][0]);
-		int character = atoi(text[numberLine][1]);
-		int nextLine = atoi(text[numberLine][2]);
-		int intervalDown = atoi(text[numberLine][3]);
-		int howManyLine = atoi(text[numberLine][4]);
 
-		fontForDraw.loadFromFile("font/single_day.ttf"); //TODO
-		for(int i = 0; i < MAX_LINE_IN_DIALOG; i++ ) {
-			if(character == 1) {
-				textForDraw.setFont(fontForDraw);
-				textForDraw.setString(text[i]);
-				textForDraw.setFillColor(sf::Color(235, 235, 235, 255));
-				textForDraw.setCharacterSize(20);
-				textForDraw.setPosition(mBoxDialog.left + 60, mBoxDialog.top + 40);
-			}
-
-			else if(character == 2) {
-				textPlayer[i].setString();
-				textPlayer[i].setFont(fontForDraw);
-				textPlayer[i].setFillColor(sf::Color(235, 235, 235, 255));
-				textPlayer[i].setCharacterSize(20);
-				textPlayer[i].setPosition(mBoxDialog.left + 60, mBoxDialog.top + 80);
-			}
-
+		else if(character == 2) {
+			textPlayer[i].setString("");
+			textPlayer[i].setFont(fontForDraw);
+			textPlayer[i].setFillColor(sf::Color(235, 235, 235, 255));
+			textPlayer[i].setCharacterSize(20);
+			textPlayer[i].setPosition(mBoxDialog.left + 60, mBoxDialog.top + 80);
 		}
-		*draw = true;
 
 	}
-
-	*/
+	*draw = true;
 }
 
 void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {
@@ -118,3 +115,4 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 
 
 }
+//-------------------------------------------------------

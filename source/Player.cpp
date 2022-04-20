@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "iostream"
-Player::Player(int x, int y, int health, int speed, Tile *level) {
+
+Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window) {
 	mBox.left = x;
 	mBox.top = y;
 	mBox.width = 48;
@@ -21,8 +22,32 @@ Player::Player(int x, int y, int health, int speed, Tile *level) {
 	mScale = 1;
 	objSolid = level->GetAllObjects("wall");
 	mObjectSound = level->GetAllObjects("sound");
-}
 
+	m_healthBar = new ProgressBar(sf::Vector2f(100, 20), sf::Color::Red);
+	m_foodBar = new ProgressBar(sf::Vector2f(100, 20), sf::Color::Yellow);
+
+	m_healthBar->SetProgress(mHealth / m_maxHealth);
+	m_foodBar->SetProgress(m_food / m_maxFood);
+
+	m_healthBar->SetPosition(sf::Vector2f(10, 10));
+	m_foodBar->SetPosition(sf::Vector2f(10, 35));
+
+	m_window = window;
+}
+//-------------------------------------------------------
+void Player::OnFrame(sf::RenderWindow* Window, sf::View* view)
+{
+	if(m_food > FLT_MIN)
+		m_food -= m_decreaseFood;
+	
+	if (m_food < m_maxFood / 2 and mHealth > m_maxHealth / 2)
+		mHealth -= m_decreaseFood;
+	m_healthBar->SetProgress(mHealth/ m_maxHealth);
+	m_foodBar->SetProgress(m_food/ m_maxFood);
+	m_healthBar->Draw(Window, view);
+	m_foodBar->Draw(Window, view);
+}
+//-------------------------------------------------------
 void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
 	float width = scaleX * mBox.width;
 	float height = scaleY * mBox.height;
@@ -42,7 +67,7 @@ void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
 	}
 	Window->draw(sPlayer);
 }
-
+//-------------------------------------------------------
 void Player::move() {
 	mFrame++;
 	if(mFrame > 64) {
@@ -110,7 +135,7 @@ void Player::move() {
 	}
 
 }
-
+//-------------------------------------------------------
 void Player::collisionSound() {
 	for(int i = 0; i < mObjectSound.size(); i++) {
 		if( getRect().intersects(mObjectSound[i].rect) and (previousNameSound != mObjectSound[i].type)) {
@@ -125,7 +150,7 @@ void Player::collisionSound() {
 		}
 	}
 }
-
+//-------------------------------------------------------
 void Player::collision(sf::FloatRect enemyRect) { //Пока только один потом массив надо сделать TODO
 
 	for(int i = 0; i < objSolid.size(); i++) {
@@ -183,3 +208,37 @@ void Player::collision(sf::FloatRect enemyRect) { //Пока только один потом масси
 	}
 	
 }
+//-------------------------------------------------------
+Player::ProgressBar::ProgressBar(sf::Vector2f size, sf::Color color)
+{
+	m_background.setSize(size);
+	m_background.setFillColor(sf::Color::Black);
+	m_foreground.setSize(size);
+	m_foreground.setFillColor(color);
+}
+//-------------------------------------------------------
+void Player::ProgressBar::SetProgress(float progress)
+{
+	m_foreground.setScale(progress, 1.f);
+}
+//-------------------------------------------------------
+void Player::ProgressBar::SetColor(sf::Color color)
+{
+	m_foreground.setFillColor(color);
+}
+//-------------------------------------------------------
+void Player::ProgressBar::SetPosition(sf::Vector2f position)
+{
+	m_position = position;
+}
+//-------------------------------------------------------
+void Player::ProgressBar::Draw(sf::RenderWindow* window, sf::View* view)
+{
+	const auto& coordBegin = view->getCenter() - view->getSize() / 2.f;
+	sf::Vector2f positionOnView = sf::Vector2f(m_position.x + coordBegin.x, m_position.y + coordBegin.y);
+	m_background.setPosition(positionOnView);
+	m_foreground.setPosition(positionOnView);
+	window->draw(m_background);
+	window->draw(m_foreground);
+}
+//-------------------------------------------------------
