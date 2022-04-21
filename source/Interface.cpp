@@ -1,4 +1,7 @@
 #include "Interface.h"
+#include "World.h"
+
+World world;
 
 Interface::Interface(Tile *level) {
 	renderTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT);
@@ -69,6 +72,8 @@ void Interface::dialog(int id, bool *draw) {
 }
 
 void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {
+	world.OnFrame();
+
 	if(dialog) {
 		sDialog.setScale(0.5f, 0.3f);
 		mBoxDialog.left = view->getCenter().x - 240;
@@ -78,8 +83,8 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 		Window->draw(sDialog);
 	}
 
-	renderTexture.clear(sf::Color(0, 0, 0, 100));
-	renderColorTexture.clear(sf::Color(0, 0, 0, 100));
+	renderTexture.clear(sf::Color(0, 0, 0, world.GetTime() * 10));
+	renderColorTexture.clear(sf::Color(0, 0, 0, world.GetTime() * 10));
 	for(int i = 0; i < count; i++) {
 		mBoxLight[i].left = mObjectLight[i].rect.left;
 		mBoxLight[i].top = mObjectLight[i].rect.top;

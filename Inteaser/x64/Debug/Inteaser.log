@@ -1,0 +1,66 @@
+﻿  Entity.cpp
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Entity.cpp(18,9): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+  Interactions.cpp
+  Interface.cpp
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(12,29): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(95,52): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(98,53): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(100,45): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(100,40): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(100,33): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,55): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,50): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,45): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,38): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+  main.cpp
+  Player.cpp
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(5,14): warning C4244: =: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(6,13): warning C4244: =: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(10,12): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(102,16): warning C4305: +=: усечение из "double" в "float"
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(106,16): warning C4305: -=: усечение из "double" в "float"
+  skelet.cpp
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(9,12): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(19,25): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(19,22): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(20,14): warning C4244: =: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(21,13): warning C4244: =: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  TApplication.cpp
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\TApplication.cpp(99,32): warning C4305: аргумент: усечение из "double" в "float"
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\TApplication.cpp(128,58): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  Tile.cpp
+  World.cpp
+  Создание кода...
+Interface.obj : error LNK2001: неразрешенный внешний символ "struct sf::BlendMode const sf::BlendAlpha" (?BlendAlpha@sf@@3UBlendMode@1@B).
+Interface.obj : error LNK2001: неразрешенный внешний символ "struct sf::BlendMode const sf::BlendMultiply" (?BlendMultiply@sf@@3UBlendMode@1@B).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::Black" (?Black@Color@sf@@2V12@B).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::Red" (?Red@Color@sf@@2V12@B).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::Yellow" (?Yellow@Color@sf@@2V12@B).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::White" (?White@Color@sf@@2V12@B).
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\x64\Inteaser.exe : fatal error LNK1120: неразрешенных внешних элементов: 7

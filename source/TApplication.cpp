@@ -5,7 +5,7 @@ TApplication::TApplication(): Window(nullptr) {
 	sf::Texture tBackground;
 	tBackground.loadFromImage(img);
 }
-
+//-------------------------------------------------------
 void TApplication::Init() {
 	Window = new sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Menu");
 	inventory = new Inventory();
@@ -26,7 +26,7 @@ void TApplication::Init() {
 	musicControl->loadMusic("sounds/music/theme.wav");
 
 }
-
+//-------------------------------------------------------
 void TApplication::Run() {
 	float viewX = SCREEN_WIDTH / 2, viewY = SCREEN_HEIGHT / 2;
 	bool dialog = false, drawDialog = false;
