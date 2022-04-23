@@ -79,7 +79,7 @@ void TApplication::Run() {
 		}
 		if(!musicControl->mainMusic.getStatus()) {
 			musicControl->mainMusic.setVolume(5.f);
-				musicControl->mainMusic.play();//MUSIC
+				//musicControl->mainMusic.play();//MUSIC
 		}
 
 		if(!dialog) {

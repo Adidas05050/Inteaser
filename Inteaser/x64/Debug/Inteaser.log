@@ -1,66 +1,211 @@
-﻿  Entity.cpp
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Entity.cpp(18,9): warning C4244: return: преобразование "float" в "int", возможна потеря данных
-  Interactions.cpp
-  Interface.cpp
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(12,29): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(95,52): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(98,53): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(100,45): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(100,40): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(100,33): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,55): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,50): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,45): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(101,38): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
-  main.cpp
-  Player.cpp
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(5,14): warning C4244: =: преобразование "int" в "T", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(6,13): warning C4244: =: преобразование "int" в "T", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(10,12): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(102,16): warning C4305: +=: усечение из "double" в "float"
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Player.cpp(106,16): warning C4305: -=: усечение из "double" в "float"
-  skelet.cpp
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(9,12): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(19,25): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(19,22): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(20,14): warning C4244: =: преобразование "int" в "T", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\skelet.cpp(21,13): warning C4244: =: преобразование "int" в "T", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-  TApplication.cpp
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\TApplication.cpp(99,32): warning C4305: аргумент: усечение из "double" в "float"
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\TApplication.cpp(128,58): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-  Tile.cpp
+﻿  Interface.cpp
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(15,29): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(86,57): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(87,62): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(100,52): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(103,53): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(105,45): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(105,40): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(105,33): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(106,55): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(106,50): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(106,45): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\Interface.cpp(106,38): warning C4244: аргумент: преобразование "float" в "sf::Uint8", возможна потеря данных
   World.cpp
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\World.cpp(6,14): warning C4305: =: усечение из "double" в "float"
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\World.cpp(19,28): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\source\World.cpp(19,25): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
   Создание кода...
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::String::String(char const *,class std::locale const &)" (??0String@sf@@QEAA@PEBDAEBVlocale@std@@@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::String::String(char const *,class std::locale const &)" (??0String@sf@@QEAA@PEBDAEBVlocale@std@@@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::String::String(char const *,class std::locale const &)" (??0String@sf@@QEAA@PEBDAEBVlocale@std@@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: static bool __cdecl sf::Keyboard::isKeyPressed(enum sf::Keyboard::Key)" (?isKeyPressed@Keyboard@sf@@SA_NW4Key@12@@Z) в функции "public: int __cdecl Interactions::Interact(class Player *,class Tile *)" (?Interact@Interactions@@QEAAHPEAVPlayer@@PEAVTile@@@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: static bool __cdecl sf::Keyboard::isKeyPressed(enum sf::Keyboard::Key)" (?isKeyPressed@Keyboard@sf@@SA_NW4Key@12@@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: static bool __cdecl sf::Keyboard::isKeyPressed(enum sf::Keyboard::Key)" (?isKeyPressed@Keyboard@sf@@SA_NW4Key@12@@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+Interactions.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+main.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+World.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+Interactions.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(class sf::Vector2<float> const &)" (?setPosition@Transformable@sf@@QEAAXAEBV?$Vector2@M@2@@Z) в функции "public: int __cdecl Interactions::Interact(class Player *,class Tile *)" (?Interact@Interactions@@QEAAHPEAVPlayer@@PEAVTile@@@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(class sf::Vector2<float> const &)" (?setPosition@Transformable@sf@@QEAAXAEBV?$Vector2@M@2@@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setPosition(class sf::Vector2<float> const &)" (?setPosition@Transformable@sf@@QEAAXAEBV?$Vector2@M@2@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Transformable::setOrigin(float,float)" (?setOrigin@Transformable@sf@@QEAAXMM@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setOrigin(float,float)" (?setOrigin@Transformable@sf@@QEAAXMM@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Transformable::setOrigin(class sf::Vector2<float> const &)" (?setOrigin@Transformable@sf@@QEAAXAEBV?$Vector2@M@2@@Z) в функции "public: int __cdecl Interactions::Interact(class Player *,class Tile *)" (?Interact@Interactions@@QEAAHPEAVPlayer@@PEAVTile@@@Z).
+World.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (??0Color@sf@@QEAA@EEEE@Z).
+Interactions.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (??0Color@sf@@QEAA@EEEE@Z).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (??0Color@sf@@QEAA@EEEE@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (??0Color@sf@@QEAA@EEEE@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (??0Color@sf@@QEAA@EEEE@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: virtual __cdecl sf::Shape::~Shape(void)" (??1Shape@sf@@UEAA@XZ) в функции "public: virtual __cdecl sf::CircleShape::~CircleShape(void)" (??1CircleShape@sf@@UEAA@XZ).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Shape::~Shape(void)" (??1Shape@sf@@UEAA@XZ).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Shape::setFillColor(class sf::Color const &)" (?setFillColor@Shape@sf@@QEAAXAEBVColor@2@@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Shape::setFillColor(class sf::Color const &)" (?setFillColor@Shape@sf@@QEAAXAEBVColor@2@@Z).
+World.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Shape::setFillColor(class sf::Color const &)" (?setFillColor@Shape@sf@@QEAAXAEBVColor@2@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Shape::setOutlineColor(class sf::Color const &)" (?setOutlineColor@Shape@sf@@QEAAXAEBVColor@2@@Z) в функции "public: int __cdecl Interactions::Interact(class Player *,class Tile *)" (?Interact@Interactions@@QEAAHPEAVPlayer@@PEAVTile@@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Shape::setOutlineThickness(float)" (?setOutlineThickness@Shape@sf@@QEAAXM@Z) в функции "public: int __cdecl Interactions::Interact(class Player *,class Tile *)" (?Interact@Interactions@@QEAAHPEAVPlayer@@PEAVTile@@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::CircleShape::CircleShape(float,unsigned __int64)" (??0CircleShape@sf@@QEAA@M_K@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::CircleShape::setRadius(float)" (?setRadius@CircleShape@sf@@QEAAXM@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Font::Font(void)" (??0Font@sf@@QEAA@XZ) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Font::Font(void)" (??0Font@sf@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Font::Font(void)" (??0Font@sf@@QEAA@XZ).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Font::~Font(void)" (??1Font@sf@@QEAA@XZ) в функции "int `public: __cdecl Interactions::Interactions(void)'::`1'::dtor$3" (?dtor$3@?0???0Interactions@@QEAA@XZ@4HA).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Font::~Font(void)" (??1Font@sf@@QEAA@XZ).
+main.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Font::~Font(void)" (??1Font@sf@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Font::~Font(void)" (??1Font@sf@@QEAA@XZ).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::Font::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadFromFile@Font@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: bool __cdecl sf::Font::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadFromFile@Font@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: bool __cdecl sf::Font::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadFromFile@Font@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::RectangleShape::RectangleShape(class sf::Vector2<float> const &)" (??0RectangleShape@sf@@QEAA@AEBV?$Vector2@M@1@@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::RectangleShape::RectangleShape(class sf::Vector2<float> const &)" (??0RectangleShape@sf@@QEAA@AEBV?$Vector2@M@1@@Z).
+World.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::RectangleShape::RectangleShape(class sf::Vector2<float> const &)" (??0RectangleShape@sf@@QEAA@AEBV?$Vector2@M@1@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::RectangleShape::setSize(class sf::Vector2<float> const &)" (?setSize@RectangleShape@sf@@QEAAXAEBV?$Vector2@M@2@@Z) в функции "public: int __cdecl Interactions::Interact(class Player *,class Tile *)" (?Interact@Interactions@@QEAAHPEAVPlayer@@PEAVTile@@@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RectangleShape::setSize(class sf::Vector2<float> const &)" (?setSize@RectangleShape@sf@@QEAAXAEBV?$Vector2@M@2@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Text::Text(void)" (??0Text@sf@@QEAA@XZ) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Text::Text(void)" (??0Text@sf@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Text::Text(void)" (??0Text@sf@@QEAA@XZ).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Text::setString(class sf::String const &)" (?setString@Text@sf@@QEAAXAEBVString@2@@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setString(class sf::String const &)" (?setString@Text@sf@@QEAAXAEBVString@2@@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setString(class sf::String const &)" (?setString@Text@sf@@QEAAXAEBVString@2@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Text::setFont(class sf::Font const &)" (?setFont@Text@sf@@QEAAXAEBVFont@2@@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setFont(class sf::Font const &)" (?setFont@Text@sf@@QEAAXAEBVFont@2@@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setFont(class sf::Font const &)" (?setFont@Text@sf@@QEAAXAEBVFont@2@@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Text::setCharacterSize(unsigned int)" (?setCharacterSize@Text@sf@@QEAAXI@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setCharacterSize(unsigned int)" (?setCharacterSize@Text@sf@@QEAAXI@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setCharacterSize(unsigned int)" (?setCharacterSize@Text@sf@@QEAAXI@Z).
+Interactions.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Text::setFillColor(class sf::Color const &)" (?setFillColor@Text@sf@@QEAAXAEBVColor@2@@Z) в функции "public: __cdecl Interactions::Interactions(void)" (??0Interactions@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setFillColor(class sf::Color const &)" (?setFillColor@Text@sf@@QEAAXAEBVColor@2@@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Text::setFillColor(class sf::Color const &)" (?setFillColor@Text@sf@@QEAAXAEBVColor@2@@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::String::String(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::locale const &)" (??0String@sf@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBVlocale@3@@Z) в функции "public: void __cdecl Interface::dialog(int,bool *)" (?dialog@Interface@@QEAAXHPEA_N@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::String::String(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::locale const &)" (??0String@sf@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBVlocale@3@@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::RenderStates::RenderStates(struct sf::BlendMode const &)" (??0RenderStates@sf@@QEAA@AEBUBlendMode@1@@Z) в функции "public: void __cdecl Interface::draw(class sf::RenderWindow *,class sf::Rect<float>,class sf::View *,bool)" (?draw@Interface@@QEAAXPEAVRenderWindow@sf@@V?$Rect@M@3@PEAVView@3@_N@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Transformable::setScale(float,float)" (?setScale@Transformable@sf@@QEAAXMM@Z) в функции "public: void __cdecl Interface::draw(class sf::RenderWindow *,class sf::Rect<float>,class sf::View *,bool)" (?draw@Interface@@QEAAXPEAVRenderWindow@sf@@V?$Rect@M@3@PEAVView@3@_N@Z).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setScale(float,float)" (?setScale@Transformable@sf@@QEAAXMM@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setScale(float,float)" (?setScale@Transformable@sf@@QEAAXMM@Z).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Transformable::setScale(float,float)" (?setScale@Transformable@sf@@QEAAXMM@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::Texture(void)" (??0Texture@sf@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::Texture(void)" (??0Texture@sf@@QEAA@XZ).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::Texture(void)" (??0Texture@sf@@QEAA@XZ).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::Texture(void)" (??0Texture@sf@@QEAA@XZ).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::Texture(void)" (??0Texture@sf@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::~Texture(void)" (??1Texture@sf@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::~Texture(void)" (??1Texture@sf@@QEAA@XZ).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::~Texture(void)" (??1Texture@sf@@QEAA@XZ).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::~Texture(void)" (??1Texture@sf@@QEAA@XZ).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Texture::~Texture(void)" (??1Texture@sf@@QEAA@XZ).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class sf::Rect<int> const &)" (?loadFromFile@Texture@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$Rect@H@2@@Z) в функции "public: __cdecl Interface::Interface(class Tile *)" (??0Interface@@QEAA@PEAVTile@@@Z).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: bool __cdecl sf::Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class sf::Rect<int> const &)" (?loadFromFile@Texture@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$Rect@H@2@@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: bool __cdecl sf::Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class sf::Rect<int> const &)" (?loadFromFile@Texture@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$Rect@H@2@@Z).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: bool __cdecl sf::Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class sf::Rect<int> const &)" (?loadFromFile@Texture@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$Rect@H@2@@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Texture::setSmooth(bool)" (?setSmooth@Texture@sf@@QEAAX_N@Z) в функции "public: __cdecl Interface::Interface(class Tile *)" (??0Interface@@QEAA@PEAVTile@@@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Texture::setSmooth(bool)" (?setSmooth@Texture@sf@@QEAAX_N@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: class sf::Vector2<float> const & __cdecl sf::View::getCenter(void)const " (?getCenter@View@sf@@QEBAAEBV?$Vector2@M@2@XZ) в функции "public: void __cdecl Interface::draw(class sf::RenderWindow *,class sf::Rect<float>,class sf::View *,bool)" (?draw@Interface@@QEAAXPEAVRenderWindow@sf@@V?$Rect@M@3@PEAVView@3@_N@Z).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: class sf::Vector2<float> const & __cdecl sf::View::getCenter(void)const " (?getCenter@View@sf@@QEBAAEBV?$Vector2@M@2@XZ).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: class sf::Vector2<float> const & __cdecl sf::View::getCenter(void)const " (?getCenter@View@sf@@QEBAAEBV?$Vector2@M@2@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: class sf::Vector2<float> const & __cdecl sf::View::getCenter(void)const " (?getCenter@View@sf@@QEBAAEBV?$Vector2@M@2@XZ).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::clear(class sf::Color const &)" (?clear@RenderTarget@sf@@QEAAXAEBVColor@2@@Z) в функции "public: void __cdecl Interface::draw(class sf::RenderWindow *,class sf::Rect<float>,class sf::View *,bool)" (?draw@Interface@@QEAAXPEAVRenderWindow@sf@@V?$Rect@M@3@PEAVView@3@_N@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::clear(class sf::Color const &)" (?clear@RenderTarget@sf@@QEAAXAEBVColor@2@@Z).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z).
+World.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::RenderTexture::RenderTexture(void)" (??0RenderTexture@sf@@QEAA@XZ) в функции "public: __cdecl Interface::Interface(class Tile *)" (??0Interface@@QEAA@PEAVTile@@@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: virtual __cdecl sf::RenderTexture::~RenderTexture(void)" (??1RenderTexture@sf@@UEAA@XZ) в функции "int `public: __cdecl Interface::Interface(class Tile *)'::`1'::dtor$5" (?dtor$5@?0???0Interface@@QEAA@PEAVTile@@@Z@4HA).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::RenderTexture::create(unsigned int,unsigned int,struct sf::ContextSettings const &)" (?create@RenderTexture@sf@@QEAA_NIIAEBUContextSettings@2@@Z) в функции "public: __cdecl Interface::Interface(class Tile *)" (??0Interface@@QEAA@PEAVTile@@@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::RenderTexture::display(void)" (?display@RenderTexture@sf@@QEAAXXZ) в функции "public: void __cdecl Interface::draw(class sf::RenderWindow *,class sf::Rect<float>,class sf::View *,bool)" (?draw@Interface@@QEAAXPEAVRenderWindow@sf@@V?$Rect@M@3@PEAVView@3@_N@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: class sf::Texture const & __cdecl sf::RenderTexture::getTexture(void)const " (?getTexture@RenderTexture@sf@@QEBAAEBVTexture@2@XZ) в функции "public: void __cdecl Interface::draw(class sf::RenderWindow *,class sf::Rect<float>,class sf::View *,bool)" (?draw@Interface@@QEAAXPEAVRenderWindow@sf@@V?$Rect@M@3@PEAVView@3@_N@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Sprite::Sprite(void)" (??0Sprite@sf@@QEAA@XZ).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Sprite::Sprite(void)" (??0Sprite@sf@@QEAA@XZ).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Sprite::Sprite(void)" (??0Sprite@sf@@QEAA@XZ).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Sprite::Sprite(void)" (??0Sprite@sf@@QEAA@XZ).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Sprite::Sprite(void)" (??0Sprite@sf@@QEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Sprite::setTexture(class sf::Texture const &,bool)" (?setTexture@Sprite@sf@@QEAAXAEBVTexture@2@_N@Z).
+Interface.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Sprite::setTexture(class sf::Texture const &,bool)" (?setTexture@Sprite@sf@@QEAAXAEBVTexture@2@_N@Z).
+Inventory.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Sprite::setTexture(class sf::Texture const &,bool)" (?setTexture@Sprite@sf@@QEAAXAEBVTexture@2@_N@Z).
+Player.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Sprite::setTexture(class sf::Texture const &,bool)" (?setTexture@Sprite@sf@@QEAAXAEBVTexture@2@_N@Z).
+skelet.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Sprite::setTexture(class sf::Texture const &,bool)" (?setTexture@Sprite@sf@@QEAAXAEBVTexture@2@_N@Z).
+Interface.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Sprite::setColor(class sf::Color const &)" (?setColor@Sprite@sf@@QEAAXAEBVColor@2@@Z) в функции "public: void __cdecl Interface::draw(class sf::RenderWindow *,class sf::Rect<float>,class sf::View *,bool)" (?draw@Interface@@QEAAXPEAVRenderWindow@sf@@V?$Rect@M@3@PEAVView@3@_N@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Sprite::setColor(class sf::Color const &)" (?setColor@Sprite@sf@@QEAAXAEBVColor@2@@Z).
 Interface.obj : error LNK2001: неразрешенный внешний символ "struct sf::BlendMode const sf::BlendAlpha" (?BlendAlpha@sf@@3UBlendMode@1@B).
 Interface.obj : error LNK2001: неразрешенный внешний символ "struct sf::BlendMode const sf::BlendMultiply" (?BlendMultiply@sf@@3UBlendMode@1@B).
 TApplication.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
 Tile.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+World.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
 Interface.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
 Inventory.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
 Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
 skelet.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B).
+Inventory.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: class sf::Vector2<unsigned int> __cdecl sf::Texture::getSize(void)const " (?getSize@Texture@sf@@QEBA?AV?$Vector2@I@2@XZ) в функции "public: __cdecl Inventory::Inventory(void)" (??0Inventory@@QEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: class sf::Vector2<unsigned int> __cdecl sf::Texture::getSize(void)const " (?getSize@Texture@sf@@QEBA?AV?$Vector2@I@2@XZ).
+Music.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::Music::openFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?openFromFile@Music@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) в функции "public: void __cdecl Music::loadMusic(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadMusic@Music@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z).
+Music.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Sound::setBuffer(class sf::SoundBuffer const &)" (?setBuffer@Sound@sf@@QEAAXAEBVSoundBuffer@2@@Z) в функции "public: void __cdecl Music::loadSound(void)" (?loadSound@Music@@QEAAXXZ).
+Music.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::SoundBuffer::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadFromFile@SoundBuffer@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) в функции "public: void __cdecl Music::loadSound(void)" (?loadSound@Music@@QEAAXXZ).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Color::Color(void)" (??0Color@sf@@QEAA@XZ) в функции "public: __cdecl Player::ProgressBar::ProgressBar(class sf::Vector2<float>,class sf::Color)" (??0ProgressBar@Player@@QEAA@V?$Vector2@M@sf@@VColor@3@@Z).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: class sf::Vector2<float> const & __cdecl sf::View::getSize(void)const " (?getSize@View@sf@@QEBAAEBV?$Vector2@M@2@XZ) в функции "public: void __cdecl Player::ProgressBar::Draw(class sf::RenderWindow *,class sf::View *)" (?Draw@ProgressBar@Player@@QEAAXPEAVRenderWindow@sf@@PEAVView@4@@Z).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Sprite::setTextureRect(class sf::Rect<int> const &)" (?setTextureRect@Sprite@sf@@QEAAXAEBV?$Rect@H@2@@Z) в функции "public: __cdecl Player::Player(int,int,int,int,class Tile *,class sf::RenderWindow *)" (??0Player@@QEAA@HHHHPEAVTile@@PEAVRenderWindow@sf@@@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: void __cdecl sf::Sprite::setTextureRect(class sf::Rect<int> const &)" (?setTextureRect@Sprite@sf@@QEAAXAEBV?$Rect@H@2@@Z).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::SoundSource::setPitch(float)" (?setPitch@SoundSource@sf@@QEAAXM@Z) в функции "public: void __cdecl Player::move(void)" (?move@Player@@QEAAXXZ).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Music::Music(void)" (??0Music@sf@@QEAA@XZ) в функции "public: __cdecl Music::Music(void)" (??0Music@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Music::Music(void)" (??0Music@sf@@QEAA@XZ).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: virtual __cdecl sf::Music::~Music(void)" (??1Music@sf@@UEAA@XZ) в функции "int `public: __cdecl Music::Music(void)'::`1'::dtor$0" (?dtor$0@?0???0Music@@QEAA@XZ@4HA).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Music::~Music(void)" (??1Music@sf@@UEAA@XZ).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Sound::Sound(void)" (??0Sound@sf@@QEAA@XZ) в функции "public: __cdecl Music::Music(void)" (??0Music@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Sound::Sound(void)" (??0Sound@sf@@QEAA@XZ).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: virtual __cdecl sf::Sound::~Sound(void)" (??1Sound@sf@@UEAA@XZ) в функции "public: __cdecl Music::Music(void)" (??0Music@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl sf::Sound::~Sound(void)" (??1Sound@sf@@UEAA@XZ).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::SoundBuffer::SoundBuffer(void)" (??0SoundBuffer@sf@@QEAA@XZ) в функции "public: __cdecl Music::Music(void)" (??0Music@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::SoundBuffer::SoundBuffer(void)" (??0SoundBuffer@sf@@QEAA@XZ).
+Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::SoundBuffer::~SoundBuffer(void)" (??1SoundBuffer@sf@@QEAA@XZ) в функции "public: __cdecl Music::Music(void)" (??0Music@@QEAA@XZ).
+TApplication.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::SoundBuffer::~SoundBuffer(void)" (??1SoundBuffer@sf@@QEAA@XZ).
 Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::Black" (?Black@Color@sf@@2V12@B).
 Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::Red" (?Red@Color@sf@@2V12@B).
 Player.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::Yellow" (?Yellow@Color@sf@@2V12@B).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::VideoMode::VideoMode(unsigned int,unsigned int,unsigned int)" (??0VideoMode@sf@@QEAA@III@Z) в функции "public: void __cdecl TApplication::Init(void)" (?Init@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Window::close(void)" (?close@Window@sf@@QEAAXXZ) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::Window::isOpen(void)const " (?isOpen@Window@sf@@QEBA_NXZ) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::Window::pollEvent(class sf::Event &)" (?pollEvent@Window@sf@@QEAA_NAEAVEvent@2@@Z) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Window::setVerticalSyncEnabled(bool)" (?setVerticalSyncEnabled@Window@sf@@QEAAX_N@Z) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Window::setFramerateLimit(unsigned int)" (?setFramerateLimit@Window@sf@@QEAAXI@Z) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Window::display(void)" (?display@Window@sf@@QEAAXXZ) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Image::Image(void)" (??0Image@sf@@QEAA@XZ) в функции "public: __cdecl TApplication::TApplication(void)" (??0TApplication@@QEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Image::Image(void)" (??0Image@sf@@QEAA@XZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::Image::~Image(void)" (??1Image@sf@@QEAA@XZ) в функции "public: __cdecl TApplication::TApplication(void)" (??0TApplication@@QEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl sf::Image::~Image(void)" (??1Image@sf@@QEAA@XZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::Image::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadFromFile@Image@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) в функции "public: __cdecl TApplication::TApplication(void)" (??0TApplication@@QEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: bool __cdecl sf::Image::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadFromFile@Image@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: bool __cdecl sf::Texture::loadFromImage(class sf::Image const &,class sf::Rect<int> const &)" (?loadFromImage@Texture@sf@@QEAA_NAEBVImage@2@AEBV?$Rect@H@2@@Z) в функции "public: __cdecl TApplication::TApplication(void)" (??0TApplication@@QEAA@XZ).
+Tile.obj : error LNK2001: неразрешенный внешний символ "public: bool __cdecl sf::Texture::loadFromImage(class sf::Image const &,class sf::Rect<int> const &)" (?loadFromImage@Texture@sf@@QEAA_NAEBVImage@2@AEBV?$Rect@H@2@@Z).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::View::View(void)" (??0View@sf@@QEAA@XZ) в функции "public: __cdecl TApplication::TApplication(void)" (??0TApplication@@QEAA@XZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::View::setCenter(float,float)" (?setCenter@View@sf@@QEAAXMM@Z) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::View::setViewport(class sf::Rect<float> const &)" (?setViewport@View@sf@@QEAAXAEBV?$Rect@M@2@@Z) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::View::reset(class sf::Rect<float> const &)" (?reset@View@sf@@QEAAXAEBV?$Rect@M@2@@Z) в функции "public: void __cdecl TApplication::Init(void)" (?Init@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::RenderTarget::setView(class sf::View const &)" (?setView@RenderTarget@sf@@QEAAXAEBVView@2@@Z) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl sf::RenderWindow::RenderWindow(class sf::VideoMode,class sf::String const &,unsigned int,struct sf::ContextSettings const &)" (??0RenderWindow@sf@@QEAA@VVideoMode@1@AEBVString@1@IAEBUContextSettings@1@@Z) в функции "public: void __cdecl TApplication::Init(void)" (?Init@TApplication@@QEAAXXZ).
+TApplication.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::SoundSource::setVolume(float)" (?setVolume@SoundSource@sf@@QEAAXM@Z) в функции "public: void __cdecl TApplication::Run(void)" (?Run@TApplication@@QEAAXXZ).
 TApplication.obj : error LNK2001: неразрешенный внешний символ "public: static class sf::Color const sf::Color::White" (?White@Color@sf@@2V12@B).
-C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\x64\Inteaser.exe : fatal error LNK1120: неразрешенных внешних элементов: 7
+Tile.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Transformable::move(class sf::Vector2<float> const &)" (?move@Transformable@sf@@QEAAXAEBV?$Vector2@M@2@@Z) в функции "public: void __cdecl TmxObject::MoveBy(class sf::Vector2<float> const &)" (?MoveBy@TmxObject@@QEAAXAEBV?$Vector2@M@sf@@@Z).
+Tile.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl sf::Image::createMaskFromColor(class sf::Color const &,unsigned char)" (?createMaskFromColor@Image@sf@@QEAAXAEBVColor@2@E@Z) в функции "public: bool __cdecl Tile::LoadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?LoadFromFile@Tile@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z).
+Tile.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: class sf::Rect<float> const & __cdecl sf::View::getViewport(void)const " (?getViewport@View@sf@@QEBAAEBV?$Rect@M@2@XZ) в функции "public: void __cdecl Tile::Draw(class sf::RenderTarget &)const " (?Draw@Tile@@QEBAXAEAVRenderTarget@sf@@@Z).
+Tile.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: class sf::View const & __cdecl sf::RenderTarget::getView(void)const " (?getView@RenderTarget@sf@@QEBAAEBVView@2@XZ) в функции "public: void __cdecl Tile::Draw(class sf::RenderTarget &)const " (?Draw@Tile@@QEBAXAEAVRenderTarget@sf@@@Z).
+Tile.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: class sf::Rect<float> __cdecl sf::Sprite::getLocalBounds(void)const " (?getLocalBounds@Sprite@sf@@QEBA?AV?$Rect@M@2@XZ) в функции "public: void __cdecl Tile::Draw(class sf::RenderTarget &)const " (?Draw@Tile@@QEBAXAEAVRenderTarget@sf@@@Z).
+Tile.obj : error LNK2001: неразрешенный внешний символ "private: virtual void __cdecl sf::Sprite::draw(class sf::RenderTarget &,class sf::RenderStates)const " (?draw@Sprite@sf@@EEBAXAEAVRenderTarget@2@VRenderStates@2@@Z).
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\\source\SFML\lib\sfml-graphics.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\\source\SFML\lib\sfml-window.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\\source\SFML\lib\sfml-system.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\\source\SFML\lib\sfml-audio.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+C:\Users\ANDRE\source\repos\Adidas05050\Inteaser\x64\Inteaser.exe : fatal error LNK1120: неразрешенных внешних элементов: 87

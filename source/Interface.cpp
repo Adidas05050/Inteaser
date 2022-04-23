@@ -25,7 +25,6 @@ Interface::Interface(Tile *level) {
 		mBoxColorLight[i].height = mObjectLight[i].rect.height;//
 		sColorLight[i].setTexture(tColorLight);//
 	}
-
 }
 //-------------------------------------------------------
 void Interface::dialog(int id, bool *draw) {
@@ -117,7 +116,6 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 	Window->draw(sprite);
 	sprite.setTexture(renderTexture.getTexture());
 	Window->draw(sprite);
-
-
+	world.DrawRain(Window, view);
 }
 //-------------------------------------------------------
