@@ -6,8 +6,12 @@ TApplication::TApplication(): Window(nullptr) {
 	tBackground.loadFromImage(img);
 }
 //-------------------------------------------------------
-void TApplication::Init() {
+void TApplication::Init() 
+{
 	Window = new sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Menu");
+	Window->setFramerateLimit(30);
+	Window->setVerticalSyncEnabled(true);
+
 	inventory = new Inventory();
 	level = new Tile();
 	level->LoadFromFile("map/testMap.tmx");
@@ -25,43 +29,25 @@ void TApplication::Init() {
 	player->loadSound();
 	musicControl->loadMusic("sounds/music/theme.wav");
 
+	m_viewPosition = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 }
 //-------------------------------------------------------
-void TApplication::Run() {
-	float viewX = SCREEN_WIDTH / 2, viewY = SCREEN_HEIGHT / 2;
+void TApplication::Run() 
+{
+	
 	bool dialog = false, drawDialog = false;
 	int dialogID = 0;
-	while (Window->isOpen()) {
 
+	sf::Color color(0, 0, 0, 255);
+	textMission.setFillColor(color);
+	sf::Event event;
 
-		sf::Color color(0, 0 , 0, 255);
-		textMission.setFillColor(color);
-		sf::Event event;
-		Window->setFramerateLimit(30);
-		Window->setVerticalSyncEnabled(true);
+	while (Window->isOpen()) 
+	{
 
-		Window->setView(heroView);
 		miniMap.setViewport(sf::FloatRect(0.7f, 0.02f, 0.3f, 0.22f));
 
-
-		if((player->getCenterX() - (SCREEN_WIDTH / 2) > 0 ) and (player->getCenterX() + (SCREEN_WIDTH / 2) < LEVEL_WIDTH )) {
-			if(player->getCenterX() - viewX > 0) {
-				viewX += ((player->getCenterX() - viewX) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
-			} else {
-				viewX -= ((viewX - player->getCenterX()) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
-			}
-		}
-
-		if((player->getCenterY() - (SCREEN_HEIGHT / 2) > 0) and (player->getCenterY() + (SCREEN_HEIGHT / 2) < LEVEL_HEIGHT)) {
-			if(player->getCenterY() - viewY > 0) {
-				viewY += ((player->getCenterY() - viewY) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
-			} else {
-				viewY -= ((viewY - player->getCenterY()) / (SCREEN_HEIGHT / 12)) * player->mSpeed;
-			}
-		}
-
-
-		heroView.setCenter(viewX, viewY);
+		SmoothCamera();
 
 		Window->clear(sf::Color::White);
 
@@ -83,22 +69,22 @@ void TApplication::Run() {
 		}
 
 		if(!dialog) {
-			player->collisionSound();
-			player->move();
-			player->collision(skelet->getRect());
+			//player->CollisionSound();
+			player->Move();
+			player->Сollision(skelet->GetRect());
 			
 		}
 
 		inventory->counterItem(Interaction->Interact(player, level));// Calculation interactable objects and give ID for inventory
-		if(inventory->checkInventory(2, 3) and !skelet->alive()) {
+		if(inventory->checkInventory(2, 3) and !skelet->IsAlive()) {
 			skelet->spawn(1100, 1100, 100);
 			dialog = true;
 			dialogID = 1;
 		}
-		player->draw(Window, 3, 3);
+		player->Draw(Window, 3, 3);
 		skelet->draw(Window, 0.1, 0.1);
 		inventory->drawInventory(Window, &heroView);
-		interface->draw(Window, player->getRect(), &heroView, dialog);
+		interface->draw(Window, player->GetRect(), &heroView, dialog);
 		if(dialog) {
 			interface->dialog(dialogID, &drawDialog);
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
@@ -122,21 +108,51 @@ void TApplication::Run() {
 	}
 }
 //----------------------------------?????????????WTF?????????????????--------------------------
-void TApplication::setInventory() {
+void TApplication::setInventory() 
+{
 	inventory->drawMission(Window, &heroView);
 	int mission;
-	mission = inventory->getCurrentMission(player->getRect().left);
+	mission = inventory->getCurrentMission(player->GetRect().left);
 	std::string currentTask;
 	currentTask = inventory->getTextMission(mission);
-	textMission.setString("Health: " + std::to_string(player->getHealth()) + "\n\n\n" + currentTask);
+	textMission.setString("Health: " + std::to_string(player->GetHealth()) + "\n\n\n" + currentTask);
 	textMission.setPosition(heroView.getCenter().x - 250, heroView.getCenter().y - 220);
 	Window->draw(textMission);
 }
 //----------------------------------------------------------------------------------------------
-void TApplication::End() {
-	if (Window != nullptr) {
-		delete Window;
+void TApplication::End() 
+{
+	if (Window == nullptr)
+		return;
 
-		Window = nullptr;
+	delete Window;
+	Window = nullptr;
+	//TODO удалить ВСЕ указатели
+}
+//----------------------------------------------------------------------------------------------
+void TApplication::SmoothCamera()
+{
+	Window->setView(heroView);
+
+	// Плавное движение камеры
+	if ((player->GetCenter().x - (SCREEN_WIDTH / 2) > 0) and (player->GetCenter().x + (SCREEN_WIDTH / 2) < LEVEL_WIDTH)) {
+		if (player->GetCenter().x - m_viewPosition.x > 0) {
+			m_viewPosition.x += ((player->GetCenter().x - m_viewPosition.x) / (SCREEN_HEIGHT / 12)) * player->GetSpeed();
+		}
+		else {
+			m_viewPosition.x -= ((m_viewPosition.x - player->GetCenter().x) / (SCREEN_HEIGHT / 12)) * player->GetSpeed();
+		}
 	}
+
+	if ((player->GetCenter().y - (SCREEN_HEIGHT / 2) > 0) and (player->GetCenter().y + (SCREEN_HEIGHT / 2) < LEVEL_HEIGHT)) {
+		if (player->GetCenter().y - m_viewPosition.y > 0) {
+			m_viewPosition.y += ((player->GetCenter().y - m_viewPosition.y) / (SCREEN_HEIGHT / 12)) * player->GetSpeed();
+		}
+		else {
+			m_viewPosition.y -= ((m_viewPosition.y - player->GetCenter().y) / (SCREEN_HEIGHT / 12)) * player->GetSpeed();
+		}
+	}
+
+	heroView.setCenter(m_viewPosition);
+
 }

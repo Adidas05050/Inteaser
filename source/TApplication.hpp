@@ -13,28 +13,30 @@
 #include "Interactions.h"
 #include "Skelet.h"
 
-class TApplication {
+class TApplication 
+{
+public:
+	TApplication();
+	void Init();
+	void Run();
+	void End();
+	void setInventory();
+	void SmoothCamera();
 
-	protected:
-		sf::RenderWindow *Window;
-		Inventory *inventory;
-		Tile *level;
-		Player *player;
-		Skelet *skelet;
-		Music *musicControl;
-		Interface *interface;
-		Interactions *Interaction;
-		sf::View heroView;
-		sf::View miniMap;
-		sf::Font font;
-		sf::Text textMission;
-
-	public:
-		TApplication();
-		void Init();
-		void Run();
-		void End();
-		void setInventory();
+private:
+	sf::Vector2f m_viewPosition;
+	sf::RenderWindow *Window;
+	Inventory *inventory;
+	Tile *level;
+	Player *player;
+	Skelet *skelet;
+	Music *musicControl;
+	Interface *interface;
+	Interactions *Interaction;
+	sf::View heroView;
+	sf::View miniMap;
+	sf::Font font;
+	sf::Text textMission;
 };
 
 #endif

@@ -4,29 +4,42 @@
 #include "SFML.hpp"
 #include "Tile.h"
 
-class Entity {
+class Entity
+{
 public:
-	int mSpeed = 0;
-	int getHealth();
-	int getSpeed();
-	sf::FloatRect getRect();
-	float getCenterX();
-	float getCenterY();
-	bool alive();
+
+			// Получить текущее здоровье
+	int		GetHealth();
+
+			// Получить текущую скорость
+	int		GetSpeed();
+	
+			// Получить размер сущности 
+	auto	GetRect() -> sf::FloatRect;
+
+			// Возвращает центр спрайта		
+	auto	GetCenter() -> sf::Vector2f;
+
+			// Жива ли сущность
+	bool	IsAlive();
+					
+				 // Событие происходящее на каждом кадре
 	virtual void OnFrame(sf::RenderWindow* Window, sf::View* view) = 0;
-	std::vector<TmxObject> objSolid;
 
 protected:
-	int mFrame = 0;
-	float mHealth = 0;
+	int m_speed = 0;
+	int m_frame = 0;
+	float m_health = 0;
 	float m_maxHealth = 100;
 	float m_food = 100;
 	float m_maxFood = 100;
 
-	sf::FloatRect mBox;
-	sf::Texture texture;
+	sf::FloatRect m_box;
+	sf::Texture m_texture;
 
 	sf::RenderWindow* m_window = nullptr;
+
+	std::vector<TmxObject> m_objectsSolid; // Список объектов, которые коллизятся с сущностью
 };
 
 #endif

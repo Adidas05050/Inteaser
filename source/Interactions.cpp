@@ -24,8 +24,8 @@ int Interactions::Interact(Player* player, Tile *level) {
 		return -1;
 	}
 	
-	interactTrigger.left = player->getRect().left + player->getRect().width / 2 - (INTERACT_TRIGGER_WIDTH / 2);
-	interactTrigger.top = player->getRect().top + player->getRect().height / 2 - (INTERACT_TRIGGER_HEIGHT / 2);
+	interactTrigger.left = player->GetRect().left + player->GetRect().width / 2 - (INTERACT_TRIGGER_WIDTH / 2);
+	interactTrigger.top = player->GetRect().top + player->GetRect().height / 2 - (INTERACT_TRIGGER_HEIGHT / 2);
 	interactTrigger.width = INTERACT_TRIGGER_WIDTH;
 	interactTrigger.height = INTERACT_TRIGGER_HEIGHT;
 	
@@ -37,16 +37,16 @@ int Interactions::Interact(Player* player, Tile *level) {
 	
 	//IMPORTANT!!! circ, item, recta - draw some elements for the test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
-	circ.setPosition(player->getRect().left + player->getRect().width / 2, player->getRect().top + player->getRect().height / 2);
+	circ.setPosition(player->GetRect().left + player->GetRect().width / 2, player->GetRect().top + player->GetRect().height / 2);
 	
-	item.setPosition(player->getRect().left + player->getRect().width / 2, player->getRect().top + player->getRect().height / 2);
+	item.setPosition(player->GetRect().left + player->GetRect().width / 2, player->GetRect().top + player->GetRect().height / 2);
 	
 	recta.setSize(sf::Vector2f(interactTrigger.width, interactTrigger.height));
 	recta.setOrigin(sf::Vector2f(interactTrigger.width / 2, interactTrigger.height / 2));
 	recta.setOutlineThickness(-1);
 	recta.setFillColor(sf::Color(0, 0, 0, 0));
 	recta.setOutlineColor(sf::Color(255, 0, 0));
-	recta.setPosition(sf::Vector2f(player->getRect().left + player->getRect().width / 2, player->getRect().top + player->getRect().height / 2));
+	recta.setPosition(sf::Vector2f(player->GetRect().left + player->GetRect().width / 2, player->GetRect().top + player->GetRect().height / 2));
 
 	textForInteractibleObject.setFillColor(sf::Color(235, 235, 235, 0));
 	//======================================================================================================================================
@@ -58,10 +58,10 @@ int Interactions::Interact(Player* player, Tile *level) {
 		if(interactTrigger.intersects(interactingObjects[idLocation][i].rect)) {
 				
 			temp = sqrt(
-			(interactingObjects[idLocation][i].rect.left + interactingObjects[idLocation][i].rect.width / 2 - (player->getRect().left + player->getRect().width / 2)) *
-			(interactingObjects[idLocation][i].rect.left + interactingObjects[idLocation][i].rect.width / 2 - (player->getRect().left + player->getRect().width / 2)) +
-			(interactingObjects[Interactions::idLocation][i].rect.top + interactingObjects[idLocation][i].rect.height / 2 - (player->getRect().top + player->getRect().height / 2)) *
-			(interactingObjects[Interactions::idLocation][i].rect.top + interactingObjects[idLocation][i].rect.height / 2 - (player->getRect().top + player->getRect().height / 2)));
+			(interactingObjects[idLocation][i].rect.left + interactingObjects[idLocation][i].rect.width / 2 - (player->GetRect().left + player->GetRect().width / 2)) *
+			(interactingObjects[idLocation][i].rect.left + interactingObjects[idLocation][i].rect.width / 2 - (player->GetRect().left + player->GetRect().width / 2)) +
+			(interactingObjects[Interactions::idLocation][i].rect.top + interactingObjects[idLocation][i].rect.height / 2 - (player->GetRect().top + player->GetRect().height / 2)) *
+			(interactingObjects[Interactions::idLocation][i].rect.top + interactingObjects[idLocation][i].rect.height / 2 - (player->GetRect().top + player->GetRect().height / 2)));
 			
 			if(temp_distance == -1 && close_object == -1 || temp_distance > temp) {
 				temp_distance = temp;

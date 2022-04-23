@@ -2,31 +2,31 @@
 #include "iostream"
 
 Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window) {
-	mBox.left = x;
-	mBox.top = y;
-	mBox.width = 48;
-	mBox.height = 24;
+	m_box.left = x;
+	m_box.top = y;
+	m_box.width = 48;
+	m_box.height = 24;
 
-	mHealth = health;
-	mSpeed = speed;
+	m_health = health;
+	m_speed = speed;
 
-	forJump.x = 0;
-	forJump.y = 0;
+	m_forJump.x = 0;
+	m_forJump.y = 0;
 
-	sPlayer.setPosition(2500, 2000);
-	sPlayer.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
-	texture.loadFromFile("media/hero/Player.png");
-	sPlayer.setTexture(texture);
-	mFrame = 0;
-	mSpriteTile = 0;
-	mScale = 1;
-	objSolid = level->GetAllObjects("wall");
-	mObjectSound = level->GetAllObjects("sound");
+	m_playerSprite.setPosition(x, y);
+	m_playerSprite.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+	m_texture.loadFromFile("media/hero/Player.png");
+	m_playerSprite.setTexture(m_texture);
+	m_frame = 0;
+	m_spriteTile = 0;
+	m_scale = 1;
+	m_objectsSolid = level->GetAllObjects("wall");
+	m_objectsSound = level->GetAllObjects("sound");
 
 	m_healthBar = new ProgressBar(sf::Vector2f(100, 20), sf::Color::Red);
 	m_foodBar = new ProgressBar(sf::Vector2f(100, 20), sf::Color::Yellow);
 
-	m_healthBar->SetProgress(mHealth / m_maxHealth);
+	m_healthBar->SetProgress(m_health / m_maxHealth);
 	m_foodBar->SetProgress(m_food / m_maxFood);
 
 	m_healthBar->SetPosition(sf::Vector2f(10, 10));
@@ -40,106 +40,106 @@ void Player::OnFrame(sf::RenderWindow* Window, sf::View* view)
 	if(m_food > FLT_MIN)
 		m_food -= m_decreaseFood;
 	
-	if (m_food < m_maxFood / 2 and mHealth > m_maxHealth / 2)
-		mHealth -= m_decreaseFood;
-	m_healthBar->SetProgress(mHealth/ m_maxHealth);
+	if (m_food < m_maxFood / 2 and m_health > m_maxHealth / 2)
+		m_health -= m_decreaseFood;
+	m_healthBar->SetProgress(m_health/ m_maxHealth);
 	m_foodBar->SetProgress(m_food/ m_maxFood);
 	m_healthBar->Draw(Window, view);
 	m_foodBar->Draw(Window, view);
 }
 //-------------------------------------------------------
-void Player::draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
-	float width = scaleX * mBox.width;
-	float height = scaleY * mBox.height;
-	float playerWidth = width / (float) mBox.width;
-	float playerHeight = height / (float) mBox.height;
-	if( isStay )
-		sPlayer.setTextureRect(sf::IntRect(mSpriteTile*24, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+void Player::Draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
+	float width = scaleX * m_box.width;
+	float height = scaleY * m_box.height;
+	float playerWidth = width / (float) m_box.width;
+	float playerHeight = height / (float) m_box.height;
+	if( m_isStay )
+		m_playerSprite.setTextureRect(sf::IntRect(m_spriteTile*24, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	else
-		sPlayer.setTextureRect(sf::IntRect(mSpriteTile*24, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT));
+		m_playerSprite.setTextureRect(sf::IntRect(m_spriteTile*24, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT));
 
-	if( isLeftDirection ) {
-		sPlayer.setScale(playerWidth * (-1) * mScale, playerHeight * mScale);
-		sPlayer.setPosition(mBox.left + PLAYER_WIDTH*3 + forJump.x, mBox.top + forJump.y);
+	if( m_isLeftDirection ) {
+		m_playerSprite.setScale(playerWidth * (-1) * m_scale, playerHeight * m_scale);
+		m_playerSprite.setPosition(m_box.left + PLAYER_WIDTH*3 + m_forJump.x, m_box.top + m_forJump.y);
 	} else {
-		sPlayer.setScale(playerWidth * mScale, playerHeight * mScale);
-		sPlayer.setPosition(mBox.left + forJump.x, mBox.top + forJump.y);
+		m_playerSprite.setScale(playerWidth * m_scale, playerHeight * m_scale);
+		m_playerSprite.setPosition(m_box.left + m_forJump.x, m_box.top + m_forJump.y);
 	}
-	Window->draw(sPlayer);
+	Window->draw(m_playerSprite);
 }
 //-------------------------------------------------------
-void Player::move() {
-	mFrame++;
-	if(mFrame > 64) {
-		mFrame = 0;
+void Player::Move() {
+	m_frame++;
+	if(m_frame > 64) {
+		m_frame = 0;
 	}
-	isStay = true;
+	m_isStay = true;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		mBox.top -= mSpeed;
-		isStay = false;
+		m_box.top -= m_speed;
+		m_isStay = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		mBox.top += mSpeed;
-		isStay = false;
+		m_box.top += m_speed;
+		m_isStay = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		mBox.left += mSpeed;
-		isLeftDirection = false;
-		isStay = false;
+		m_box.left += m_speed;
+		m_isLeftDirection = false;
+		m_isStay = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		mBox.left-= mSpeed;
-		isLeftDirection = true;
-		isStay = false;
+		m_box.left-= m_speed;
+		m_isLeftDirection = true;
+		m_isStay = false;
 	}
 
 	//*****Jump
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and canJump) {
-		canJump = false;
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and m_isCanJump) {
+		m_isCanJump = false;
 		std::cout <<"1";
 	}
-	if(!canJump and mScale <= 1.5f and !inAir) {
-		mScale += 0.1;
-		forJump.x -= 3;
-		forJump.y -= 12;
-	} else if (mScale > 1.f) {
-		mScale -= 0.1;
-		forJump.x += 3;
-		forJump.y += 12;
-		inAir = true;
+	if(!m_isCanJump and m_scale <= 1.5f and !m_isInAir) {
+		m_scale += 0.1;
+		m_forJump.x -= 3;
+		m_forJump.y -= 12;
+	} else if (m_scale > 1.f) {
+		m_scale -= 0.1;
+		m_forJump.x += 3;
+		m_forJump.y += 12;
+		m_isInAir = true;
 	} else {
-		canJump = true;
-		inAir = false;
+		m_isCanJump = true;
+		m_isInAir = false;
 	}
 	//------
-	if(mSpriteTile > PLAYER_FRAME/2 - 1 and isStay) {
-		mSpriteTile = 0;
+	if(m_spriteTile > PLAYER_FRAME/2 - 1 and m_isStay) {
+		m_spriteTile = 0;
 	}
 
-	if(mFrame % 4 == 0) {
-		if( isStay ) {
-			if(mSpriteTile < PLAYER_FRAME/2 - 1)
-				mSpriteTile++;
+	if(m_frame % 4 == 0) {
+		if( m_isStay ) {
+			if(m_spriteTile < PLAYER_FRAME/2 - 1)
+				m_spriteTile++;
 			else
-				mSpriteTile = 0;
+				m_spriteTile = 0;
 		} else {
-			if(mSpriteTile < PLAYER_FRAME - 1)
-				mSpriteTile++;
+			if(m_spriteTile < PLAYER_FRAME - 1)
+				m_spriteTile++;
 			else
-				mSpriteTile = 0;
+				m_spriteTile = 0;
 			if(!stepSound[currentNumberSound].getStatus()) {
 				stepSound[currentNumberSound].setPitch(1.5f);
-				stepSound[currentNumberSound].play(); //MUSIC
+				//stepSound[currentNumberSound].play(); //MUSIC
 			}
 		}
 	}
 
 }
 //-------------------------------------------------------
-void Player::collisionSound() {
-	for(int i = 0; i < mObjectSound.size(); i++) {
-		if( getRect().intersects(mObjectSound[i].rect) and (previousNameSound != mObjectSound[i].type)) {
-			previousNameSound = mObjectSound[i].type;
+void Player::CollisionSound() {
+	for(int i = 0; i < m_objectsSound.size(); i++) {
+		if( GetRect().intersects(m_objectsSound[i].rect) and (previousNameSound != m_objectsSound[i].type)) {
+			previousNameSound = m_objectsSound[i].type;
 			for(it = tileMap.begin(); it != tileMap.end(); it++) {
 				if(it->second == previousNameSound) {
 					currentNumberSound = it->first;
@@ -151,63 +151,75 @@ void Player::collisionSound() {
 	}
 }
 //-------------------------------------------------------
-void Player::collision(sf::FloatRect enemyRect) { //Пока только один потом массив надо сделать TODO
+void Player::Сollision(sf::FloatRect enemyRect) 
+{
+	for(int i = 0; i < m_objectsSolid.size(); i++)
+	{
 
-	for(int i = 0; i < objSolid.size(); i++) {
-
-		mBox.top += mSpeed;
-		if( getRect().intersects(objSolid[i].rect)) {
-			mBox.top -= mSpeed;
+		m_box.top += m_speed;
+		if( GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			m_box.top -= m_speed;
 		}
-		mBox.top -= mSpeed;
+		m_box.top -= m_speed;
 
-		mBox.left += mSpeed;
-		if( getRect().intersects(objSolid[i].rect) ) {
-			mBox.left -= mSpeed;
+		m_box.left += m_speed;
+		if(GetRect().intersects(m_objectsSolid[i].rect) )
+		{
+			m_box.left -= m_speed;
 		}
-		mBox.left -= mSpeed;
+		m_box.left -= m_speed;
 
-		mBox.left -= mSpeed;
-		if( getRect().intersects(objSolid[i].rect) ) {
-			mBox.left += mSpeed;
+		m_box.left -= m_speed;
+		if(GetRect().intersects(m_objectsSolid[i].rect) )
+		{
+			m_box.left += m_speed;
 		}
-		mBox.left += mSpeed;
+		m_box.left += m_speed;
 
-		mBox.top -= mSpeed;
-		if( getRect().intersects(objSolid[i].rect) ) {
-			mBox.top += mSpeed;
+		m_box.top -= m_speed;
+		if(GetRect().intersects(m_objectsSolid[i].rect) )
+		{
+			m_box.top += m_speed;
 		}
-		mBox.top += mSpeed;
+		m_box.top += m_speed;
 	}
 	
-	for(int i = 0; i < 1; i++) {
+	for(int i = 0; i < 1; i++) 
+	{
 
-		mBox.top += mSpeed;
-		if( getRect().intersects(enemyRect) ) {
-			mBox.top -= mSpeed;
+		m_box.top += m_speed;
+		if(GetRect().intersects(enemyRect) )
+		{
+			m_box.top -= m_speed;
 		}
-		mBox.top -= mSpeed;
+		m_box.top -= m_speed;
 
-		mBox.left += mSpeed;
-		if( getRect().intersects(enemyRect) ) {
-			mBox.left -= mSpeed;
+		m_box.left += m_speed;
+		if(GetRect().intersects(enemyRect) )
+		{
+			m_box.left -= m_speed;
 		}
-		mBox.left -= mSpeed;
+		m_box.left -= m_speed;
 
-		mBox.left -= mSpeed;
-		if( getRect().intersects(enemyRect) ) {
-			mBox.left += mSpeed;
+		m_box.left -= m_speed;
+		if(GetRect().intersects(enemyRect) )
+		{
+			m_box.left += m_speed;
 		}
-		mBox.left += mSpeed;
+		m_box.left += m_speed;
 
-		mBox.top -= mSpeed;
-		if( getRect().intersects(enemyRect) ) {
-			mBox.top += mSpeed;
+		m_box.top -= m_speed;
+		if(GetRect().intersects(enemyRect) )
+		{
+			m_box.top += m_speed;
 		}
-		mBox.top += mSpeed;
+		m_box.top += m_speed;
 	}
 	
 }
+//-------------------------------------------------------
+// ProgressBar
 //-------------------------------------------------------
 Player::ProgressBar::ProgressBar(sf::Vector2f size, sf::Color color)
 {

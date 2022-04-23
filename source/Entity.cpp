@@ -1,28 +1,27 @@
 #include "Entity.h"
-
-float Entity::getCenterX() {
-	float centerX = (mBox.width / 2) + mBox.left;
-	return centerX;
+//-------------------------------------------------------
+sf::Vector2f Entity::GetCenter()
+{
+	return sf::Vector2f((m_box.width / 2) + m_box.left, (m_box.height / 2) + m_box.top);
 }
-
-float Entity::getCenterY() {
-	float centerY = (mBox.height / 2) + mBox.top;
-	return centerY;
+//-------------------------------------------------------
+sf::FloatRect Entity::GetRect() 
+{
+	return m_box;
 }
-
-sf::FloatRect Entity::getRect() {
-	return mBox;
+//-------------------------------------------------------
+int Entity::GetHealth() 
+{
+	return m_health;
 }
-
-int Entity::getHealth() {
-	return mHealth;
+//-------------------------------------------------------
+int Entity::GetSpeed() 
+{
+	return m_speed;
 }
-
-int Entity::getSpeed() {
-	return mSpeed;
+//-------------------------------------------------------
+bool Entity::IsAlive() 
+{
+	return (m_health > 0? true: false);
 }
-
-bool Entity::alive() {
-	return (mHealth > 0? true: false);
-}
-
+//-------------------------------------------------------

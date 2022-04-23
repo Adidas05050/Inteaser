@@ -9,29 +9,39 @@ class Player : public Entity, public Music
 {
 public:
 	Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window);
-	void draw(sf::RenderWindow* Window, int scaleX, int scaleY);
-	void move();
-	void collision(sf::FloatRect enemyRect);
-	void collisionSound();
+
+		 // События каждый кадр
 	void OnFrame(sf::RenderWindow* Window, sf::View* view) override;
+
+		 // Отрисовка на экране
+	void Draw(sf::RenderWindow* Window, int scaleX, int scaleY);
+			
+		 // Перемещение персонажа
+	void Move();
+
+		 // Проверка столкновений с объектами
+	void Сollision(sf::FloatRect enemyRect);
+
 	const int PLAYER_WIDTH = 24;
 	const int PLAYER_HEIGHT = 24;
 	const int PLAYER_FRAME = 8;
 
 private:
-	std::vector<TmxObject> mObjectSound;
+	void CollisionSound();
+
+	std::vector<TmxObject> m_objectsSound;
 		
 	float m_decreaseFood = 1;
-	sf::Sprite sPlayer;
-	int	mSpriteTile;
-	float mScale;
-	sf::Vector2i forJump;
-	bool canJump = true;
-	bool inAir = false;
-	bool isLeftDirection = false;
-	bool isStay = true;
+	sf::Sprite m_playerSprite;
+	int	m_spriteTile;
+	float m_scale;
+	sf::Vector2i m_forJump;
+	bool m_isCanJump = true;
+	bool m_isInAir = false;
+	bool m_isLeftDirection = false;
+	bool m_isStay = true;
 
-
+	// Структура для различных прогресс-баров: еда, здоровье и т.п.
 	struct ProgressBar
 	{
 	public:

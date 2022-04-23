@@ -1,33 +1,33 @@
 #include "skelet.h"
 
 Skelet::Skelet(int health, int speed, Tile *level) {
-	mBox.left = -1;
-	mBox.top = -1;
-	mBox.width = 24;
-	mBox.height = 48;
+	m_box.left = -1;
+	m_box.top = -1;
+	m_box.width = 24;
+	m_box.height = 48;
 
-	mHealth = health;
-	mSpeed = speed;
+	m_health = health;
+	m_speed = speed;
 
-	texture.loadFromFile("media/enemy/skelet.png");
-	sSkelet.setTexture(texture);
-	objSolid = level->GetAllObjects("wall");
+	m_texture.loadFromFile("media/enemy/skelet.png");
+	sSkelet.setTexture(m_texture);
+	m_objectsSolid = level->GetAllObjects("wall");
 	mObjectSound = level->GetAllObjects("sound");
 }
 
 void Skelet::spawn(int x, int y, int health) {
 	sSkelet.setPosition(x, y);
-	mBox.left = x;
-	mBox.top = y;
-	mHealth = 100;
+	m_box.left = x;
+	m_box.top = y;
+	m_health = 100;
 }
 
 void Skelet::draw(sf::RenderWindow* Window, float scaleX, float scaleY) {
-	float width = scaleX * mBox.width;
-	float height = scaleY * mBox.height;
-	float skeletWidth = width / (float) mBox.width;
-	float skeletHeight = height / (float) mBox.height;
+	float width = scaleX * m_box.width;
+	float height = scaleY * m_box.height;
+	float skeletWidth = width / (float) m_box.width;
+	float skeletHeight = height / (float) m_box.height;
 	sSkelet.setScale(skeletWidth, skeletHeight);
-	if(mBox.left != -1 )
+	if(m_box.left != -1 )
 		Window->draw(sSkelet);
 }
