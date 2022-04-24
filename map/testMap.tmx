@@ -10026,6 +10026,6 @@
   <object id="131" name="light" type="lamp" x="1248" y="1950" width="64" height="32"/>
   <object id="132" name="light" type="torch" x="992" y="1950" width="64" height="32"/>
   <object id="135" name="light" x="1121.21" y="2009.09" width="48.4848" height="42.4242"/>
-  <object id="132" name="light" type="torch" x="200" y="200" width="64" height="32"/>
+  <object id="132" name="light" type="player" x="200" y="200" width="48" height="76"/>
  </objectgroup>
 </map>

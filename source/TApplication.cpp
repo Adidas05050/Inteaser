@@ -69,7 +69,7 @@ void TApplication::Run()
 		}
 
 		if(!dialog) {
-			//player->CollisionSound();
+			player->CollisionSound();
 			player->Move();
 			player->Ñollision(skelet->GetRect());
 			

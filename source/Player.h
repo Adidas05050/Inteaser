@@ -22,12 +22,15 @@ public:
 		 // Проверка столкновений с объектами
 	void Сollision(sf::FloatRect enemyRect);
 
+	void CollisionSound();
+
 	const int PLAYER_WIDTH = 24;
 	const int PLAYER_HEIGHT = 24;
 	const int PLAYER_FRAME = 8;
+	
 
 private:
-	void CollisionSound();
+	
 
 	std::vector<TmxObject> m_objectsSound;
 		

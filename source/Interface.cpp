@@ -100,6 +100,11 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 		} else if (mObjectLight[i].type == "lamp") {
 			sLight[i].setColor(sf::Color(140, 196, 209));
 			sColorLight[i].setColor(sf::Color(140, 196, 209, alphaLamp));
+		} else if (mObjectLight[i].type == "player") {
+			sLight[i].setColor(sf::Color(222, 125, 55));
+			sColorLight[i].setColor(sf::Color(222, 125, 55, alphaTorch));
+			sLight[i].setPosition(playerBox.left - mBoxLight[i].width - playerBox.width, playerBox.top - mBoxLight[i].height - playerBox.height / 2);
+			sColorLight[i].setPosition(playerBox.left - mBoxColorLight[i].width - playerBox.width, playerBox.top - mBoxColorLight[i].height - playerBox.height / 2);
 		} else {
 			sLight[i].setColor(sf::Color(255.f, 0.f, 0.f));
 			sColorLight[i].setColor(sf::Color(255.f, 0.f, 0.f, alphaRed));
