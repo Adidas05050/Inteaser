@@ -9,7 +9,7 @@
 class Music
 {
 	public:
-		void loadSound();
+		Music();
 		void loadMusic(std::string path);
 		sf::Music mainMusic;
 		std::map<int, std::string> tileMap = 

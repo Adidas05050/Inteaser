@@ -1,6 +1,6 @@
 #include "Music.h"
 
-void Music::loadSound() {
+Music::Music() {
 	it = tileMap.begin();
 	for(int i = 0; it != tileMap.end(); i++, it++) {
 		if(!mBuffer[i].loadFromFile("sounds/short/" + it->second + ".wav")) 

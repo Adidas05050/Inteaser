@@ -23,6 +23,10 @@ Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindo
 	m_objectsSolid = level->GetAllObjects("wall");
 	m_objectsSound = level->GetAllObjects("sound");
 
+	// Костыль выставления скорости звука, надеюсь, временный
+	stepSound[0].setPitch(1.5f);
+	stepSound[1].setPitch(1.3f);
+
 	m_healthBar = new ProgressBar(sf::Vector2f(100, 20), sf::Color::Red);
 	m_foodBar = new ProgressBar(sf::Vector2f(100, 20), sf::Color::Yellow);
 
@@ -88,7 +92,7 @@ void Player::Move() {
 		m_isStay = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		m_box.left-= m_speed;
+		m_box.left -= m_speed;
 		m_isLeftDirection = true;
 		m_isStay = false;
 	}
@@ -127,9 +131,13 @@ void Player::Move() {
 				m_spriteTile++;
 			else
 				m_spriteTile = 0;
-			if(!stepSound[currentNumberSound].getStatus()) {
-				stepSound[currentNumberSound].setPitch(1.5f);
+			if (m_isStay)
+				stepSound[currentNumberSound].stop();
+			else if(stepSound[currentNumberSound].getStatus() != sf::SoundSource::Status::Playing) 
+			{
+				stepSound[0].setPlayingOffset(sf::Time(stepSound->getBuffer()->getDuration() / 2.f));
 				stepSound[currentNumberSound].play(); //MUSIC
+
 			}
 		}
 	}

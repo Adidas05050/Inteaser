@@ -27,7 +27,7 @@ public:
 	virtual void OnFrame(sf::RenderWindow* Window, sf::View* view) = 0;
 
 protected:
-	int m_speed = 0;
+	float m_speed = 0;
 	int m_frame = 0;
 	float m_health = 0;
 	float m_maxHealth = 100;

@@ -26,7 +26,6 @@ void TApplication::Init()
 	textMission.setCharacterSize(24);
 	musicControl = new Music();
 	Interaction = new Interactions();
-	player->loadSound();
 	musicControl->loadMusic("sounds/music/theme.wav");
 
 	m_viewPosition = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);

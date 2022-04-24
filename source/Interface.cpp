@@ -71,7 +71,8 @@ void Interface::dialog(int id, bool *draw) {
 }
 
 void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {
-	world.OnFrame();
+
+	world.OnFrame(Window, view);
 
 	if(dialog) {
 		sDialog.setScale(0.5f, 0.3f);
@@ -113,7 +114,7 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 		renderTexture.draw(sLight[i], sf::BlendMultiply); //sf::BlendAdd, sf::BlendAlpha, sf::BlendMultiply - стандарт, sf::BlendNone
 
 	}
-
+	
 	renderTexture.display();
 	renderColorTexture.display();
 	sf::Sprite sprite;
@@ -121,6 +122,5 @@ void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View
 	Window->draw(sprite);
 	sprite.setTexture(renderTexture.getTexture());
 	Window->draw(sprite);
-	world.DrawRain(Window, view);
 }
 //-------------------------------------------------------
