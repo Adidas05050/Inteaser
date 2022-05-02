@@ -41,9 +41,6 @@ Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindo
 //-------------------------------------------------------
 void Player::OnFrame(sf::RenderWindow* Window, sf::View* view)
 {
-	if(m_food > FLT_MIN)
-		m_food -= m_decreaseFood;
-	
 	if (m_food < m_maxFood / 2 and m_health > m_maxHealth / 2)
 		m_health -= m_decreaseFood;
 	m_healthBar->SetProgress(m_health/ m_maxHealth);
@@ -98,10 +95,22 @@ void Player::Move() {
 	}
 
 	//*****Jump
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and m_isCanJump) {
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and m_isCanJump) 
+	{
 		m_isCanJump = false;
 		std::cout <<"1";
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && m_food > FLT_MIN)
+	{
+		if (m_isLeftDirection)
+			m_box.left -= 20;
+		else
+			m_box.left += 20;
+
+		m_food -= m_decreaseFood;
+	}
+
 	if(!m_isCanJump and m_scale <= 1.5f and !m_isInAir) {
 		m_scale += 0.1;
 		m_forJump.x -= 3;

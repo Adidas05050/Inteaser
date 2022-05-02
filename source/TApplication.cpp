@@ -40,6 +40,7 @@ void TApplication::Run()
 	sf::Color color(0, 0, 0, 255);
 	textMission.setFillColor(color);
 	sf::Event event;
+	skelet->spawn(1100, 1100, 100);
 
 	while (Window->isOpen()) 
 	{
@@ -75,11 +76,10 @@ void TApplication::Run()
 		}
 
 		inventory->counterItem(Interaction->Interact(player, level));// Calculation interactable objects and give ID for inventory
-		if(inventory->checkInventory(2, 3) and !skelet->IsAlive()) {
-			skelet->spawn(1100, 1100, 100);
-			dialog = true;
+		//if(inventory->checkInventory(2, 3) and !skelet->IsAlive()) {
+		//	dialog = true;
 			dialogID = 1;
-		}
+		//}
 		player->Draw(Window, 3, 3);
 		skelet->draw(Window, 0.1, 0.1);
 		inventory->drawInventory(Window, &heroView);

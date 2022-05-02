@@ -27,26 +27,29 @@ Interface::Interface(Tile *level) {
 	}
 }
 //-------------------------------------------------------
-void Interface::dialog(int id, bool *draw) {
+void Interface::dialog(int id, bool *draw)
+{
+	/*
 	if (*draw)
 		return;
 	file.open("dialogs/skelet/1.txt");
 	std::string line;
 	std::getline(file, line);
-	file.close();
 	int n = atoi(line.c_str());
 	int numberLine = 0;
 	bool *flags = new bool [n];
-	std::string *text = new std::string [n];
-	for(int i = 0; i < n; n++) {
-		std::getline(file, text[i]);
+	std::vector<std::string> text;
+	for(int i = 0; i < n; i++) {
+		std::getline(file, line);
+		text.push_back(line);
 		flags[i] = false;
 	}
-	int currentLine = atoi(text[numberLine].c_str());
-	int character = atoi(text[numberLine].c_str());
-	int nextLine = atoi(text[numberLine].c_str());
-	int intervalDown = atoi(text[numberLine].c_str());
-	int howManyLine = atoi(text[numberLine].c_str());
+	file.close();
+	//int currentLine = atoi(text[numberLine][0]);
+	int character = text[numberLine][1] - '0';
+	//int nextLine = atoi(text[numberLine][2]);
+	//int intervalDown = atoi(text[numberLine][3]);
+	//int howManyLine = atoi(text[numberLine][4]);
 
 	fontForDraw.loadFromFile("font/single_day.ttf"); //TODO
 	for(int i = 0; i < MAX_LINE_IN_DIALOG; i++ ) {
@@ -68,6 +71,7 @@ void Interface::dialog(int id, bool *draw) {
 
 	}
 	*draw = true;
+	//*/
 }
 
 void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {

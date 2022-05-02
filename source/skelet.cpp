@@ -1,4 +1,5 @@
 #include "skelet.h"
+#include "header.h"
 
 Skelet::Skelet(int health, int speed, Tile *level) {
 	m_box.left = -1;
@@ -28,27 +29,32 @@ void Skelet::draw(sf::RenderWindow* Window, float scaleX, float scaleY) {
 	float skeletWidth = width / (float) m_box.width;
 	float skeletHeight = height / (float) m_box.height;
 	sSkelet.setScale(skeletWidth, skeletHeight);
+	sSkelet.setPosition(m_box.left, m_box.top);
+
 	if(m_box.left != -1 )
 		Window->draw(sSkelet);
 }
 
-void Skelet::Move(sf::Vector2f playerRect)
+void Skelet::Move(sf::Vector2f playerCenter)
 {
+	// Пока что так: игрок далеко стоим чилим
+	if(Math::GetDistance(playerCenter.x, playerCenter.y, GetCenter().x, GetCenter().y) > 200)
+		return;
 	m_frame++;
-	if (playerRect.x < GetCenter().x)
+	if (playerCenter.x < GetCenter().x - m_box.width)
 	{
 		m_box.left -= m_speed;
 	}
-	if (playerRect.x > GetCenter().x)
+	if (playerCenter.x > GetCenter().x + m_box.width)
 	{
 		m_box.left += m_speed;
 	}
-	if (playerRect.y < GetCenter().y)
+	if (playerCenter.y < GetCenter().y - m_box.height)
 	{
-		m_box.left += m_speed;
+		m_box.top -= m_speed;
 	}
-	if (playerRect.y > GetCenter().y)
+	if (playerCenter.y > GetCenter().y + m_box.height)
 	{
-		m_box.left -= m_speed;
+		m_box.top += m_speed;
 	}
 }
