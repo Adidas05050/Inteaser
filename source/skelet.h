@@ -10,6 +10,7 @@ class Skelet : public Entity {
 		void spawn(int x, int y, int health);
 		void draw(sf::RenderWindow* Window, float scaleX, float scaleY);
 		void OnFrame(sf::RenderWindow* Window, sf::View* view) override {};
+		void Move(sf::Vector2f playerRect);
 
 	protected:
 		std::vector<TmxObject> mObjectSound;

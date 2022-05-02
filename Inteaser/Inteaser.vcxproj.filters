@@ -100,6 +100,8 @@
     <ClInclude Include="..\source\World.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\World\Weather.h" />
+    <ClInclude Include="..\source\World\Weather.h">
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

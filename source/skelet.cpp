@@ -31,3 +31,24 @@ void Skelet::draw(sf::RenderWindow* Window, float scaleX, float scaleY) {
 	if(m_box.left != -1 )
 		Window->draw(sSkelet);
 }
+
+void Skelet::Move(sf::Vector2f playerRect)
+{
+	m_frame++;
+	if (playerRect.x < GetCenter().x)
+	{
+		m_box.left -= m_speed;
+	}
+	if (playerRect.x > GetCenter().x)
+	{
+		m_box.left += m_speed;
+	}
+	if (playerRect.y < GetCenter().y)
+	{
+		m_box.left += m_speed;
+	}
+	if (playerRect.y > GetCenter().y)
+	{
+		m_box.left -= m_speed;
+	}
+}

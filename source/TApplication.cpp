@@ -71,7 +71,7 @@ void TApplication::Run()
 			player->CollisionSound();
 			player->Move();
 			player->Ñollision(skelet->GetRect());
-			
+			skelet->Move(player->GetCenter());
 		}
 
 		inventory->counterItem(Interaction->Interact(player, level));// Calculation interactable objects and give ID for inventory
