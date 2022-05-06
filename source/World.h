@@ -9,13 +9,14 @@ class World
 public:
 	World();
 
-	float	GetTime() { return 2; }
+	float	GetTime() const { return m_isTickingTime? m_time : 2; }
 	void	OnFrame(sf::RenderWindow* Window, sf::View* view);
 	
 private:
 	float	m_time;
 	float	m_tick;
 	bool	m_isRain = false;
+	bool	m_isTickingTime = false;
 
 	Weather::Rain m_rain;
 };

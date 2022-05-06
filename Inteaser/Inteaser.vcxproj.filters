@@ -26,7 +26,7 @@
     <ClCompile Include="..\source\Interactions.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Interface.cpp">
+    <ClCompile Include="..\source\ControlLight.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Inventory.cpp">
@@ -70,7 +70,7 @@
     <ClInclude Include="..\source\Interactions.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Interface.h">
+    <ClInclude Include="..\source\ControlLight.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
     <ClInclude Include="..\source\Inventory.h">

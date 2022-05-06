@@ -1,9 +1,9 @@
-#include "Interface.h"
+#include "ControlLight.h"
 #include "World.h"
 
 World world;
 
-Interface::Interface(Tile *level) {
+ControlLight::ControlLight(Tile *level) {
 	renderTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT);
 	renderColorTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT);
 	tLight.loadFromFile("media/background/light.png"); //можно поменять на light, lightRev, LightWh; Стандарт light
@@ -27,7 +27,7 @@ Interface::Interface(Tile *level) {
 	}
 }
 //-------------------------------------------------------
-void Interface::dialog(int id, bool *draw)
+void ControlLight::dialog(int id, bool *draw)
 {
 	/*
 	if (*draw)
@@ -73,8 +73,8 @@ void Interface::dialog(int id, bool *draw)
 	*draw = true;
 	//*/
 }
-
-void Interface::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {
+//-------------------------------------------------------
+void ControlLight::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {
 
 	world.OnFrame(Window, view);
 

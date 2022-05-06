@@ -26,12 +26,20 @@ void World::OnFrame(sf::RenderWindow* Window, sf::View* view)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
 		m_isRain = false;
 
+	// ”правление временем суток
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4))
+		m_isTickingTime = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5))
+		m_isTickingTime = false;
+
 	if (m_isRain)
 		m_rain.PlaySound();
 	else
 		m_rain.StopSound();
-	m_rain.OnFrame(Window, view); // ¬сегда обрабатываетс€ дл€ плавного наростани€ и затухани€
 
-	m_time += m_tick;
+	m_rain.OnFrame(Window, view); // ¬сегда обрабатываетс€ дл€ плавного нарастани€ и затухани€
+
+	if(m_isTickingTime)
+		m_time += m_tick; 
 }
 

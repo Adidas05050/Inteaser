@@ -5,7 +5,7 @@ Skelet::Skelet(int health, int speed, Tile *level) {
 	m_box.left = -1;
 	m_box.top = -1;
 	m_box.width = 24;
-	m_box.height = 48;
+	m_box.height = 24;
 
 	m_health = health;
 	m_speed = speed;
@@ -40,6 +40,10 @@ void Skelet::Move(sf::Vector2f playerCenter)
 	// Пока что так: игрок далеко стоим чилим
 	if(Math::GetDistance(playerCenter.x, playerCenter.y, GetCenter().x, GetCenter().y) > 200)
 		return;
+
+	if(Math::GetDistance(playerCenter.x, playerCenter.y, GetCenter().x, GetCenter().y) < 50)
+		return;
+
 	m_frame++;
 	if (playerCenter.x < GetCenter().x - m_box.width)
 	{

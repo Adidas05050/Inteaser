@@ -17,8 +17,9 @@ void TApplication::Init()
 	level->LoadFromFile("map/testMap.tmx");
 	player = new Player(200, 200, 200, 10, level, Window);
 	skelet = new Skelet(0, 10, level);
-	interface = new Interface(level);
-	heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
+	interface = new ControlLight(level);
+	m_heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
+	m_guiView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 	miniMap.reset(sf::FloatRect(0, 0, LEVEL_WIDTH, LEVEL_HEIGHT));
 	font.loadFromFile("font/Cartoonic.otf");
 	textMission.setString("");
@@ -29,6 +30,7 @@ void TApplication::Init()
 	musicControl->loadMusic("sounds/music/theme.wav");
 
 	m_viewPosition = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	m_heroView.setCenter(m_viewPosition.x, m_viewPosition.y);
 }
 //-------------------------------------------------------
 void TApplication::Run() 
@@ -47,6 +49,7 @@ void TApplication::Run()
 
 		miniMap.setViewport(sf::FloatRect(0.7f, 0.02f, 0.3f, 0.22f));
 
+		GuiView();
 		SmoothCamera();
 
 		Window->clear(sf::Color::White);
@@ -57,7 +60,7 @@ void TApplication::Run()
 				Window->close();
 			}
 		}
-
+		
 		level->Draw(*Window);
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
@@ -70,8 +73,7 @@ void TApplication::Run()
 
 		if(!dialog) {
 			player->CollisionSound();
-			player->Move();
-			player->Ñollision(skelet->GetRect());
+			player->Move(skelet->GetRect());
 			skelet->Move(player->GetCenter());
 		}
 
@@ -81,9 +83,9 @@ void TApplication::Run()
 			dialogID = 1;
 		//}
 		player->Draw(Window, 3, 3);
-		skelet->draw(Window, 0.1, 0.1);
-		inventory->drawInventory(Window, &heroView);
-		interface->draw(Window, player->GetRect(), &heroView, dialog);
+		skelet->draw(Window, 0.1f, 0.1f);
+		inventory->drawInventory(Window, &m_guiView);
+		interface->draw(Window, player->GetRect(), &m_guiView, dialog);
 		if(dialog) {
 			interface->dialog(dialogID, &drawDialog);
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
@@ -102,20 +104,20 @@ void TApplication::Run()
 			Window->draw(Interaction->recta);// for test
 			Window->draw(Interaction->textForInteractibleObject);
 		}
-		player->OnFrame(Window, &heroView);
+		player->OnFrame(Window, &m_guiView);
 		Window->display();
 	}
 }
 //----------------------------------?????????????WTF?????????????????--------------------------
 void TApplication::setInventory() 
 {
-	inventory->drawMission(Window, &heroView);
+	inventory->drawMission(Window, &m_guiView);
 	int mission;
 	mission = inventory->getCurrentMission(player->GetRect().left);
 	std::string currentTask;
 	currentTask = inventory->getTextMission(mission);
 	textMission.setString("Health: " + std::to_string(player->GetHealth()) + "\n\n\n" + currentTask);
-	textMission.setPosition(heroView.getCenter().x - 250, heroView.getCenter().y - 220);
+	textMission.setPosition(m_guiView.getCenter().x - 250, m_guiView.getCenter().y - 220);
 	Window->draw(textMission);
 }
 //----------------------------------------------------------------------------------------------
@@ -131,7 +133,7 @@ void TApplication::End()
 //----------------------------------------------------------------------------------------------
 void TApplication::SmoothCamera()
 {
-	Window->setView(heroView);
+	Window->setView(m_heroView);
 
 	// Ïëàâíîå äâèæåíèå êàìåðû
 	if ((player->GetCenter().x - (SCREEN_WIDTH / 2) > 0) and (player->GetCenter().x + (SCREEN_WIDTH / 2) < LEVEL_WIDTH)) {
@@ -152,6 +154,14 @@ void TApplication::SmoothCamera()
 		}
 	}
 
-	heroView.setCenter(m_viewPosition);
+	m_heroView.setCenter(m_viewPosition);
 
 }
+//----------------------------------------------------------------------------------------------
+void TApplication::GuiView()
+{
+	m_guiView.setCenter(m_viewPosition);
+}
+//----------------------------------------------------------------------------------------------
+
+

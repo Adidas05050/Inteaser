@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Inventory.h"
 #include "Music.h"
-#include "Interface.h"
+#include "ControlLight.h"
 #include "Interactions.h"
 #include "Skelet.h"
 
@@ -22,6 +22,7 @@ public:
 	void End();
 	void setInventory();
 	void SmoothCamera();
+	void GuiView();
 
 private:
 	sf::Vector2f m_viewPosition;
@@ -31,9 +32,10 @@ private:
 	Player *player;
 	Skelet *skelet;
 	Music *musicControl;
-	Interface *interface;
+	ControlLight *interface;
 	Interactions *Interaction;
-	sf::View heroView;
+	sf::View m_heroView;
+	sf::View m_guiView;
 	sf::View miniMap;
 	sf::Font font;
 	sf::Text textMission;

@@ -10,9 +10,10 @@
 extern const int LEVEL_WIDTH;
 extern const int LEVEL_HEIGHT;
 const int MAX_LINE_IN_DIALOG = 5;
-class Interface {
+class ControlLight
+{
 public:
-	Interface(Tile* level);
+	ControlLight(Tile* level);
 	void draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog);
 	void dialog(int id, bool* draw);
 	sf::Font fontForDraw;
@@ -36,10 +37,7 @@ protected:
 
 	int count; // сомнительная польза, пока чисто для удоства
 private:
-	
 	sf::RenderWindow* m_window = nullptr;
-
-
 };
 
 #endif

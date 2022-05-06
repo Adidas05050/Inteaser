@@ -153,7 +153,7 @@
     <ClCompile Include="..\source\Entity.cpp" />
     <ClCompile Include="..\source\header.cpp" />
     <ClCompile Include="..\source\Interactions.cpp" />
-    <ClCompile Include="..\source\Interface.cpp" />
+    <ClCompile Include="..\source\ControlLight.cpp" />
     <ClCompile Include="..\source\Inventory.cpp" />
     <ClCompile Include="..\source\main.cpp" />
     <ClCompile Include="..\source\Music.cpp" />
@@ -169,7 +169,7 @@
     <ClInclude Include="..\source\Entity.h" />
     <ClInclude Include="..\source\header.h" />
     <ClInclude Include="..\source\Interactions.h" />
-    <ClInclude Include="..\source\Interface.h" />
+    <ClInclude Include="..\source\ControlLight.h" />
     <ClInclude Include="..\source\Inventory.h" />
     <ClInclude Include="..\source\Music.h" />
     <ClInclude Include="..\source\Player.h" />

@@ -4,7 +4,7 @@
 Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window) {
 	m_box.left = x;
 	m_box.top = y;
-	m_box.width = 48;
+	m_box.width = 24;
 	m_box.height = 24;
 
 	m_health = health;
@@ -43,8 +43,19 @@ void Player::OnFrame(sf::RenderWindow* Window, sf::View* view)
 {
 	if (m_food < m_maxFood / 2 and m_health > m_maxHealth / 2)
 		m_health -= m_decreaseFood;
+
+	if (m_food < FLT_MIN)
+		m_isWeak = true;
+
+	if( m_food < m_maxFood)
+		m_food += m_decreaseFood / 2;
+
+	if (m_food >= m_maxFood)
+		m_isWeak = false;
+
 	m_healthBar->SetProgress(m_health/ m_maxHealth);
 	m_foodBar->SetProgress(m_food/ m_maxFood);
+
 	m_healthBar->Draw(Window, view);
 	m_foodBar->Draw(Window, view);
 }
@@ -69,46 +80,43 @@ void Player::Draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
 	Window->draw(m_playerSprite);
 }
 //-------------------------------------------------------
-void Player::Move() {
+void Player::Move(sf::FloatRect enemyRect) {
 	m_frame++;
 	if(m_frame > 64) {
 		m_frame = 0;
 	}
+	m_curSpeed = m_speed;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && !m_isWeak)
+	{
+		m_curSpeed += 20;
+		m_food -= m_decreaseFood;
+	}
+
 	m_isStay = true;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		m_box.top -= m_speed;
+		m_box.top -= m_curSpeed;
 		m_isStay = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		m_box.top += m_speed;
+		m_box.top += m_curSpeed;
 		m_isStay = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		m_box.left += m_speed;
+		m_box.left += m_curSpeed;
 		m_isLeftDirection = false;
 		m_isStay = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		m_box.left -= m_speed;
+		m_box.left -= m_curSpeed;
 		m_isLeftDirection = true;
 		m_isStay = false;
 	}
-
+	Ñollision(enemyRect);
 	//*****Jump
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and m_isCanJump) 
 	{
 		m_isCanJump = false;
 		std::cout <<"1";
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && m_food > FLT_MIN)
-	{
-		if (m_isLeftDirection)
-			m_box.left -= 20;
-		else
-			m_box.left += 20;
-
-		m_food -= m_decreaseFood;
 	}
 
 	if(!m_isCanJump and m_scale <= 1.5f and !m_isInAir) {
@@ -173,38 +181,38 @@ void Player::Ñollision(sf::FloatRect enemyRect)
 	for(int i = 0; i < m_objectsSolid.size(); i++)
 	{
 
-		m_box.top += m_speed;
+		m_box.top += m_curSpeed;
 		if( GetRect().intersects(m_objectsSolid[i].rect))
 		{
-			m_box.top -= m_speed;
+			m_box.top -= m_curSpeed;
 		}
-		m_box.top -= m_speed;
+		m_box.top -= m_curSpeed;
 
-		m_box.left += m_speed;
+		m_box.top -= m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			m_box.top += m_curSpeed;
+		}
+		m_box.top += m_curSpeed;
+
+		m_box.left += m_curSpeed;
 		if(GetRect().intersects(m_objectsSolid[i].rect) )
 		{
-			m_box.left -= m_speed;
+			m_box.left -= m_curSpeed;
 		}
-		m_box.left -= m_speed;
+		m_box.left -= m_curSpeed;
 
-		m_box.left -= m_speed;
+		m_box.left -= m_curSpeed;
 		if(GetRect().intersects(m_objectsSolid[i].rect) )
 		{
-			m_box.left += m_speed;
+			m_box.left += m_curSpeed;
 		}
-		m_box.left += m_speed;
-
-		m_box.top -= m_speed;
-		if(GetRect().intersects(m_objectsSolid[i].rect) )
-		{
-			m_box.top += m_speed;
-		}
-		m_box.top += m_speed;
+		m_box.left += m_curSpeed;
+		
 	}
 	
 	for(int i = 0; i < 1; i++) 
 	{
-
 		m_box.top += m_speed;
 		if(GetRect().intersects(enemyRect) )
 		{

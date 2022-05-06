@@ -10,6 +10,7 @@ class Player : public Entity, public Music
 public:
 	Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window);
 
+
 		 // События каждый кадр
 	void OnFrame(sf::RenderWindow* Window, sf::View* view) override;
 
@@ -17,7 +18,7 @@ public:
 	void Draw(sf::RenderWindow* Window, int scaleX, int scaleY);
 			
 		 // Перемещение персонажа
-	void Move();
+	void Move(sf::FloatRect enemyRect);
 
 		 // Проверка столкновений с объектами
 	void Сollision(sf::FloatRect enemyRect);
@@ -30,11 +31,11 @@ public:
 	
 
 private:
-	
 
 	std::vector<TmxObject> m_objectsSound;
 		
 	float m_decreaseFood = 1;
+
 	sf::Sprite m_playerSprite;
 	int	m_spriteTile;
 	float m_scale;
@@ -43,7 +44,7 @@ private:
 	bool m_isInAir = false;
 	bool m_isLeftDirection = false;
 	bool m_isStay = true;
-
+	bool m_isWeak = false;
 	// Структура для различных прогресс-баров: еда, здоровье и т.п.
 	struct ProgressBar
 	{
