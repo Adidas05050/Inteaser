@@ -8,7 +8,7 @@
 #include "Music.h"
 #include "ControlLight.h"
 #include "Interactions.h"
-#include "skelet.h"
+#include "Skelet.h"
 
 class TApplication 
 {

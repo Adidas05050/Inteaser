@@ -85,7 +85,7 @@ void TApplication::Run()
 		//	dialogID = 1;
 		//}
 		player->Draw(3, 3);
-		skelet->draw(0.1f, 0.1f);
+		skelet->draw(3, 3);
 		inventory->drawInventory(g_window, &m_guiView);
 		interface->draw(g_window, player->GetRect(), &m_guiView, dialog);
 		if(dialog) {
@@ -107,6 +107,7 @@ void TApplication::Run()
 			g_window->draw(Interaction->textForInteractibleObject);
 		}
 		player->OnFrame(&m_guiView);
+		skelet->OnFrame(&m_guiView);
 		g_window->display();
 	}
 }

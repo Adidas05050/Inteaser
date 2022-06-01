@@ -41,7 +41,7 @@
     <ClCompile Include="..\source\Player.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\skelet.cpp">
+    <ClCompile Include="..\source\Skelet.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="..\source\TApplication.cpp">
@@ -85,7 +85,7 @@
     <ClInclude Include="..\source\SFML.hpp">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\skelet.h">
+    <ClInclude Include="..\source\Skelet.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
     <ClInclude Include="..\source\TApplication.hpp">

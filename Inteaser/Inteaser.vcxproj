@@ -158,7 +158,7 @@
     <ClCompile Include="..\source\main.cpp" />
     <ClCompile Include="..\source\Music.cpp" />
     <ClCompile Include="..\source\Player.cpp" />
-    <ClCompile Include="..\source\skelet.cpp" />
+    <ClCompile Include="..\source\Skelet.cpp" />
     <ClCompile Include="..\source\TApplication.cpp" />
     <ClCompile Include="..\source\Tile.cpp" />
     <ClCompile Include="..\source\tinyxml2.cpp" />
@@ -174,7 +174,7 @@
     <ClInclude Include="..\source\Music.h" />
     <ClInclude Include="..\source\Player.h" />
     <ClInclude Include="..\source\SFML.hpp" />
-    <ClInclude Include="..\source\skelet.h" />
+    <ClInclude Include="..\source\Skelet.h" />
     <ClInclude Include="..\source\TApplication.hpp" />
     <ClInclude Include="..\source\Tile.h" />
     <ClInclude Include="..\source\tinyxml2.h" />

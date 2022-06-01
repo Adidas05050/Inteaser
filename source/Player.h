@@ -33,14 +33,6 @@ public:
 
 
 private:
-	enum class AnimState
-	{
-		Idle,
-		Walk,
-		Attack,
-		PickUp
-	};
-
 	std::vector<TmxObject> m_objectsSound;
 		
 	float m_decreaseFood = 1;
@@ -51,11 +43,6 @@ private:
 	sf::Vector2i m_forJump;
 	bool m_isCanJump = true;
 	bool m_isInAir = false;
-	bool m_isLeftDirection = false;
-	bool m_isStay = true;
-	bool m_isWeak = false;
-	bool m_isAttack = false;
-
 
 	// Структура для различных прогресс-баров: еда, здоровье и т.п.
 	struct ProgressBar

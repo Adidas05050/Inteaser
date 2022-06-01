@@ -70,15 +70,18 @@ void Player::Draw(int scaleX, int scaleY) {
 	// Для атаки
 
 	// Для передвижения
-	if( m_isStay )
+	if (m_isStay)
 		m_playerSprite.setTextureRect(sf::IntRect(m_spriteTile*24, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	else
 		m_playerSprite.setTextureRect(sf::IntRect(m_spriteTile*24, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT));
 
-	if( m_isLeftDirection ) {
+	if (m_isLeftDirection)
+	{
 		m_playerSprite.setScale(playerWidth * (-1) * m_scale, playerHeight * m_scale);
 		m_playerSprite.setPosition(m_box.left + PLAYER_WIDTH*3 + m_forJump.x, m_box.top + m_forJump.y);
-	} else {
+	}
+	else
+	{
 		m_playerSprite.setScale(playerWidth * m_scale, playerHeight * m_scale);
 		m_playerSprite.setPosition(m_box.left + m_forJump.x, m_box.top + m_forJump.y);
 	}
