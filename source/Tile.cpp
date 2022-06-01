@@ -12,7 +12,7 @@ const char DIR_SEPARATOR = '\\';
 #else
 const char DIR_SEPARATOR = '/';
 #endif
-
+//-------------------------------------------------------
 // Returns parent directory of given path;
 std::string GetParentDirectory(const std::string &filepath)
 {
@@ -24,7 +24,7 @@ std::string GetParentDirectory(const std::string &filepath)
     }
     return parentDir;
 }
-
+//-------------------------------------------------------
 // Joins two path fragments, e.g. directory path and filename
 std::string JoinPaths(const std::string &path, const std::string &subpath)
 {
@@ -39,7 +39,7 @@ std::string JoinPaths(const std::string &path, const std::string &subpath)
 
     return path + DIR_SEPARATOR + subpath;
 }
-
+//-------------------------------------------------------
 // Parses hex-encoded RGB like "6d9fb9"
 sf::Color ParseColor(const std::string &hexRGB)
 {
@@ -56,7 +56,7 @@ sf::Color ParseColor(const std::string &hexRGB)
 
     return sf::Color(red, green, blue);
 }
-
+//-------------------------------------------------------
 float ParseFloat(const std::string &str)
 {
     char *pEnd = nullptr;
@@ -68,36 +68,36 @@ float ParseFloat(const std::string &str)
 
     return value;
 }
-
+//-------------------------------------------------------
 int TmxObject::GetPropertyInt(const std::string &propertyName)
 {
     return std::stoi(properties[propertyName].c_str());
 }
-
+//-------------------------------------------------------
 float TmxObject::GetPropertyFloat(const std::string &propertyName)
 {
     return ParseFloat(properties[propertyName].c_str());
 }
-
+//-------------------------------------------------------
 std::string TmxObject::GetPropertyString(const std::string &propertyName)
 {
     return properties[propertyName];
 }
-
+//-------------------------------------------------------
 void TmxObject::MoveBy(const sf::Vector2f &movement)
 {
     rect.left += movement.x;
     rect.top += movement.y;
     sprite.move(movement);
 }
-
+//-------------------------------------------------------
 void TmxObject::MoveTo(const sf::Vector2f &position)
 {
     rect.left = position.x;
     rect.top = position.y;
     sprite.setPosition(position);
 }
-
+//-------------------------------------------------------
 bool Tile::LoadFromFile(const std::string &filepath)
 {
     XMLDocument levelFile;
@@ -341,7 +341,7 @@ bool Tile::LoadFromFile(const std::string &filepath)
 
     return true;
 }
-
+//-------------------------------------------------------
 TmxObject Tile::GetFirstObject(const std::string &name) const
 {
     // Only first object with given name
@@ -350,7 +350,7 @@ TmxObject Tile::GetFirstObject(const std::string &name) const
             return m_objects[i];
     throw std::runtime_error("Object with name " + name + " was not found");
 }
-
+//-------------------------------------------------------
 std::vector<TmxObject> Tile::GetAllObjects(const std::string &name) const
 {
     // All objects with given name
@@ -365,30 +365,30 @@ std::vector<TmxObject> Tile::GetAllObjects(const std::string &name) const
 
     return vec;
 }
-
+//-------------------------------------------------------
 sf::Vector2i Tile::GetTileSize() const
 {
     return sf::Vector2i(m_tileWidth, m_tileHeight);
 }
-
+//-------------------------------------------------------
 float Tile::GetTilemapWidth() const
 {
     return static_cast<float>(m_tileWidth * m_width);
 }
-
+//-------------------------------------------------------
 float Tile::GetTilemapHeight() const
 {
     return static_cast<float>(m_tileHeight * m_height);
 }
-
+//-------------------------------------------------------
 sf::Vector2f Tile::GetTilemapSize() const
 {
     return sf::Vector2f(GetTilemapWidth(), GetTilemapHeight());
 }
-
-void Tile::Draw(sf::RenderTarget &target) const
+//-------------------------------------------------------
+void Tile::Draw() const
 {
-    const sf::FloatRect viewportRect = target.getView().getViewport();
+    const sf::FloatRect viewportRect = g_window->getView().getViewport();
 
     // Draw all tiles (and don't draw objects)
     for (const auto &layer : m_layers)
@@ -397,7 +397,7 @@ void Tile::Draw(sf::RenderTarget &target) const
         {
             if (viewportRect.intersects(tile.getLocalBounds()))
             {
-                target.draw(tile);
+                g_window->draw(tile);
             }
         }
     }

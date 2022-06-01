@@ -43,7 +43,7 @@ class Tile
     float GetTilemapHeight() const;
     sf::Vector2f GetTilemapSize() const;
 
-    void Draw(sf::RenderTarget &target) const;
+    void Draw() const;
 
   private:
     int m_width = 0;

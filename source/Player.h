@@ -12,10 +12,10 @@ public:
 
 
 		 // События каждый кадр
-	void OnFrame(sf::RenderWindow* Window, sf::View* view) override;
+	void OnFrame(sf::View* view) override;
 
 		 // Отрисовка на экране
-	void Draw(sf::RenderWindow* Window, int scaleX, int scaleY);
+	void Draw(int scaleX, int scaleY);
 			
 		 // Перемещение персонажа
 	void Move(sf::FloatRect enemyRect);
@@ -23,14 +23,23 @@ public:
 		 // Проверка столкновений с объектами
 	void Сollision(sf::FloatRect enemyRect);
 
+	void Attack() override;
+
 	void CollisionSound();
 
 	const int PLAYER_WIDTH = 24;
 	const int PLAYER_HEIGHT = 24;
 	const int PLAYER_FRAME = 8;
-	
+
 
 private:
+	enum class AnimState
+	{
+		Idle,
+		Walk,
+		Attack,
+		PickUp
+	};
 
 	std::vector<TmxObject> m_objectsSound;
 		
@@ -45,6 +54,9 @@ private:
 	bool m_isLeftDirection = false;
 	bool m_isStay = true;
 	bool m_isWeak = false;
+	bool m_isAttack = false;
+
+
 	// Структура для различных прогресс-баров: еда, здоровье и т.п.
 	struct ProgressBar
 	{
@@ -53,7 +65,7 @@ private:
 		void SetProgress(float progress);
 		void SetColor(sf::Color color);
 		void SetPosition(sf::Vector2f position);
-		void Draw(sf::RenderWindow* window, sf::View* view);
+		void Draw(sf::View* view);
 	private:
 		sf::Color m_defaultColor;
 		sf::RectangleShape m_background;

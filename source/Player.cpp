@@ -39,8 +39,10 @@ Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindo
 	m_window = window;
 }
 //-------------------------------------------------------
-void Player::OnFrame(sf::RenderWindow* Window, sf::View* view)
+void Player::OnFrame(sf::View* view)
 {
+	Attack();
+
 	if (m_food < m_maxFood / 2 and m_health > m_maxHealth / 2)
 		m_health -= m_decreaseFood;
 
@@ -56,15 +58,18 @@ void Player::OnFrame(sf::RenderWindow* Window, sf::View* view)
 	m_healthBar->SetProgress(m_health/ m_maxHealth);
 	m_foodBar->SetProgress(m_food/ m_maxFood);
 
-	m_healthBar->Draw(Window, view);
-	m_foodBar->Draw(Window, view);
+	m_healthBar->Draw(view);
+	m_foodBar->Draw(view);
 }
 //-------------------------------------------------------
-void Player::Draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
+void Player::Draw(int scaleX, int scaleY) {
 	float width = scaleX * m_box.width;
 	float height = scaleY * m_box.height;
 	float playerWidth = width / (float) m_box.width;
 	float playerHeight = height / (float) m_box.height;
+	// Для атаки
+
+	// Для передвижения
 	if( m_isStay )
 		m_playerSprite.setTextureRect(sf::IntRect(m_spriteTile*24, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	else
@@ -77,7 +82,8 @@ void Player::Draw(sf::RenderWindow* Window, int scaleX, int scaleY) {
 		m_playerSprite.setScale(playerWidth * m_scale, playerHeight * m_scale);
 		m_playerSprite.setPosition(m_box.left + m_forJump.x, m_box.top + m_forJump.y);
 	}
-	Window->draw(m_playerSprite);
+
+	g_window->draw(m_playerSprite);
 }
 //-------------------------------------------------------
 void Player::Move(sf::FloatRect enemyRect) {
@@ -85,6 +91,9 @@ void Player::Move(sf::FloatRect enemyRect) {
 	if(m_frame > 64) {
 		m_frame = 0;
 	}
+	// При атаке стоим на месте
+	if (m_isAttack)
+		return;
 	m_curSpeed = m_speed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && !m_isWeak)
 	{
@@ -244,6 +253,14 @@ void Player::Сollision(sf::FloatRect enemyRect)
 	
 }
 //-------------------------------------------------------
+void Player::Attack()
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		m_isAttack = true;
+	else
+		m_isAttack = false;
+}
+//-------------------------------------------------------
 // ProgressBar
 //-------------------------------------------------------
 Player::ProgressBar::ProgressBar(sf::Vector2f size, sf::Color color)
@@ -269,13 +286,13 @@ void Player::ProgressBar::SetPosition(sf::Vector2f position)
 	m_position = position;
 }
 //-------------------------------------------------------
-void Player::ProgressBar::Draw(sf::RenderWindow* window, sf::View* view)
+void Player::ProgressBar::Draw(sf::View* view)
 {
 	const auto& coordBegin = view->getCenter() - view->getSize() / 2.f;
 	sf::Vector2f positionOnView = sf::Vector2f(m_position.x + coordBegin.x, m_position.y + coordBegin.y);
 	m_background.setPosition(positionOnView);
 	m_foreground.setPosition(positionOnView);
-	window->draw(m_background);
-	window->draw(m_foreground);
+	g_window->draw(m_background);
+	g_window->draw(m_foreground);
 }
 //-------------------------------------------------------

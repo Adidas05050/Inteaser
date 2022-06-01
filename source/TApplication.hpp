@@ -1,9 +1,6 @@
 #ifndef TAPPLICATION_HEADER
 #define TAPPLICATION_HEADER
 
-#include <iostream>
-#include <fstream>
-#include <string>
 #include "SFML.hpp"
 #include "Tile.h"
 #include "Player.h"
@@ -11,7 +8,7 @@
 #include "Music.h"
 #include "ControlLight.h"
 #include "Interactions.h"
-#include "Skelet.h"
+#include "skelet.h"
 
 class TApplication 
 {
@@ -26,7 +23,7 @@ public:
 
 private:
 	sf::Vector2f m_viewPosition;
-	sf::RenderWindow *Window;
+
 	Inventory *inventory;
 	Tile *level;
 	Player *player;
@@ -40,5 +37,4 @@ private:
 	sf::Font font;
 	sf::Text textMission;
 };
-
 #endif

@@ -15,15 +15,15 @@ Skelet::Skelet(int health, int speed, Tile *level) {
 	m_objectsSolid = level->GetAllObjects("wall");
 	mObjectSound = level->GetAllObjects("sound");
 }
-
+//-------------------------------------------------------
 void Skelet::spawn(int x, int y, int health) {
 	sSkelet.setPosition(x, y);
 	m_box.left = x;
 	m_box.top = y;
 	m_health = 100;
 }
-
-void Skelet::draw(sf::RenderWindow* Window, float scaleX, float scaleY) {
+//-------------------------------------------------------
+void Skelet::draw(float scaleX, float scaleY) {
 	float width = scaleX * m_box.width;
 	float height = scaleY * m_box.height;
 	float skeletWidth = width / (float) m_box.width;
@@ -32,9 +32,9 @@ void Skelet::draw(sf::RenderWindow* Window, float scaleX, float scaleY) {
 	sSkelet.setPosition(m_box.left, m_box.top);
 
 	if(m_box.left != -1 )
-		Window->draw(sSkelet);
+		g_window->draw(sSkelet);
 }
-
+//-------------------------------------------------------
 void Skelet::Move(sf::Vector2f playerCenter)
 {
 	// Пока что так: игрок далеко стоим чилим
@@ -62,3 +62,4 @@ void Skelet::Move(sf::Vector2f playerCenter)
 		m_box.top += m_speed;
 	}
 }
+//-------------------------------------------------------

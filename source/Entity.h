@@ -22,9 +22,12 @@ public:
 
 			// Жива ли сущность
 	bool	IsAlive();
-					
+
+					// Атакующие действия	
+	virtual void	Attack() = 0;
+
 				 // Событие происходящее на каждом кадре
-	virtual void OnFrame(sf::RenderWindow* Window, sf::View* view) = 0;
+	virtual void OnFrame(sf::View* view) = 0;
 
 protected:
 	float m_curSpeed = 0;

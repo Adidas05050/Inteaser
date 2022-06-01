@@ -7,4 +7,5 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 #include <iostream>
+inline sf::RenderWindow* g_window = nullptr;
 #endif

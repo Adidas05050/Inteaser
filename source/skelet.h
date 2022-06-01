@@ -5,18 +5,19 @@
 #include "Music.h"
 
 class Skelet : public Entity {
-	public:
-		Skelet(int health, int speed, Tile *level);
-		void spawn(int x, int y, int health);
-		void draw(sf::RenderWindow* Window, float scaleX, float scaleY);
-		void OnFrame(sf::RenderWindow* Window, sf::View* view) override {};
-		void Move(sf::Vector2f playerCenter);
+public:
+	Skelet(int health, int speed, Tile *level);
+	void spawn(int x, int y, int health);
+	void draw(float scaleX, float scaleY);
+	void OnFrame(sf::View* view) override {};
+	void Move(sf::Vector2f playerCenter);
+	void Attack() override {};
 
-	protected:
-		std::vector<TmxObject> mObjectSound;
+protected:
+	std::vector<TmxObject> mObjectSound;
 
-		sf::Sprite sSkelet;
-		int	mSpriteTile;
+	sf::Sprite sSkelet;
+	int	mSpriteTile;
 };
 
 #endif
