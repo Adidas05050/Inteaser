@@ -13,7 +13,7 @@ Interactions::Interactions() {
 	fontForInteractibleObject.loadFromFile("font/single_day.ttf");
 	
 	textForInteractibleObject.setFont(fontForInteractibleObject);
-	textForInteractibleObject.setString("Look (Press \"E\")");
+	textForInteractibleObject.setString("Take (Press \"E\")");
 	textForInteractibleObject.setFillColor(sf::Color(235, 235, 235, 0));
 	textForInteractibleObject.setCharacterSize(20);
 }
@@ -84,7 +84,7 @@ int Interactions::Interact(Player* player, Tile *level) {
 		// X = interactingObjects[idLocation][close_object].rect.left + interactingObjects[idLocation][close_object].rect.width / 2
 		// y = interactingObjects[idLocation][close_object].rect.top - interactingObjects[idLocation][close_object].rect.height * 1.5
 		
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !press_check) {
+		if(player->IsInteract() && !press_check) {
 			press_check = true;
 			switch(close_object) {
 				case 0: {	// don't touch this, because I did it to show you how each object can be unique !!!!!!!!!
@@ -105,7 +105,7 @@ int Interactions::Interact(Player* player, Tile *level) {
 				}
 			}
 		} else {
-			if(press_check && !sf::Keyboard::isKeyPressed(sf::Keyboard::E)) press_check = false;
+			if(press_check && !player->IsInteract()) press_check = false;
 		}
 	}
 	return -1;

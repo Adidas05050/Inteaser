@@ -8,25 +8,25 @@ class Entity
 {
 public:
 
-			// Получить текущее здоровье
+	// Получить текущее здоровье
 	int		GetHealth();
 
-			// Получить текущую скорость
+	// Получить текущую скорость
 	int		GetSpeed();
-	
-			// Получить координаты и размер сущности 
-	auto	GetRect() -> sf::FloatRect;
 
-			// Возвращает центр спрайта		
-	auto	GetCenter() -> sf::Vector2f;
+	// Получить координаты и размер сущности 
+	auto	GetRect()->sf::FloatRect;
 
-			// Жива ли сущность
+	// Возвращает центр спрайта		
+	auto	GetCenter()->sf::Vector2f;
+
+	// Жива ли сущность
 	bool	IsAlive();
 
-					// Атакующие действия	
+	// Атакующие действия	
 	virtual void	Attack() = 0;
 
-				 // Событие происходящее на каждом кадре
+	// Событие происходящее на каждом кадре
 	virtual void OnFrame(sf::View* view) = 0;
 
 protected:
@@ -41,10 +41,10 @@ protected:
 	bool m_isLeftDirection = false;
 	bool m_isStay = true;
 	bool m_isWeak = false;
-	bool m_isAttack = false;
 
 	sf::Sprite m_sprite;
-	std::vector <sf::Texture> AnimState;
+	std::vector <sf::Texture> m_animState;
+
 	enum class AnimState
 	{
 		Idle,
@@ -52,6 +52,25 @@ protected:
 		Attack,
 		PickUp
 	};
+
+	enum class Direction
+	{
+		Up,
+		Left,
+		Right,
+		Down,
+	};
+	enum class ActionState
+	{
+		Idle,
+		Running,
+		Ended
+	};
+
+	ActionState m_attackState = ActionState::Idle;
+	ActionState m_pickUpState = ActionState::Idle;
+	Direction m_direction = Direction::Down;
+	AnimState m_curAnimState = AnimState::Idle;
 
 	sf::FloatRect m_box;
 	sf::Texture m_texture;

@@ -12,11 +12,11 @@ Skelet::Skelet(int health, int speed, Tile *level) {
 	m_speed = speed;
 
 	m_texture.loadFromFile("media/enemy/AxeBanditIdle.png");
-	AnimState.push_back(m_texture);
+	m_animState.push_back(m_texture);
 	m_texture.loadFromFile("media/enemy/AxeBanditRun.png");
-	AnimState.push_back(m_texture);
+	m_animState.push_back(m_texture);
 	m_texture.loadFromFile("media/enemy/AxeBanditAttack.png");
-	AnimState.push_back(m_texture);
+	m_animState.push_back(m_texture);
 	m_objectsSolid = level->GetAllObjects("wall");
 	mObjectSound = level->GetAllObjects("sound");
 }
@@ -95,13 +95,13 @@ void Skelet::Animation()
 {
 	if (m_isStay)
 	{
-		m_sprite.setTexture(AnimState[int (AnimState::Idle)]);
+		m_sprite.setTexture(m_animState[int (AnimState::Idle)]);
 		if (m_frame >= 6)
 			m_frame = 0;
 	}
 	else
 	{
-		m_sprite.setTexture(AnimState[int(AnimState::Walk)]);
+		m_sprite.setTexture(m_animState[int(AnimState::Walk)]);
 		if (m_frame >= 8)
 			m_frame = 0;
 	}

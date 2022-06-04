@@ -4,22 +4,17 @@
 Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window) {
 	m_box.left = x;
 	m_box.top = y;
-	m_box.width = 24;
-	m_box.height = 24;
+	m_box.width = 64;
+	m_box.height = 64;
 
 	m_health = health;
 	m_speed = speed;
 
-	m_forJump.x = 0;
-	m_forJump.y = 0;
+	LoadImages();
 
 	m_playerSprite.setPosition(x, y);
 	m_playerSprite.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
-	m_texture.loadFromFile("media/hero/Player.png");
-	m_playerSprite.setTexture(m_texture);
-	m_frame = 0;
-	m_spriteTile = 0;
-	m_scale = 1;
+	
 	m_objectsSolid = level->GetAllObjects("wall");
 	m_objectsSound = level->GetAllObjects("sound");
 
@@ -39,9 +34,87 @@ Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindo
 	m_window = window;
 }
 //-------------------------------------------------------
+void Player::LoadImages()
+{
+	// Up, Left, Right, Down
+	// Idle, Walk, Attack, PickUp
+	std::vector<sf::Texture> directionList;
+
+	m_texture.loadFromFile("media/hero/idle_up.png");
+	directionList.push_back(m_texture);
+
+	m_texture.loadFromFile("media/hero/idle_side.png");
+	directionList.push_back(m_texture);
+
+	m_texture.loadFromFile("media/hero/idle_side.png");
+	directionList.push_back(m_texture);
+
+	m_texture.loadFromFile("media/hero/idle_down.png");
+	directionList.push_back(m_texture);
+
+	m_animationState[AnimState::Idle] = directionList;
+	m_spritesInAnimation.push_back(5);
+
+	//Walk
+	directionList.clear();
+
+	m_texture.loadFromFile("media/hero/walk_up.png");
+	directionList.push_back(m_texture);
+
+	m_texture.loadFromFile("media/hero/walk_side.png");
+	directionList.push_back(m_texture);
+									   
+	m_texture.loadFromFile("media/hero/walk_side.png");
+	directionList.push_back(m_texture);
+									   
+	m_texture.loadFromFile("media/hero/walk_down.png");
+	directionList.push_back(m_texture);
+
+	m_animationState[AnimState::Walk] = directionList;
+	m_spritesInAnimation.push_back(6);
+
+	//Attack
+	directionList.clear();
+
+	m_texture.loadFromFile("media/hero/attack_up.png");
+	directionList.push_back(m_texture);
+
+	m_texture.loadFromFile("media/hero/attack_side.png");
+	directionList.push_back(m_texture);
+									   
+	m_texture.loadFromFile("media/hero/attack_side.png");
+	directionList.push_back(m_texture);
+									   
+	m_texture.loadFromFile("media/hero/attack_down.png");
+	directionList.push_back(m_texture);
+
+	m_animationState[AnimState::Attack] = directionList;
+	m_spritesInAnimation.push_back(3);
+
+	//PickUp для всех направлений одинаков
+	directionList.clear();
+
+	m_texture.loadFromFile("media/hero/pick_up.png");
+	directionList.push_back(m_texture);
+	directionList.push_back(m_texture);
+	directionList.push_back(m_texture);
+	directionList.push_back(m_texture);
+
+	m_animationState[AnimState::PickUp] = directionList;
+	m_spritesInAnimation.push_back(5);
+
+}
+//-------------------------------------------------------
 void Player::OnFrame(sf::View* view)
 {
+	if (m_frame > 64)
+		m_frame = 0;
+
+	if (m_frame % 4 == 0)
+		m_currentSpriteTile++;
+
 	Attack();
+	PickUp();
 
 	if (m_food < m_maxFood / 2 and m_health > m_maxHealth / 2)
 		m_health -= m_decreaseFood;
@@ -60,43 +133,52 @@ void Player::OnFrame(sf::View* view)
 
 	m_healthBar->Draw(view);
 	m_foodBar->Draw(view);
+
+	m_frame++;
 }
 //-------------------------------------------------------
-void Player::Draw(int scaleX, int scaleY) {
-	float width = scaleX * m_box.width;
-	float height = scaleY * m_box.height;
-	float playerWidth = width / (float) m_box.width;
-	float playerHeight = height / (float) m_box.height;
-	// Для атаки
+void Player::Draw(float scaleX, float scaleY)
+{
+	const float playerWidth = scaleX * m_box.width / (float) m_box.width;
+	const float playerHeight = scaleY * m_box.height / (float) m_box.height;
 
-	// Для передвижения
-	if (m_isStay)
-		m_playerSprite.setTextureRect(sf::IntRect(m_spriteTile*24, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
-	else
-		m_playerSprite.setTextureRect(sf::IntRect(m_spriteTile*24, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT));
 
-	if (m_isLeftDirection)
-	{
-		m_playerSprite.setScale(playerWidth * (-1) * m_scale, playerHeight * m_scale);
-		m_playerSprite.setPosition(m_box.left + PLAYER_WIDTH*3 + m_forJump.x, m_box.top + m_forJump.y);
-	}
-	else
-	{
-		m_playerSprite.setScale(playerWidth * m_scale, playerHeight * m_scale);
-		m_playerSprite.setPosition(m_box.left + m_forJump.x, m_box.top + m_forJump.y);
-	}
+	if (m_currentSpriteTile >= m_spritesInAnimation[int(m_curAnimState)])
+		ResetAnimation();
+
+	// Выставление текстуры
+	m_playerSprite.setTexture(m_animationState[m_curAnimState][static_cast<int>(m_direction)]);
+
+	// Находим в текстуре анимации необходимый кусок. Поддерживает несколько строк в анимации
+	const int widthTexture = int(m_animationState[m_curAnimState][static_cast<int>(m_direction)].getSize().x);
+
+	m_currentColumn = m_currentSpriteTile % (widthTexture / PLAYER_WIDTH);
+
+	if (PLAYER_WIDTH * m_currentSpriteTile - (widthTexture * m_currentRow) >= widthTexture)
+		m_currentRow++;
+	const bool isLeft = m_direction != Direction::Left;
+	const auto& textureRect = sf::IntRect(	PLAYER_WIDTH * m_currentColumn + (isLeft ? PLAYER_WIDTH : 0), PLAYER_WIDTH * m_currentRow,
+											isLeft ? -PLAYER_WIDTH : PLAYER_WIDTH, PLAYER_HEIGHT);
+	m_playerSprite.setTextureRect(textureRect);
+
+	// Выставление позиции
+	m_playerSprite.setScale(playerWidth, playerHeight);
+	m_playerSprite.setPosition(m_box.left - m_box.width / 2, m_box.top - m_box.height / 2);
+
 
 	g_window->draw(m_playerSprite);
 }
 //-------------------------------------------------------
-void Player::Move(sf::FloatRect enemyRect) {
-	m_frame++;
-	if(m_frame > 64) {
-		m_frame = 0;
-	}
+void Player::Move(sf::FloatRect enemyRect)
+{
 	// При атаке стоим на месте
-	if (m_isAttack)
+	if (m_attackState == ActionState::Running)
 		return;
+
+	// Взаимодействие с предметами
+	if (m_pickUpState == ActionState::Running)
+		return;
+
 	m_curSpeed = m_speed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && !m_isWeak)
 	{
@@ -104,73 +186,64 @@ void Player::Move(sf::FloatRect enemyRect) {
 		m_food -= m_decreaseFood;
 	}
 
-	m_isStay = true;
+	m_curAnimState = AnimState::Idle;
+	Direction direction = m_direction;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		m_box.top -= m_curSpeed;
-		m_isStay = false;
+		direction = Direction::Up;
+		m_curAnimState = AnimState::Walk;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		m_box.top += m_curSpeed;
-		m_isStay = false;
+		direction = Direction::Down;
+		m_curAnimState = AnimState::Walk;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		m_box.left += m_curSpeed;
-		m_isLeftDirection = false;
-		m_isStay = false;
+		direction = Direction::Right;
+		m_curAnimState = AnimState::Walk;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		m_box.left -= m_curSpeed;
-		m_isLeftDirection = true;
-		m_isStay = false;
+		direction = Direction::Left;
+		m_curAnimState = AnimState::Walk;
 	}
+
 	Сollision(enemyRect);
-	//*****Jump
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and m_isCanJump) 
+
+	if(direction != m_direction)
+		ResetAnimation();
+
+	m_direction = direction;
+
+	// Звук шагов - off временно
+	//if (m_isStay)
+	//	stepSound[currentNumberSound].stop();
+	//else if (stepSound[currentNumberSound].getStatus() != sf::SoundSource::Status::Playing)
+	//{
+	//	stepSound[0].setPlayingOffset(sf::Time(stepSound->getBuffer()->getDuration() / 2.f));
+	//	stepSound[currentNumberSound].play(); //MUSIC
+	//}
+
+}
+//-------------------------------------------------------
+void Player::ResetAnimation()
+{
+	m_currentColumn = 0;
+	m_currentRow = 0;
+	m_currentSpriteTile = 0;
+
+	if (m_attackState == ActionState::Running)
 	{
-		m_isCanJump = false;
-		std::cout <<"1";
+		m_attackState = ActionState::Ended;
+		m_curAnimState = AnimState::Idle;
 	}
 
-	if(!m_isCanJump and m_scale <= 1.5f and !m_isInAir) {
-		m_scale += 0.1;
-		m_forJump.x -= 3;
-		m_forJump.y -= 12;
-	} else if (m_scale > 1.f) {
-		m_scale -= 0.1;
-		m_forJump.x += 3;
-		m_forJump.y += 12;
-		m_isInAir = true;
-	} else {
-		m_isCanJump = true;
-		m_isInAir = false;
+	if (m_pickUpState == ActionState::Running)
+	{
+		m_pickUpState = ActionState::Ended;
+		m_curAnimState = AnimState::Idle;
 	}
-	//------
-	if(m_spriteTile > PLAYER_FRAME/2 - 1 and m_isStay) {
-		m_spriteTile = 0;
-	}
-
-	if(m_frame % 4 == 0) {
-		if( m_isStay ) {
-			if(m_spriteTile < PLAYER_FRAME/2 - 1)
-				m_spriteTile++;
-			else
-				m_spriteTile = 0;
-		} else {
-			if(m_spriteTile < PLAYER_FRAME - 1)
-				m_spriteTile++;
-			else
-				m_spriteTile = 0;
-			if (m_isStay)
-				stepSound[currentNumberSound].stop();
-			else if(stepSound[currentNumberSound].getStatus() != sf::SoundSource::Status::Playing) 
-			{
-				stepSound[0].setPlayingOffset(sf::Time(stepSound->getBuffer()->getDuration() / 2.f));
-				stepSound[currentNumberSound].play(); //MUSIC
-
-			}
-		}
-	}
-
 }
 //-------------------------------------------------------
 void Player::CollisionSound() {
@@ -258,10 +331,36 @@ void Player::Сollision(sf::FloatRect enemyRect)
 //-------------------------------------------------------
 void Player::Attack()
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		m_isAttack = true;
-	else
-		m_isAttack = false;
+	if (m_attackState == ActionState::Idle && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		ResetAnimation();
+		m_attackState = ActionState::Running;
+		m_curAnimState = AnimState::Attack;
+	}
+	else if (m_attackState == ActionState::Ended)
+	{
+		ResetAnimation();
+		m_attackState = ActionState::Idle;
+		m_curAnimState = AnimState::Idle;
+	}
+
+}
+//-------------------------------------------------------
+void Player::PickUp()
+{
+	if (m_pickUpState == ActionState::Idle && sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	{
+		ResetAnimation();
+		m_pickUpState = ActionState::Running;
+		m_curAnimState = AnimState::PickUp;
+	}
+	else if (m_pickUpState == ActionState::Ended)
+	{
+		ResetAnimation();
+		m_pickUpState = ActionState::Idle;
+		m_curAnimState = AnimState::Idle;
+	}
+
 }
 //-------------------------------------------------------
 // ProgressBar
