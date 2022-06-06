@@ -3,6 +3,11 @@
 
 #include "SFML.hpp"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 const int LEVEL_WIDTH = 3200;
 const int LEVEL_HEIGHT = 3200;
 const int SCREEN_WIDTH = 800;
@@ -46,12 +51,31 @@ class Tile
     void Draw() const;
 
   private:
+    int GetSubRect(int index);
+	void LoadImages(tinyxml2::XMLElement* map, const std::string& filepath);
+
+
     int m_width = 0;
     int m_height = 0;
     int m_tileWidth = 0;
     int m_tileHeight = 0;
-    int m_firstTileID = 0;
-    sf::Texture m_tilesetImage;
+
+    struct TileInfo
+    {
+        TileInfo(int width, int height, int firstId, int size, sf::Texture texture, std::vector<sf::IntRect> subRects)
+	        : Width(width), Height(height), FirstID(firstId), Size(size), Texture(texture), SubRects(subRects)
+    	{}
+        int Width = 0;
+        int Height = 0;
+        int FirstID = 0;
+        int Size = 0;
+        sf::Texture Texture;
+        std::vector<sf::IntRect> SubRects;
+    };
+
+    int m_currentTileInfo = 0;
+    std::vector<TileInfo> m_tileInfo;
+
     std::vector<TmxObject> m_objects;
     std::vector<TmxLayer> m_layers;
 };

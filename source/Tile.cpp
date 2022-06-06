@@ -98,7 +98,90 @@ void TmxObject::MoveTo(const sf::Vector2f &position)
     sprite.setPosition(position);
 }
 //-------------------------------------------------------
-bool Tile::LoadFromFile(const std::string &filepath)
+int Tile::GetSubRect(int index)
+{
+    // У каждого тайл-изображения нумерация идёт с 0 в текстуре.
+    // Здесь происходит выбор из какой текстуры будут взяты координаты
+    for(int i = 0; i < m_tileInfo.size(); i++)
+    {
+        const int firstId = m_tileInfo[i].FirstID;
+        const int size = m_tileInfo[i].Size;
+        if (index >= firstId && index < firstId + size)
+        {
+            m_currentTileInfo = i;
+            return index - m_tileInfo[i].FirstID;
+        }
+
+    }
+    return -1;
+}
+//-------------------------------------------------------
+void Tile::LoadImages(XMLElement* map, const std::string& filepath)
+{
+    
+    for(XMLElement* element = map->FirstChildElement("tileset"); element != nullptr; element = element->NextSiblingElement("tileset"))
+    {
+        // Retrieve tileset description and the first tile GID (Group Identifier).
+        
+        const int firstTileID = std::stoi(element->Attribute("firstgid"));
+        const int tileWidth = std::stoi(element->Attribute("tilewidth"));
+        const int tileHeight = std::stoi(element->Attribute("tileheight"));
+        const int size = std::stoi(element->Attribute("tilecount"));
+
+        // <image> contains tileset texture
+        XMLElement* image = element->FirstChildElement("image");
+        const std::string imageFilename = image->Attribute("source");
+        const std::string imagePath = JoinPaths(GetParentDirectory(filepath), imageFilename);
+        sf::Color matteColor = sf::Color(0, 0, 0, 0);
+        if (image->Attribute("trans") != nullptr)
+        {
+            matteColor = ParseColor(image->Attribute("trans"));
+        }
+
+        sf::Image img;
+        if (!img.loadFromFile(imagePath))
+        {
+            std::cout << "Failed to load tile sheet." << std::endl;
+            continue;
+        }
+
+        // Set tileset matte color, used to composite transparent image on
+        //  background filled with matte color.
+        img.createMaskFromColor(matteColor);
+        sf::Texture texture;
+        // Load texture from file.
+        texture.loadFromImage(img);
+        // Keep texture sharp when resized.
+        texture.setSmooth(false);
+
+        // Retrieve amount of rows and columns in tileset.
+        const int columns = texture.getSize().x / tileWidth;
+        const int rows = texture.getSize().y / tileHeight;
+
+        
+
+        // Collect texture rects list.
+        // Each texture rect is subimage in tileset image, i.e. single tile image.
+        std::vector<sf::IntRect> subRects;
+        for (int y = 0; y < rows; y++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                sf::IntRect rect;
+                rect.top = y * tileHeight;
+                rect.height = tileHeight;
+                rect.left = x * tileWidth;
+                rect.width = tileWidth;
+                subRects.push_back(rect);
+            }
+        }
+
+        // Заполняем информацию о тайл изображении
+        m_tileInfo.emplace_back(tileWidth, tileHeight, firstTileID, size, texture, subRects);
+    }
+}
+//-------------------------------------------------------
+bool Tile::LoadFromFile(const std::string& filepath)
 {
     XMLDocument levelFile;
 
@@ -109,7 +192,7 @@ bool Tile::LoadFromFile(const std::string &filepath)
     }
 
     // Element <map> should be root in TMX format.
-    XMLElement *map = levelFile.FirstChildElement("map");
+    XMLElement* map = levelFile.FirstChildElement("map");
     if (map == 0)
     {
         throw std::runtime_error("<map> element not found");
@@ -122,53 +205,7 @@ bool Tile::LoadFromFile(const std::string &filepath)
     m_tileWidth = std::stoi(map->Attribute("tilewidth"));
     m_tileHeight = std::stoi(map->Attribute("tileheight"));
 
-    // Retrieve tileset description and the first tile GID (Group Identifier).
-    XMLElement *tilesetElement = map->FirstChildElement("tileset");
-    m_firstTileID = std::stoi(tilesetElement->Attribute("firstgid"));
-    // <image> contains tileset texture
-    XMLElement *image = tilesetElement->FirstChildElement("image");
-    const std::string imageFilename = image->Attribute("source");
-    const std::string imagePath = JoinPaths(GetParentDirectory(filepath), imageFilename);
-    sf::Color matteColor = sf::Color(0, 0, 0, 0);
-    if (image->Attribute("trans") != nullptr)
-    {
-        matteColor = ParseColor(image->Attribute("trans"));
-    }
-
-    sf::Image img;
-    if (!img.loadFromFile(imagePath))
-    {
-        std::cout << "Failed to load tile sheet." << std::endl;
-        return false;
-    }
-
-    // Set tileset matte color, used to composite transparent image on
-    //  background filled with matte color.
-    img.createMaskFromColor(matteColor);
-    // Load texture from file.
-    m_tilesetImage.loadFromImage(img);
-    // Keep texture sharp when resized.
-    m_tilesetImage.setSmooth(false);
-
-    // Retrieve amount of rows and columns in tileset.
-    const int columns = m_tilesetImage.getSize().x / m_tileWidth;
-    const int rows = m_tilesetImage.getSize().y / m_tileHeight;
-
-    // Collect texture rects list.
-    // Each texture rect is subimage in tileset image, i.e. single tile image.
-    std::vector<sf::IntRect> subRects;
-    for (int y = 0; y < rows; y++)
-    {
-        for (int x = 0; x < columns; x++)
-        {
-            sf::IntRect rect;
-            rect.top = y * m_tileHeight;
-            rect.height = m_tileHeight;
-            rect.left = x * m_tileWidth;
-            rect.width = m_tileWidth;
-            subRects.push_back(rect);
-        }
-    }
+    LoadImages(map, filepath);
 
     ////////////////////////////////////////////////////////////////////////////
     /// Parse tile layers
@@ -210,15 +247,15 @@ bool Tile::LoadFromFile(const std::string &filepath)
         while (tileElement)
         {
             const int tileGID = std::stoi(tileElement->Attribute("gid"));
-            const int subRectToUse = tileGID - m_firstTileID;
+            const int subRectToUse = GetSubRect(tileGID);
 
             // Figure out texture rect for each tile.
             if (subRectToUse >= 0)
             {
                 sf::Sprite sprite;
-                sprite.setTexture(m_tilesetImage);
-                sprite.setTextureRect(subRects[subRectToUse]);
-                sprite.setPosition(static_cast<float>(x * m_tileWidth), static_cast<float>(y * m_tileHeight));
+                sprite.setTexture(m_tileInfo[m_currentTileInfo].Texture);
+                sprite.setTextureRect(m_tileInfo[m_currentTileInfo].SubRects[subRectToUse]);
+                sprite.setPosition(static_cast<float>(x * m_tileInfo[m_currentTileInfo].Width), static_cast<float>(y * m_tileInfo[m_currentTileInfo].Height));
                 sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
 
                 layer.tiles.push_back(sprite);
@@ -276,7 +313,7 @@ bool Tile::LoadFromFile(const std::string &filepath)
                 float height = 0;
 
                 sf::Sprite sprite;
-                sprite.setTexture(m_tilesetImage);
+                sprite.setTexture(m_tileInfo[m_currentTileInfo].Texture);
                 sprite.setTextureRect(sf::IntRect(0, 0, 0, 0));
                 sprite.setPosition(x, y);
 
@@ -287,10 +324,10 @@ bool Tile::LoadFromFile(const std::string &filepath)
                 }
                 else
                 {
-                    const size_t index = std::stoi(objectElement->Attribute("gid")) - m_firstTileID;
-                    width = static_cast<float>(subRects[index].width);
-                    height = static_cast<float>(subRects[index].height);
-                    sprite.setTextureRect(subRects[index]);
+                    const size_t index = GetSubRect(std::stoi(objectElement->Attribute("gid")));
+                    width = static_cast<float>(m_tileInfo[m_currentTileInfo].SubRects[index].width);
+                    height = static_cast<float>(m_tileInfo[m_currentTileInfo].SubRects[index].height);
+                    sprite.setTextureRect(m_tileInfo[m_currentTileInfo].SubRects[index]);
                     sprite.setOrigin(0, height);
                 }
 

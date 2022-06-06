@@ -3,8 +3,11 @@ TApplication::TApplication()
 {
 	sf::Image img;
 	img.loadFromFile("media/background/map.png");
+	sf::Image grass;
+	img.loadFromFile("media/background/grass.png");
 	sf::Texture tBackground;
 	tBackground.loadFromImage(img);
+	tBackground.loadFromImage(grass);
 }
 //-------------------------------------------------------
 void TApplication::Init() 
@@ -84,8 +87,8 @@ void TApplication::Run()
 		//	dialog = true;
 		//	dialogID = 1;
 		//}
-		player->Draw(3, 3);
-		skelet->draw(3, 3);
+		player->Draw(2, 2);
+		skelet->draw(2, 2);
 		inventory->drawInventory(g_window, &m_guiView);
 		interface->draw(g_window, player->GetRect(), &m_guiView, dialog);
 		if(dialog) {
