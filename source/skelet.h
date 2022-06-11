@@ -6,8 +6,8 @@
 
 class Skelet : public Entity {
 public:
-	Skelet(int health, int speed, Tile *level);
-	void spawn(int x, int y, int health);
+	Skelet(float health, float speed, Tile *level);
+	void spawn(float x, float y, int health);
 	void draw(float scaleX, float scaleY);
 	void OnFrame(sf::View* view) override;
 	void Move(sf::Vector2f playerCenter);
@@ -16,7 +16,8 @@ public:
 
 protected:
 	std::vector<TmxObject> mObjectSound;
-	int	mSpriteTile;
+
+	ProgressBar* m_healthBar = nullptr;
 };
 
 #endif

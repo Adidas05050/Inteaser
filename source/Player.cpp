@@ -1,17 +1,22 @@
 #include "Player.h"
 #include "iostream"
-
-Player::Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window) {
-	m_box.left = x;
-	m_box.top = y;
-	m_box.width = 64;
-	m_box.height = 64;
+namespace
+{
+	const float PlayerBoxWidth = -56.f;
+	const float PlayerBoxHeight = -32.f;
+}
+Player::Player(float x, float y, int health, int speed, Tile *level, sf::RenderWindow* window) {
+	m_box.left = x + PlayerBoxWidth;
+	m_box.top = y + PlayerBoxHeight;
+	m_box.width = 20;
+	m_box.height = 20;
 
 	m_health = health;
 	m_speed = speed;
 
 	LoadImages();
 
+	m_positionSprite = { x, y };
 	m_playerSprite.setPosition(x, y);
 	m_playerSprite.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	
@@ -162,18 +167,34 @@ void Player::Draw(float scaleX, float scaleY)
 	m_playerSprite.setTextureRect(textureRect);
 
 	// Выставление позиции
+	m_positionSprite.x = m_box.left + PlayerBoxWidth;
+	m_positionSprite.y = m_box.top + PlayerBoxHeight;
 	m_playerSprite.setScale(playerWidth, playerHeight);
-	m_playerSprite.setPosition(m_box.left - m_box.width / 2, m_box.top - m_box.height / 2);
-
+	m_playerSprite.setPosition(m_positionSprite);
+	
 
 	g_window->draw(m_playerSprite);
+
+	// Collision box
+	sf::RectangleShape recta;
+	recta.setSize(sf::Vector2f(m_box.width, m_box.height));
+	recta.setOrigin(sf::Vector2f(m_box.width / 2, m_box.height / 2));
+	recta.setOutlineThickness(-1);
+	recta.setFillColor(sf::Color(0, 0, 0, 0));
+	recta.setOutlineColor(sf::Color(255, 0, 0));
+	recta.setPosition(sf::Vector2f(m_box.left + m_box.width / 2, m_box.top + m_box.height / 2));
+
+	g_window->draw(recta);
 }
 //-------------------------------------------------------
-void Player::Move(sf::FloatRect enemyRect)
+void Player::Move(Entity* entity)
 {
-	// При атаке стоим на месте
+	// При атаке стоим на месте и проверяем, долбанули ли мы кого-то
 	if (m_attackState == ActionState::Running)
+	{
+		CollisionAttack(entity);
 		return;
+	}
 
 	// Взаимодействие с предметами
 	if (m_pickUpState == ActionState::Running)
@@ -209,7 +230,7 @@ void Player::Move(sf::FloatRect enemyRect)
 		m_curAnimState = AnimState::Walk;
 	}
 
-	Сollision(enemyRect);
+	Collision(entity);
 
 	if(direction != m_direction)
 		ResetAnimation();
@@ -261,8 +282,59 @@ void Player::CollisionSound() {
 	}
 }
 //-------------------------------------------------------
-void Player::Сollision(sf::FloatRect enemyRect) 
+void Player::CollisionAttack(Entity* entity)
 {
+	const sf::FloatRect enemyRect = entity->GetRect();
+	m_collisionEntity = nullptr;
+	float widthAttack = m_direction == Direction::Left ? -75 : m_direction == Direction::Right ? 75 : 64;
+	float heightAttack = m_direction == Direction::Up ? -75 : m_direction == Direction::Down ? 75 : 64;
+
+	sf::FloatRect rect(0, 0, widthAttack, heightAttack);
+	float addWidth = 0.f;
+	float addHeight = 0.f;
+	switch (m_direction)
+	{
+	case Direction::Left:
+		addWidth = m_playerSprite.getGlobalBounds().width / 2 + 20;
+		addHeight = m_playerSprite.getGlobalBounds().height / 4;
+		break;
+
+	case Direction::Right:
+		addWidth = m_playerSprite.getGlobalBounds().width / 2 - 20;
+		addHeight = m_playerSprite.getGlobalBounds().height / 4;
+		break;
+
+	case Direction::Up:
+		addWidth = m_playerSprite.getGlobalBounds().width / 4;
+		addHeight = m_playerSprite.getGlobalBounds().height / 2 + 20;
+		break;
+
+	case Direction::Down:
+		addWidth = m_playerSprite.getGlobalBounds().width / 4;
+		addHeight = m_playerSprite.getGlobalBounds().height / 4 + 10;
+		break;
+	}
+
+	rect.left +=  m_playerSprite.getGlobalBounds().left + addWidth;
+	rect.top += m_playerSprite.getGlobalBounds().top + addHeight;
+	if (rect.intersects(enemyRect))
+		m_collisionEntity = entity;
+
+	sf::RectangleShape recta;
+	recta.setSize(sf::Vector2f(rect.width, rect.height));
+	recta.setOrigin(sf::Vector2f(rect.width / 2, rect.height / 2));
+	recta.setOutlineThickness(-1);
+	recta.setFillColor(sf::Color(0, 0, 0, 0));
+	recta.setOutlineColor(sf::Color(0, 255, 0));
+	recta.setPosition(sf::Vector2f(rect.left + rect.width / 2, rect.top + rect.height / 2));
+
+	g_window->draw(recta);
+}
+//-------------------------------------------------------
+void Player::Collision(Entity* entity)
+{
+	const sf::FloatRect enemyRect = entity->GetRect();
+
 	for(int i = 0; i < m_objectsSolid.size(); i++)
 	{
 
@@ -296,37 +368,36 @@ void Player::Сollision(sf::FloatRect enemyRect)
 		
 	}
 	
-	for(int i = 0; i < 1; i++) 
+	m_box.top += m_speed;
+	if(GetRect().intersects(enemyRect) )
+	{
+		m_box.top -= m_speed;
+	}
+	m_box.top -= m_speed;
+
+	m_box.left += m_speed;
+	if(GetRect().intersects(enemyRect) )
+	{
+		m_box.left -= m_speed;
+
+	}
+	m_box.left -= m_speed;
+
+	m_box.left -= m_speed;
+	if(GetRect().intersects(enemyRect) )
+	{
+		m_box.left += m_speed;
+
+	}
+	m_box.left += m_speed;
+
+	m_box.top -= m_speed;
+	if(GetRect().intersects(enemyRect) )
 	{
 		m_box.top += m_speed;
-		if(GetRect().intersects(enemyRect) )
-		{
-			m_box.top -= m_speed;
-		}
-		m_box.top -= m_speed;
-
-		m_box.left += m_speed;
-		if(GetRect().intersects(enemyRect) )
-		{
-			m_box.left -= m_speed;
-		}
-		m_box.left -= m_speed;
-
-		m_box.left -= m_speed;
-		if(GetRect().intersects(enemyRect) )
-		{
-			m_box.left += m_speed;
-		}
-		m_box.left += m_speed;
-
-		m_box.top -= m_speed;
-		if(GetRect().intersects(enemyRect) )
-		{
-			m_box.top += m_speed;
-		}
-		m_box.top += m_speed;
 	}
-	
+	m_box.top += m_speed;
+
 }
 //-------------------------------------------------------
 void Player::Attack()
@@ -342,6 +413,9 @@ void Player::Attack()
 		ResetAnimation();
 		m_attackState = ActionState::Idle;
 		m_curAnimState = AnimState::Idle;
+
+		if(m_collisionEntity != nullptr)
+			m_collisionEntity->SetDamage(10.f);
 	}
 
 }
@@ -361,40 +435,5 @@ void Player::PickUp()
 		m_curAnimState = AnimState::Idle;
 	}
 
-}
-//-------------------------------------------------------
-// ProgressBar
-//-------------------------------------------------------
-Player::ProgressBar::ProgressBar(sf::Vector2f size, sf::Color color)
-{
-	m_background.setSize(size);
-	m_background.setFillColor(sf::Color::Black);
-	m_foreground.setSize(size);
-	m_foreground.setFillColor(color);
-}
-//-------------------------------------------------------
-void Player::ProgressBar::SetProgress(float progress)
-{
-	m_foreground.setScale(progress, 1.f);
-}
-//-------------------------------------------------------
-void Player::ProgressBar::SetColor(sf::Color color)
-{
-	m_foreground.setFillColor(color);
-}
-//-------------------------------------------------------
-void Player::ProgressBar::SetPosition(sf::Vector2f position)
-{
-	m_position = position;
-}
-//-------------------------------------------------------
-void Player::ProgressBar::Draw(sf::View* view)
-{
-	const auto& coordBegin = view->getCenter() - view->getSize() / 2.f;
-	sf::Vector2f positionOnView = sf::Vector2f(m_position.x + coordBegin.x, m_position.y + coordBegin.y);
-	m_background.setPosition(positionOnView);
-	m_foreground.setPosition(positionOnView);
-	g_window->draw(m_background);
-	g_window->draw(m_foreground);
 }
 //-------------------------------------------------------

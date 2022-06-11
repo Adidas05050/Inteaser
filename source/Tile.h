@@ -2,6 +2,7 @@
 #define TILE_H
 
 #include "SFML.hpp"
+#include "ctime"
 
 namespace tinyxml2
 {
@@ -30,15 +31,32 @@ struct TmxObject
     sf::Sprite sprite;
 };
 
+struct AnimationSprite
+{
+    AnimationSprite(sf::Sprite sprite, float duration) : TileSprite(sprite), Duration(duration) {}
+    sf::Sprite TileSprite;
+    float Duration = 0.f;
+};
+
+struct AnimationTiles
+{
+    AnimationTiles(std::vector<AnimationSprite> sprites) : TileSprite(std::move(sprites)) {}
+    std::vector<AnimationSprite> TileSprite;
+
+    mutable float ElapsedTime = 0;
+    mutable int CurrentTile = 0;
+
+};
+
 struct TmxLayer
 {
     sf::Uint8 opacity = 0;
-    std::vector<sf::Sprite> tiles;
+    std::vector<AnimationTiles> tiles;
 };
 
 class Tile
 {
-  public:
+public:
     bool LoadFromFile(const std::string &filepath);
 
     TmxObject GetFirstObject(const std::string &name) const;
@@ -48,17 +66,30 @@ class Tile
     float GetTilemapHeight() const;
     sf::Vector2f GetTilemapSize() const;
 
-    void Draw() const;
+    void Draw();
 
-  private:
-    int GetSubRect(int index);
-	void LoadImages(tinyxml2::XMLElement* map, const std::string& filepath);
+private:
+    sf::Clock   m_clock;
+    float       m_prevTime;
+
+	struct AnimationInfo
+	{
+		AnimationInfo(int frameId, float duration) : FrameId(frameId), Duration(duration) {}
+		int     FrameId = 0;
+		float   Duration = 0.f;
+	};
+    std::vector<AnimationInfo>    LoadAnimation(tinyxml2::XMLElement* element) const;
+
+    int     GetSubRect(int index);
+    void    LoadImages(tinyxml2::XMLElement* map, const std::string& filepath);
 
 
     int m_width = 0;
     int m_height = 0;
     int m_tileWidth = 0;
     int m_tileHeight = 0;
+
+   
 
     struct TileInfo
     {
@@ -71,8 +102,10 @@ class Tile
         int Size = 0;
         sf::Texture Texture;
         std::vector<sf::IntRect> SubRects;
+        std::map<int, std::vector<AnimationInfo>> Animations; // Карта анимаций ключ - Id анимированого тайла. значение - список фреймов
     };
 
+    
     int m_currentTileInfo = 0;
     std::vector<TileInfo> m_tileInfo;
 

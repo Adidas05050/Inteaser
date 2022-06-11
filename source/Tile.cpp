@@ -100,6 +100,9 @@ void TmxObject::MoveTo(const sf::Vector2f &position)
 //-------------------------------------------------------
 int Tile::GetSubRect(int index)
 {
+    if (index == -1)
+        return -1;
+
     // У каждого тайл-изображения нумерация идёт с 0 в текстуре.
     // Здесь происходит выбор из какой текстуры будут взяты координаты
     for(int i = 0; i < m_tileInfo.size(); i++)
@@ -114,6 +117,18 @@ int Tile::GetSubRect(int index)
 
     }
     return -1;
+}
+//-------------------------------------------------------
+std::vector<Tile::AnimationInfo> Tile::LoadAnimation(XMLElement* element) const
+{
+    std::vector<Tile::AnimationInfo> animations;
+    for (XMLElement* frameElement = element->FirstChildElement("frame"); frameElement != nullptr; frameElement = frameElement->NextSiblingElement("frame"))
+    {
+        const int tileId = std::stoi(frameElement->Attribute("tileid"));
+        const int duration = std::stoi(frameElement->Attribute("duration"));
+        animations.emplace_back(tileId, duration);
+    }
+    return animations;
 }
 //-------------------------------------------------------
 void Tile::LoadImages(XMLElement* map, const std::string& filepath)
@@ -158,8 +173,6 @@ void Tile::LoadImages(XMLElement* map, const std::string& filepath)
         const int columns = texture.getSize().x / tileWidth;
         const int rows = texture.getSize().y / tileHeight;
 
-        
-
         // Collect texture rects list.
         // Each texture rect is subimage in tileset image, i.e. single tile image.
         std::vector<sf::IntRect> subRects;
@@ -175,9 +188,18 @@ void Tile::LoadImages(XMLElement* map, const std::string& filepath)
                 subRects.push_back(rect);
             }
         }
-
         // Заполняем информацию о тайл изображении
-        m_tileInfo.emplace_back(tileWidth, tileHeight, firstTileID, size, texture, subRects);
+        TileInfo tileInfo(tileWidth, tileHeight, firstTileID, size, texture, subRects);
+
+        //  Заполнение анимаций тайла
+        const auto& animationElement = element->FirstChildElement("tile");
+        if (animationElement != nullptr)
+        {
+            const int parentTileId = std::stoi(animationElement->Attribute("id"));
+            tileInfo.Animations[parentTileId] = LoadAnimation(animationElement->FirstChildElement("animation"));
+        }
+
+        m_tileInfo.emplace_back(tileInfo);
     }
 }
 //-------------------------------------------------------
@@ -246,19 +268,41 @@ bool Tile::LoadFromFile(const std::string& filepath)
         int y = 0;
         while (tileElement)
         {
-            const int tileGID = std::stoi(tileElement->Attribute("gid"));
+            int tileGID = -1;
+            if(tileElement->FindAttribute("gid"))
+                tileGID = std::stoi(tileElement->Attribute("gid"));
             const int subRectToUse = GetSubRect(tileGID);
 
             // Figure out texture rect for each tile.
             if (subRectToUse >= 0)
             {
-                sf::Sprite sprite;
-                sprite.setTexture(m_tileInfo[m_currentTileInfo].Texture);
-                sprite.setTextureRect(m_tileInfo[m_currentTileInfo].SubRects[subRectToUse]);
-                sprite.setPosition(static_cast<float>(x * m_tileInfo[m_currentTileInfo].Width), static_cast<float>(y * m_tileInfo[m_currentTileInfo].Height));
-                sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
+                std::vector<AnimationSprite> animTiles;
 
-                layer.tiles.push_back(sprite);
+                if (m_tileInfo[m_currentTileInfo].Animations[subRectToUse].empty())
+                {
+                    sf::Sprite sprite;
+                    sprite.setTexture(m_tileInfo[m_currentTileInfo].Texture);
+                    sprite.setTextureRect(m_tileInfo[m_currentTileInfo].SubRects[subRectToUse]);
+                    sprite.setPosition(static_cast<float>(x * m_tileInfo[m_currentTileInfo].Width), static_cast<float>(y * m_tileInfo[m_currentTileInfo].Height));
+                    sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
+
+                    animTiles.emplace_back(sprite, -1.f);
+                }
+                else
+                {
+	                for(const auto& anim : m_tileInfo[m_currentTileInfo].Animations[subRectToUse])
+	                {
+                        sf::Sprite sprite;
+                        sprite.setTexture(m_tileInfo[m_currentTileInfo].Texture);
+                        sprite.setTextureRect(m_tileInfo[m_currentTileInfo].SubRects[anim.FrameId]);
+                        sprite.setPosition(static_cast<float>(x * m_tileInfo[m_currentTileInfo].Width), static_cast<float>(y * m_tileInfo[m_currentTileInfo].Height));
+                        sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
+
+                        animTiles.emplace_back(sprite, anim.Duration / 1000.f);
+	                }
+                }
+                layer.tiles.emplace_back(animTiles);
+
             }
 
             tileElement = tileElement->NextSiblingElement("tile");
@@ -324,11 +368,14 @@ bool Tile::LoadFromFile(const std::string& filepath)
                 }
                 else
                 {
-                    const size_t index = GetSubRect(std::stoi(objectElement->Attribute("gid")));
-                    width = static_cast<float>(m_tileInfo[m_currentTileInfo].SubRects[index].width);
-                    height = static_cast<float>(m_tileInfo[m_currentTileInfo].SubRects[index].height);
-                    sprite.setTextureRect(m_tileInfo[m_currentTileInfo].SubRects[index]);
-                    sprite.setOrigin(0, height);
+                    if (objectElement->FindAttribute("gid"))
+                    {
+                        const size_t index = std::stoi(objectElement->Attribute("gid"));
+                        width = static_cast<float>(m_tileInfo[m_currentTileInfo].SubRects[index].width);
+                        height = static_cast<float>(m_tileInfo[m_currentTileInfo].SubRects[index].height);
+                        sprite.setTextureRect(m_tileInfo[m_currentTileInfo].SubRects[index]);
+                        sprite.setOrigin(0, height);
+                    }
                 }
 
                 // Define object
@@ -423,19 +470,32 @@ sf::Vector2f Tile::GetTilemapSize() const
     return sf::Vector2f(GetTilemapWidth(), GetTilemapHeight());
 }
 //-------------------------------------------------------
-void Tile::Draw() const
+void Tile::Draw()
 {
+	float time = m_clock.getElapsedTime().asSeconds();
     const sf::FloatRect viewportRect = g_window->getView().getViewport();
 
     // Draw all tiles (and don't draw objects)
     for (const auto &layer : m_layers)
     {
-        for (const auto &tile : layer.tiles)
+
+        for (const auto& tiles : layer.tiles)
         {
-            if (viewportRect.intersects(tile.getLocalBounds()))
+            tiles.ElapsedTime += time - m_prevTime;
+            if (tiles.TileSprite[tiles.CurrentTile].Duration > 0.f && tiles.ElapsedTime > tiles.TileSprite[tiles.CurrentTile].Duration)
             {
-                g_window->draw(tile);
+                tiles.CurrentTile += 1;
+                if (tiles.CurrentTile >= tiles.TileSprite.size())
+                    tiles.CurrentTile = 0;
+                tiles.ElapsedTime = 0;
             }
+
+            if (viewportRect.intersects(tiles.TileSprite[tiles.CurrentTile].TileSprite.getLocalBounds()))
+            {
+                g_window->draw(tiles.TileSprite[tiles.CurrentTile].TileSprite);
+            }
+            
         }
     }
+    m_prevTime = time;
 }

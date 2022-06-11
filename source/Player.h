@@ -8,7 +8,7 @@
 class Player : public Entity, public Music 
 {
 public:
-	Player(int x, int y, int health, int speed, Tile *level, sf::RenderWindow* window);
+	Player(float x, float y, int health, int speed, Tile *level, sf::RenderWindow* window);
 
 		// События каждый кадр
 	void OnFrame(sf::View* view) override;
@@ -17,11 +17,12 @@ public:
 	void Draw(float scaleX, float scaleY);
 			
 		 // Перемещение персонажа
-	void Move(sf::FloatRect enemyRect);
+	void Move(Entity* entity);
 
-	// Проверка столкновений с объектами
-	void Сollision(sf::FloatRect enemyRect);
+		 // Проверка столкновений с объектами
+	void Collision(Entity* entity);
 
+		 // Раздача снижающая прочность
 	void Attack() override;
 
 	void CollisionSound();
@@ -35,10 +36,14 @@ public:
 
 private:
 
+	Entity* m_collisionEntity = nullptr; // То с чем сейчас коллизится игрок. Возможно нужен список всех
+
 	void LoadImages();
 	void ResetAnimation();
 
 	void PickUp();
+
+	void CollisionAttack(Entity* entity);
 
 	std::vector<TmxObject> m_objectsSound;
 		
@@ -49,25 +54,8 @@ private:
 	std::vector<int>								m_spritesInAnimation;
 
 	sf::Sprite	m_playerSprite;
-	int			m_currentSpriteTile = 0;
 	int			m_currentRow = 0;
 	int			m_currentColumn = 0;
-
-	// Структура для различных прогресс-баров: еда, здоровье и т.п.
-	struct ProgressBar
-	{
-	public:
-		ProgressBar(sf::Vector2f size, sf::Color color);
-		void SetProgress(float progress);
-		void SetColor(sf::Color color);
-		void SetPosition(sf::Vector2f position);
-		void Draw(sf::View* view);
-	private:
-		sf::Color			m_defaultColor;
-		sf::RectangleShape	m_background;
-		sf::RectangleShape	m_foreground;
-		sf::Vector2f		m_position;
-	};
 
 	ProgressBar* m_healthBar = nullptr;
 	ProgressBar* m_foodBar	 = nullptr;
