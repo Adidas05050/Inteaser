@@ -39,7 +39,7 @@ void Skelet::OnFrame(sf::View* view)
 		m_currentSpriteTile++;
 
 	Animation();
-
+	Attack();
 	// Collision box
 	sf::RectangleShape recta;
 	recta.setSize(sf::Vector2f(m_box.width, m_box.height));
@@ -55,11 +55,12 @@ void Skelet::OnFrame(sf::View* view)
 	m_frame++;
 }
 //-------------------------------------------------------
-void Skelet::spawn(float x, float y, int health) {
+void Skelet::spawn(Entity* player, float x, float y, int health) {
+	m_collisionEntity = player;
 	m_sprite.setPosition(x, y);
 	m_box.left = x;
 	m_box.top = y;
-	m_health = 100;
+	m_health = health;
 	m_positionSprite = { x, y };
 }
 //-------------------------------------------------------
@@ -121,6 +122,22 @@ void Skelet::Move(sf::Vector2f playerCenter)
 	}
 }
 //-------------------------------------------------------
+void Skelet::Attack()
+{
+	if (!IsAlive())
+		return;
+	// Без анимаций всё просто.
+	if (!m_canAttack && m_frame % 16 == 0)
+		m_canAttack = true;
+
+	if (m_canAttack && Math::GetDistance(m_collisionEntity->GetCenter().x, m_collisionEntity->GetCenter().y, GetCenter().x, GetCenter().y) < 47)
+	{
+		m_canAttack = false;
+		m_collisionEntity->SetDamage(5.f);
+	}
+
+}
+//-------------------------------------------------------
 void Skelet::Animation()
 {
 	if(!IsAlive())
@@ -143,4 +160,5 @@ void Skelet::Animation()
 	else
 		m_sprite.setTextureRect(sf::IntRect(m_frameStep * int(m_currentSpriteTile), 0, m_frameStep, m_frameStep));
 }
+//-------------------------------------------------------
 

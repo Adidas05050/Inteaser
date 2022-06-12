@@ -36,8 +36,6 @@ public:
 
 private:
 
-	Entity* m_collisionEntity = nullptr; // То с чем сейчас коллизится игрок. Возможно нужен список всех
-
 	void LoadImages();
 	void ResetAnimation();
 

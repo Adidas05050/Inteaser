@@ -45,6 +45,9 @@ protected:
 	bool	m_isStay = true;
 	bool	m_isWeak = false;
 	int		m_currentSpriteTile = 0;
+	bool	m_canAttack = true;
+
+	Entity* m_collisionEntity = nullptr; // То с чем сейчас коллизится сущность. Возможно нужен список всех
 
 	sf::Vector2f m_positionSprite = {0.f, 0.f};
 	sf::Sprite m_sprite;

@@ -20,7 +20,7 @@ void TApplication::Init()
 	level = new Tile();
 	level->LoadFromFile("map/testMap.tmx");
 	player = new Player(200, 200, 200, 10, level, g_window);
-	skelet = new Skelet(100, 10, level);
+	skelet = new Skelet(20, 10, level);
 	interface = new ControlLight(level);
 	m_heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 	m_guiView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -46,7 +46,7 @@ void TApplication::Run()
 	sf::Color color(0, 0, 0, 255);
 	textMission.setFillColor(color);
 	sf::Event event{};
-	skelet->spawn(1100, 1100, 100);
+	skelet->spawn(player, 1100, 1100, 20);
 
 	while (g_window->isOpen()) 
 	{

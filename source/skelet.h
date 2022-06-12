@@ -7,11 +7,11 @@
 class Skelet : public Entity {
 public:
 	Skelet(float health, float speed, Tile *level);
-	void spawn(float x, float y, int health);
+	void spawn(Entity* player, float x, float y, int health);
 	void draw(float scaleX, float scaleY);
 	void OnFrame(sf::View* view) override;
 	void Move(sf::Vector2f playerCenter);
-	void Attack() override {};
+	void Attack() override;
 	void Animation();
 
 protected:
