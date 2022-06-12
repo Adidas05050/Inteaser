@@ -32,6 +32,7 @@ public:
 	// Событие происходящее на каждом кадре
 	virtual void OnFrame(sf::View* view) = 0;
 
+
 protected:
 	float	m_curSpeed = 0;
 	float	m_speed = 0;
@@ -66,8 +67,11 @@ protected:
 		Up,
 		Left,
 		Right,
-		Down,
+		Down
 	};
+	sf::IntRect Collision();
+	sf::IntRect CollisionSimple();
+
 	enum class ActionState
 	{
 		Idle,

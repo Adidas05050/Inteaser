@@ -30,6 +30,90 @@ bool Entity::IsAlive() const
 	return m_health > 0;
 }
 //-------------------------------------------------------
+sf::IntRect Entity::Collision()
+{
+	sf::IntRect collision;
+	for (int i = 0; i < m_objectsSolid.size(); i++)
+	{
+		
+		m_box.left += m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			m_box.left -= m_curSpeed;
+			collision.width = 1;
+		}
+		m_box.left -= m_curSpeed;
+
+		m_box.left -= m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			m_box.left += m_curSpeed;
+			collision.left = 1;
+
+		}
+		m_box.left += m_curSpeed;
+
+		m_box.top += m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			m_box.top -= m_curSpeed;
+			collision.height = 1;
+
+		}
+		m_box.top -= m_curSpeed;
+
+		m_box.top -= m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			m_box.top += m_curSpeed;
+			collision.top = 1;
+
+		}
+		m_box.top += m_curSpeed;
+	}
+	return collision;
+}
+//-------------------------------------------------------
+sf::IntRect Entity::CollisionSimple()
+{
+	sf::IntRect collision;
+	for (int i = 0; i < m_objectsSolid.size(); i++)
+	{
+		
+		m_box.left += m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			collision.width = 1;
+		}
+		m_box.left -= m_curSpeed;
+
+		m_box.left -= m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			collision.left = 1;
+
+		}
+		m_box.left += m_curSpeed;
+
+		m_box.top += m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			collision.height = 1;
+
+		}
+		m_box.top -= m_curSpeed;
+
+		m_box.top -= m_curSpeed;
+		if (GetRect().intersects(m_objectsSolid[i].rect))
+		{
+			collision.top = 1;
+
+		}
+		m_box.top += m_curSpeed;
+	}
+	return collision;
+}
+//-------------------------------------------------------
 // ProgressBar
 //-------------------------------------------------------
 Entity::ProgressBar::ProgressBar(sf::Vector2f size, sf::Color color)

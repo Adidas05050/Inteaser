@@ -71,8 +71,6 @@ void Skelet::draw(float scaleX, float scaleY) {
 	float skeletHeight = height / (float) m_box.height;
 	m_sprite.setScale(skeletWidth, skeletHeight);
 
-	m_positionSprite.x = m_box.left + EntityBoxWidth;
-	m_positionSprite.y = m_box.top + EntityBoxHeight;
 	m_sprite.setPosition(m_positionSprite);
 	
 	if(m_box.left != -1 )
@@ -88,7 +86,7 @@ void Skelet::Move(sf::Vector2f playerCenter)
 	// Мёртвые не ходят, только если нет особой логики
 	if (!IsAlive())
 		return;
-
+	m_curSpeed = m_speed;
 	m_isStay = true;
 
 	// Пока что так: игрок далеко стоим чилим
@@ -98,28 +96,40 @@ void Skelet::Move(sf::Vector2f playerCenter)
 	if(Math::GetDistance(playerCenter.x, playerCenter.y, GetCenter().x, GetCenter().y) < 47)
 		return;
 
-	if (playerCenter.x < GetCenter().x - m_box.width)
+	sf::IntRect direction = CollisionSimple();
+	if (direction.top && playerCenter.y < GetCenter().y)
+		return;
+	if (direction.height && playerCenter.y > GetCenter().y)
+		return;
+	if (direction.width && playerCenter.x > GetCenter().x)
+		return;
+	if (direction.left && playerCenter.x < GetCenter().x)
+		return;
+
+	if (!direction.left && playerCenter.x < GetCenter().x - m_box.width)
 	{
 		m_box.left -= m_speed;
 		m_isLeftDirection = true;
 		m_isStay = false;
 	}
-	if (playerCenter.x > GetCenter().x + m_box.width)
+	if (!direction.width && playerCenter.x > GetCenter().x + m_box.width)
 	{
 		m_box.left += m_speed;
 		m_isLeftDirection = false;
 		m_isStay = false;
 	}
-	if (playerCenter.y < GetCenter().y - m_box.height)
+	if (!direction.top && playerCenter.y < GetCenter().y - m_box.height)
 	{
 		m_box.top -= m_speed;
 		m_isStay = false;
 	}
-	if (playerCenter.y > GetCenter().y + m_box.height)
+	if (!direction.height && playerCenter.y > GetCenter().y + m_box.height)
 	{
 		m_box.top += m_speed;
 		m_isStay = false;
 	}
+
+	
 }
 //-------------------------------------------------------
 void Skelet::Attack()
@@ -140,8 +150,16 @@ void Skelet::Attack()
 //-------------------------------------------------------
 void Skelet::Animation()
 {
-	if(!IsAlive())
+	m_positionSprite.x = m_box.left + EntityBoxWidth;
+	m_positionSprite.y = m_box.top + EntityBoxHeight;
+
+	if (!IsAlive())
+	{
 		m_currentSpriteTile = 0;
+		if(m_sprite.getRotation() == 0.f)
+			m_sprite.rotate(90);
+		m_positionSprite.x = m_box.left + m_frameStep;
+	}
 
 	if (m_isStay)
 	{

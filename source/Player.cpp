@@ -286,8 +286,8 @@ void Player::CollisionAttack(Entity* entity)
 {
 	const sf::FloatRect enemyRect = entity->GetRect();
 	m_collisionEntity = nullptr;
-	float widthAttack = m_direction == Direction::Left ? -75 : m_direction == Direction::Right ? 75 : 64;
-	float heightAttack = m_direction == Direction::Up ? -75 : m_direction == Direction::Down ? 75 : 64;
+	const float widthAttack = m_direction == Direction::Left ? -75 : m_direction == Direction::Right ? 75 : 64;
+	const float heightAttack = m_direction == Direction::Up ? -75 : m_direction == Direction::Down ? 75 : 64;
 
 	sf::FloatRect rect(0, 0, widthAttack, heightAttack);
 	float addWidth = 0.f;
@@ -335,38 +335,7 @@ void Player::Collision(Entity* entity)
 {
 	const sf::FloatRect enemyRect = entity->GetRect();
 
-	for(int i = 0; i < m_objectsSolid.size(); i++)
-	{
-
-		m_box.top += m_curSpeed;
-		if( GetRect().intersects(m_objectsSolid[i].rect))
-		{
-			m_box.top -= m_curSpeed;
-		}
-		m_box.top -= m_curSpeed;
-
-		m_box.top -= m_curSpeed;
-		if (GetRect().intersects(m_objectsSolid[i].rect))
-		{
-			m_box.top += m_curSpeed;
-		}
-		m_box.top += m_curSpeed;
-
-		m_box.left += m_curSpeed;
-		if(GetRect().intersects(m_objectsSolid[i].rect) )
-		{
-			m_box.left -= m_curSpeed;
-		}
-		m_box.left -= m_curSpeed;
-
-		m_box.left -= m_curSpeed;
-		if(GetRect().intersects(m_objectsSolid[i].rect) )
-		{
-			m_box.left += m_curSpeed;
-		}
-		m_box.left += m_curSpeed;
-		
-	}
+	Entity::Collision();
 	
 	m_box.top += m_speed;
 	if(GetRect().intersects(enemyRect) )
