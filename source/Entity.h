@@ -48,7 +48,7 @@ protected:
 	int		m_currentSpriteTile = 0;
 	bool	m_canAttack = true;
 
-	Entity* m_collisionEntity = nullptr; // То с чем сейчас коллизится сущность. Возможно нужен список всех
+	std::vector<Entity*> m_collisionEntities; // То с чем сейчас коллизится сущность.
 
 	sf::Vector2f m_positionSprite = {0.f, 0.f};
 	sf::Sprite m_sprite;

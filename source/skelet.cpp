@@ -5,23 +5,34 @@ namespace
 	const float EntityBoxWidth = -70;
 	const float EntityBoxHeight = -60;
 }
-Skelet::Skelet(float health, float speed, Tile *level) {
+Skelet::Skelet(float health, float speed, Tile *level, Type type) {
 	m_box.left = EntityBoxWidth;
 	m_box.top = EntityBoxHeight;
 	m_box.width = 20;
 	m_box.height = 20;
 	m_frameStep = 80;
-	
+	m_type = type;
 	m_health = health;
 	m_maxHealth = health;
 	m_speed = speed;
-
-	m_texture.loadFromFile("media/enemy/AxeBanditIdle.png");
-	m_animState.push_back(m_texture);
-	m_texture.loadFromFile("media/enemy/AxeBanditRun.png");
-	m_animState.push_back(m_texture);
-	m_texture.loadFromFile("media/enemy/AxeBanditAttack.png");
-	m_animState.push_back(m_texture);
+	if (type == Type::Bandit)
+	{
+		m_texture.loadFromFile("media/enemy/AxeBanditIdle.png");
+		m_animState.push_back(m_texture);
+		m_texture.loadFromFile("media/enemy/AxeBanditRun.png");
+		m_animState.push_back(m_texture);
+		m_texture.loadFromFile("media/enemy/AxeBanditAttack.png");
+		m_animState.push_back(m_texture);
+	}
+	else if(type == Type::Ara)
+	{
+		m_texture.loadFromFile("media/enemy/Ara80.png");
+		m_animState.push_back(m_texture);
+		m_texture.loadFromFile("media/enemy/Ara80.png");
+		m_animState.push_back(m_texture);
+		m_texture.loadFromFile("media/enemy/Ara80.png");
+		m_animState.push_back(m_texture);
+	}
 	m_objectsSolid = level->GetAllObjects("wall");
 	mObjectSound = level->GetAllObjects("sound");
 
@@ -56,7 +67,7 @@ void Skelet::OnFrame(sf::View* view)
 }
 //-------------------------------------------------------
 void Skelet::spawn(Entity* player, float x, float y, int health) {
-	m_collisionEntity = player;
+	m_collisionEntities.push_back(player);
 	m_sprite.setPosition(x, y);
 	m_box.left = x;
 	m_box.top = y;
@@ -90,7 +101,7 @@ void Skelet::Move(sf::Vector2f playerCenter)
 	m_isStay = true;
 
 	// Пока что так: игрок далеко стоим чилим
-	if(Math::GetDistance(playerCenter.x, playerCenter.y, GetCenter().x, GetCenter().y) > 200)
+	if(Math::GetDistance(playerCenter.x, playerCenter.y, GetCenter().x, GetCenter().y) > (m_type == Type::Bandit ? 200 : 500))
 		return;
 
 	if(Math::GetDistance(playerCenter.x, playerCenter.y, GetCenter().x, GetCenter().y) < 47)
@@ -134,16 +145,26 @@ void Skelet::Move(sf::Vector2f playerCenter)
 //-------------------------------------------------------
 void Skelet::Attack()
 {
+	if (m_attackState == ActionState::Ended)
+		m_attackState = ActionState::Idle;
+
 	if (!IsAlive())
 		return;
-	// Без анимаций всё просто.
-	if (!m_canAttack && m_frame % 16 == 0)
+
+	if (!m_canAttack && m_frame % 20 == 0)
 		m_canAttack = true;
 
-	if (m_canAttack && Math::GetDistance(m_collisionEntity->GetCenter().x, m_collisionEntity->GetCenter().y, GetCenter().x, GetCenter().y) < 47)
+	if(m_collisionEntities.empty() )
+		return;
+
+	for (const auto& enemy : m_collisionEntities)
 	{
-		m_canAttack = false;
-		m_collisionEntity->SetDamage(5.f);
+		if (m_canAttack && Math::GetDistance(enemy->GetCenter().x, enemy->GetCenter().y, GetCenter().x, GetCenter().y) < 47)
+		{
+			m_attackState = ActionState::Running;
+			m_canAttack = false;
+			enemy->SetDamage(5.f);
+		}
 	}
 
 }
@@ -161,16 +182,35 @@ void Skelet::Animation()
 		m_positionSprite.x = m_box.left + m_frameStep;
 	}
 
-	if (m_isStay)
+	if(m_attackState == ActionState::Running)
+	{
+		m_sprite.setTexture(m_animState[int(AnimState::Attack)]);
+		if (m_type == Type::Bandit && m_currentSpriteTile >= 7)
+		{
+			m_attackState = ActionState::Ended;
+			m_currentSpriteTile = 0;
+		}
+		else if (m_type == Type::Ara && m_currentSpriteTile >= 4)
+		{
+			m_attackState = ActionState::Ended;
+			m_currentSpriteTile = 0;
+		}
+
+	}
+	else if (m_isStay)
 	{
 		m_sprite.setTexture(m_animState[int (AnimState::Idle)]);
-		if (m_currentSpriteTile >= 6)
+		if (m_type == Type::Bandit && m_currentSpriteTile >= 6)
+			m_currentSpriteTile = 0;
+		else if (m_type == Type::Ara && m_currentSpriteTile >= 4)
 			m_currentSpriteTile = 0;
 	}
 	else
 	{
 		m_sprite.setTexture(m_animState[int(AnimState::Walk)]);
-		if (m_currentSpriteTile >= 8)
+		if (m_type == Type::Bandit && m_currentSpriteTile >= 8)
+			m_currentSpriteTile = 0;
+		else if (m_type == Type::Ara && m_currentSpriteTile >= 4)
 			m_currentSpriteTile = 0;
 	}
 	if (m_isLeftDirection)

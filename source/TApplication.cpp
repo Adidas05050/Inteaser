@@ -16,47 +16,104 @@ void TApplication::Init()
 	g_window->setFramerateLimit(30);
 	g_window->setVerticalSyncEnabled(true);
 
-	inventory = new Inventory();
-	level = new Tile();
-	level->LoadFromFile("map/testMap.tmx");
-	player = new Player(200, 200, 200, 10, level, g_window);
-	skelet = new Skelet(20, 7, level);
-	interface = new ControlLight(level);
-	m_heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-	m_guiView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-	miniMap.reset(sf::FloatRect(0, 0, LEVEL_WIDTH, LEVEL_HEIGHT));
+	levels.push_back(Tile());
+	levels.push_back(Tile());
+	levels.push_back(Tile());
+	levels[0].LoadFromFile("map/level1.tmx");
+
 	font.loadFromFile("font/Cartoonic.otf");
 	textMission.setString("");
 	textMission.setFont(font);
 	textMission.setCharacterSize(24);
+	Tips.setFillColor(sf::Color::White);
+	Tips.setOutlineColor(sf::Color::White);
+	Tips.setString("Controls: WASD\nPick UP: E\nInventory: 1-9\nUse inventory item: Q\nAttack: LBM.\nTeleport: L.Shift\nOpen: ~");
+	Tips.setFont(font);
+	Tips.setCharacterSize(26);
+
 	musicControl = new Music();
 	Interaction = new Interactions();
 	musicControl->loadMusic("sounds/music/theme.wav");
+}
+//-------------------------------------------------------
+void TApplication::StartLevel(int level)
+{
+	m_enemies.clear();
+	levels[level] = Tile();
+	levels[level].LoadFromFile("map/level" + std::to_string(level + 1) + ".tmx");
+	// Положение игрока
+	const sf::FloatRect playerRect = levels[m_currentLevel].GetFirstObject("player").rect;
 
+	player = new Player(playerRect.left, playerRect.top, 200, 10, &levels[m_currentLevel], g_window);
+
+	// Положение врагов
+	const auto& enemies = levels[m_currentLevel].GetAllObjects("enemy");
+	for (const auto enemy : enemies)
+	{
+		Skelet::Type type = Skelet::Type::Bandit;
+		if (enemy.type == "ara")
+			type = Skelet::Type::Ara;
+		float health = type == Skelet::Type::Bandit ? 20: 5;
+		float speed = type == Skelet::Type::Bandit ? 7: 12;
+		Skelet* skelet = new Skelet(health, speed, &levels[m_currentLevel], type);
+		skelet->spawn(player, enemy.rect.left, enemy.rect.top, 20);
+		m_enemies.push_back(skelet);
+		
+	}
+	enemiesInLevelRemained = m_enemies.size();
+
+	LevelWidth = levels[m_currentLevel].GetTilemapWidth();
+	LevelHeight = levels[m_currentLevel].GetTilemapHeight();
+	interface = new ControlLight(&levels[m_currentLevel]);
+
+	m_heroView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
+	m_guiView.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
+	miniMap.reset(sf::FloatRect(0, 0, LevelWidth, LevelHeight));
 	m_viewPosition = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	m_heroView.setCenter(m_viewPosition.x, m_viewPosition.y);
+
+	inventory = new Inventory(player);
 }
 //-------------------------------------------------------
 void TApplication::Run() 
 {
-	
+
+	StartLevel(m_currentLevel);
 	bool dialog = false, drawDialog = false;
 	int dialogID = 0;
-
-	sf::Color color(0, 0, 0, 255);
-	textMission.setFillColor(color);
+	
+	textMission.setFillColor(sf::Color::White);
+	textMission.setOutlineColor(sf::Color::Black);
+	textMission.setOutlineThickness(2.f);
 	sf::Event event{};
-	skelet->spawn(player, 1100, 1100, 20);
 
 	while (g_window->isOpen()) 
 	{
+		g_window->clear(sf::Color::White);
+
+		// Подсчёт живых каждый кадр:\
+
+		enemiesInLevelRemained = 0;
+		for (const auto& enemy : m_enemies)
+			enemiesInLevelRemained += enemy->IsAlive();
+
+		if (enemiesInLevelRemained == 0 && m_isUsedPortal)
+		{
+			m_currentLevel++;
+			if (m_currentLevel > 2)
+				m_currentLevel = 0;
+			StartLevel(m_currentLevel);
+		}
+		
+
+		if(!player->IsAlive())
+			StartLevel(m_currentLevel);
 
 		miniMap.setViewport(sf::FloatRect(0.7f, 0.02f, 0.3f, 0.22f));
 
 		GuiView();
 		SmoothCamera();
 
-		g_window->clear(sf::Color::White);
+		levels[m_currentLevel].Draw();
 
 		while (g_window->pollEvent(event)) {
 
@@ -65,7 +122,6 @@ void TApplication::Run()
 			}
 		}
 		
-		level->Draw();
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 			setInventory();
@@ -78,43 +134,80 @@ void TApplication::Run()
 
 		if(!dialog) {
 			player->CollisionSound();
-			player->Move(skelet);
-			skelet->Move(player->GetCenter());
+			player->Move(m_enemies);
+			for(const auto& enemy : m_enemies)
+				enemy->Move(player->GetCenter());
 		}
 
-		inventory->counterItem(Interaction->Interact(player, level));// Calculation interactable objects and give ID for inventory
-		//if(inventory->checkInventory(2, 3) and !skelet->IsAlive()) {
-		//	dialog = true;
-		//	dialogID = 1;
-		//}
+		inventory->counterItem(Interaction->Interact(player, &levels[m_currentLevel]));// Calculation interactable objects and give ID for inventory
+
 		player->Draw(2, 2);
-		skelet->draw(2, 2);
-		inventory->drawInventory(g_window, &m_guiView);
+		for (const auto& enemy : m_enemies)
+			enemy->draw(2, 2);
+		
 		interface->draw(g_window, player->GetRect(), &m_guiView, dialog);
 		if(dialog) {
 			interface->dialog(dialogID, &drawDialog);
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-			{
-				dialog = false;
-				drawDialog = false;
-			}
 			
 			g_window->draw(interface->textForDraw);
 			g_window->draw(interface->textPlayer[0]);
 		}
 		
 		if(!dialog) {
-			g_window->draw(Interaction->item);// for test
-			g_window->draw(Interaction->circ);// for test
-			g_window->draw(Interaction->recta);// for test
+			//g_window->draw(Interaction->item);// for test
+			//g_window->draw(Interaction->circ);// for test
+			//g_window->draw(Interaction->recta);// for test
 			g_window->draw(Interaction->textForInteractibleObject);
 		}
 		player->OnFrame(&m_guiView);
-		skelet->OnFrame(&m_guiView);
+		for (const auto& enemy : m_enemies)
+			enemy->OnFrame(&m_guiView);
+
+		CheckPortal();
+		inventory->drawInventory(g_window, &m_guiView);
+
+		const bool isPressedTilde = sf::Keyboard::isKeyPressed(sf::Keyboard::Tilde);
+		if (m_isShowTips || isPressedTilde)
+		{
+			if(isPressedTilde)
+			m_isShowTips = false;
+			Tips.setPosition(m_guiView.getCenter().x+100, m_guiView.getCenter().y - 220);
+			g_window->draw(Tips);
+		}
+
 		g_window->display();
 	}
 }
-//----------------------------------?????????????WTF?????????????????--------------------------
+//------------------------------------------------------------
+void TApplication::CheckPortal()
+{
+	m_isUsedPortal = false;
+	const sf::FloatRect portalRect = levels[m_currentLevel].GetFirstObject("portal").rect;
+	if (player->GetRect().intersects(portalRect))
+	{
+		sf::Text text;
+		text.setFont(font);
+		text.setCharacterSize(16);
+
+		if (enemiesInLevelRemained != 0)
+		{
+			text.setFillColor({ 100, 50, 50, 255 });
+			text.setString("Finish the mission.\n(Press \"Tab\")");
+		}
+		else
+		{
+			text.setFillColor({ 150, 150, 150, 255 });
+			text.setString("Use portal.\n(Press F)");
+		}
+
+		text.setPosition(portalRect.left + portalRect.width, portalRect.top - 20);
+		g_window->draw(text);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+			m_isUsedPortal = true;
+	}
+}
+//------------------------------------------------------------
 void TApplication::setInventory() 
 {
 	inventory->drawMission(g_window, &m_guiView);
@@ -122,7 +215,7 @@ void TApplication::setInventory()
 	mission = inventory->getCurrentMission(player->GetRect().left);
 	std::string currentTask;
 	currentTask = inventory->getTextMission(mission);
-	textMission.setString("Health: " + std::to_string(player->GetHealth()) + "\n\n\n" + currentTask);
+	textMission.setString("Tip: " + currentTask + "\n\nRemained: " + std::to_string(enemiesInLevelRemained));
 	textMission.setPosition(m_guiView.getCenter().x - 250, m_guiView.getCenter().y - 220);
 	g_window->draw(textMission);
 }
@@ -142,7 +235,7 @@ void TApplication::SmoothCamera()
 	g_window->setView(m_heroView);
 
 	// Плавное движение камеры
-	if ((player->GetCenter().x - (SCREEN_WIDTH / 2) > 0) and (player->GetCenter().x + (SCREEN_WIDTH / 2) < LEVEL_WIDTH)) {
+	if ((player->GetCenter().x - (SCREEN_WIDTH / 2) > 0) and (player->GetCenter().x + (SCREEN_WIDTH / 2) < LevelWidth)) {
 		if (player->GetCenter().x - m_viewPosition.x > 0) {
 			m_viewPosition.x += ((player->GetCenter().x - m_viewPosition.x) / (SCREEN_HEIGHT / 12)) * player->GetSpeed();
 		}
@@ -151,7 +244,7 @@ void TApplication::SmoothCamera()
 		}
 	}
 
-	if ((player->GetCenter().y - (SCREEN_HEIGHT / 2) > 0) and (player->GetCenter().y + (SCREEN_HEIGHT / 2) < LEVEL_HEIGHT)) {
+	if ((player->GetCenter().y - (SCREEN_HEIGHT / 2) > 0) and (player->GetCenter().y + (SCREEN_HEIGHT / 2) < LevelHeight)) {
 		if (player->GetCenter().y - m_viewPosition.y > 0) {
 			m_viewPosition.y += ((player->GetCenter().y - m_viewPosition.y) / (SCREEN_HEIGHT / 12)) * player->GetSpeed();
 		}

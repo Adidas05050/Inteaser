@@ -5,8 +5,15 @@
 #include "Music.h"
 
 class Skelet : public Entity {
+	
 public:
-	Skelet(float health, float speed, Tile *level);
+	enum class Type
+	{
+		Bandit,
+		Ara
+	};
+
+	Skelet(float health, float speed, Tile *level, Type type);
 	void spawn(Entity* player, float x, float y, int health);
 	void draw(float scaleX, float scaleY);
 	void OnFrame(sf::View* view) override;
@@ -15,6 +22,7 @@ public:
 	void Animation();
 
 protected:
+	Type m_type = Type::Bandit;
 	std::vector<TmxObject> mObjectSound;
 
 	ProgressBar* m_healthBar = nullptr;

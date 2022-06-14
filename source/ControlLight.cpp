@@ -4,8 +4,8 @@
 World world;
 
 ControlLight::ControlLight(Tile *level) {
-	renderTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT);
-	renderColorTexture.create(LEVEL_WIDTH, LEVEL_HEIGHT);
+	renderTexture.create(LevelWidth, LevelHeight);
+	renderColorTexture.create(LevelWidth, LevelHeight);
 	tLight.loadFromFile("media/background/light.png"); //можно поменять на light, lightRev, LightWh; Стандарт light
 	tColorLight.loadFromFile("media/background/lightWh.png");//
 	tLight.setSmooth(true);
@@ -21,6 +21,7 @@ ControlLight::ControlLight(Tile *level) {
 		mBoxLight[i].width = mObjectLight[i].rect.width;
 		mBoxLight[i].height = mObjectLight[i].rect.height;
 		sLight[i].setTexture(tLight);
+		//sLight[i].scale(LevelWidth / sLight[i].getTexture()->getSize().x, LevelHeight / sLight[i].getTexture()->getSize().y);
 		mBoxColorLight[i].width = mObjectLight[i].rect.width;//
 		mBoxColorLight[i].height = mObjectLight[i].rect.height;//
 		sColorLight[i].setTexture(tColorLight);//
@@ -29,49 +30,7 @@ ControlLight::ControlLight(Tile *level) {
 //-------------------------------------------------------
 void ControlLight::dialog(int id, bool *draw)
 {
-	/*
-	if (*draw)
-		return;
-	file.open("dialogs/skelet/1.txt");
-	std::string line;
-	std::getline(file, line);
-	int n = atoi(line.c_str());
-	int numberLine = 0;
-	bool *flags = new bool [n];
-	std::vector<std::string> text;
-	for(int i = 0; i < n; i++) {
-		std::getline(file, line);
-		text.push_back(line);
-		flags[i] = false;
-	}
-	file.close();
-	//int currentLine = atoi(text[numberLine][0]);
-	int character = text[numberLine][1] - '0';
-	//int nextLine = atoi(text[numberLine][2]);
-	//int intervalDown = atoi(text[numberLine][3]);
-	//int howManyLine = atoi(text[numberLine][4]);
 
-	fontForDraw.loadFromFile("font/single_day.ttf"); //TODO
-	for(int i = 0; i < MAX_LINE_IN_DIALOG; i++ ) {
-		if(character == 1) {
-			textForDraw.setFont(fontForDraw);
-			textForDraw.setString(text[i]);
-			textForDraw.setFillColor(sf::Color(235, 235, 235, 255));
-			textForDraw.setCharacterSize(20);
-			textForDraw.setPosition(mBoxDialog.left + 60, mBoxDialog.top + 40);
-		}
-
-		else if(character == 2) {
-			textPlayer[i].setString("");
-			textPlayer[i].setFont(fontForDraw);
-			textPlayer[i].setFillColor(sf::Color(235, 235, 235, 255));
-			textPlayer[i].setCharacterSize(20);
-			textPlayer[i].setPosition(mBoxDialog.left + 60, mBoxDialog.top + 80);
-		}
-
-	}
-	*draw = true;
-	//*/
 }
 //-------------------------------------------------------
 void ControlLight::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::View* view, bool dialog) {
@@ -107,9 +66,9 @@ void ControlLight::draw(sf::RenderWindow* Window, sf::FloatRect playerBox, sf::V
 			sColorLight[i].setColor(sf::Color(140, 196, 209, alphaLamp));
 		} else if (mObjectLight[i].type == "player") {
 			sLight[i].setColor(sf::Color(222, 125, 55));
-			sColorLight[i].setColor(sf::Color(222, 125, 55, alphaTorch));
-			sLight[i].setPosition(playerBox.left - mBoxLight[i].width - playerBox.width, playerBox.top - mBoxLight[i].height - playerBox.height / 2);
-			sColorLight[i].setPosition(playerBox.left - mBoxColorLight[i].width - playerBox.width, playerBox.top - mBoxColorLight[i].height - playerBox.height / 2);
+			sColorLight[i].setColor(sf::Color(10, 255, 10, alphaTorch));
+			sLight[i].setPosition(playerBox.left - mBoxLight[i].width - playerBox.width *2, playerBox.top - mBoxLight[i].height - playerBox.height / 2);
+			sColorLight[i].setPosition(playerBox.left - mBoxColorLight[i].width - playerBox.width *2, playerBox.top - mBoxColorLight[i].height - playerBox.height / 2);
 		} else {
 			sLight[i].setColor(sf::Color(255.f, 0.f, 0.f));
 			sColorLight[i].setColor(sf::Color(255.f, 0.f, 0.f, alphaRed));

@@ -12,6 +12,7 @@ Player::Player(float x, float y, int health, int speed, Tile *level, sf::RenderW
 	m_box.height = 20;
 
 	m_health = health;
+	m_maxHealth = health;
 	m_speed = speed;
 
 	LoadImages();
@@ -121,14 +122,11 @@ void Player::OnFrame(sf::View* view)
 	Attack();
 	PickUp();
 
-	if (m_food < m_maxFood / 2 and m_health > m_maxHealth / 2)
-		m_health -= m_decreaseFood;
-
 	if (m_food < FLT_MIN)
 		m_isWeak = true;
 
 	if( m_food < m_maxFood)
-		m_food += m_decreaseFood / 2;
+		m_food += m_decreaseFood;
 
 	if (m_food >= m_maxFood)
 		m_isWeak = false;
@@ -176,7 +174,7 @@ void Player::Draw(float scaleX, float scaleY)
 	g_window->draw(m_playerSprite);
 
 	// Collision box
-	sf::RectangleShape recta;
+	/*sf::RectangleShape recta;
 	recta.setSize(sf::Vector2f(m_box.width, m_box.height));
 	recta.setOrigin(sf::Vector2f(m_box.width / 2, m_box.height / 2));
 	recta.setOutlineThickness(-1);
@@ -184,15 +182,15 @@ void Player::Draw(float scaleX, float scaleY)
 	recta.setOutlineColor(sf::Color(255, 0, 0));
 	recta.setPosition(sf::Vector2f(m_box.left + m_box.width / 2, m_box.top + m_box.height / 2));
 
-	g_window->draw(recta);
+	g_window->draw(recta);*/
 }
 //-------------------------------------------------------
-void Player::Move(Entity* entity)
+void Player::Move(const std::vector<Skelet*>& entities)
 {
 	// При атаке стоим на месте и проверяем, долбанули ли мы кого-то
 	if (m_attackState == ActionState::Running)
 	{
-		CollisionAttack(entity);
+		CollisionAttack(entities);
 		return;
 	}
 
@@ -204,33 +202,33 @@ void Player::Move(Entity* entity)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && !m_isWeak)
 	{
 		m_curSpeed += 20;
-		m_food -= m_decreaseFood;
+		m_food -= m_decreaseFood * 10;
 	}
 
 	m_curAnimState = AnimState::Idle;
 	Direction direction = m_direction;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		m_box.top -= m_curSpeed;
 		direction = Direction::Up;
 		m_curAnimState = AnimState::Walk;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		m_box.top += m_curSpeed;
 		direction = Direction::Down;
 		m_curAnimState = AnimState::Walk;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		m_box.left += m_curSpeed;
 		direction = Direction::Right;
 		m_curAnimState = AnimState::Walk;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		m_box.left -= m_curSpeed;
 		direction = Direction::Left;
 		m_curAnimState = AnimState::Walk;
 	}
 
-	Collision(entity);
+	Collision(entities);
 
 	if(direction != m_direction)
 		ResetAnimation();
@@ -282,91 +280,102 @@ void Player::CollisionSound() {
 	}
 }
 //-------------------------------------------------------
-void Player::CollisionAttack(Entity* entity)
+void Player::CollisionAttack(const std::vector<Skelet*>& entities)
 {
-	const sf::FloatRect enemyRect = entity->GetRect();
-	m_collisionEntity = nullptr;
-	const float widthAttack = m_direction == Direction::Left ? -75 : m_direction == Direction::Right ? 75 : 64;
-	const float heightAttack = m_direction == Direction::Up ? -75 : m_direction == Direction::Down ? 75 : 64;
-
-	sf::FloatRect rect(0, 0, widthAttack, heightAttack);
-	float addWidth = 0.f;
-	float addHeight = 0.f;
-	switch (m_direction)
+	m_collisionEntities.clear();
+	for (const auto& entity : entities)
 	{
-	case Direction::Left:
-		addWidth = m_playerSprite.getGlobalBounds().width / 2 + 20;
-		addHeight = m_playerSprite.getGlobalBounds().height / 4;
-		break;
+		if (!entity->IsAlive())
+			continue;
 
-	case Direction::Right:
-		addWidth = m_playerSprite.getGlobalBounds().width / 2 - 20;
-		addHeight = m_playerSprite.getGlobalBounds().height / 4;
-		break;
+		const sf::FloatRect enemyRect = entity->GetRect();
+		const float widthAttack = m_direction == Direction::Left ? -75 : m_direction == Direction::Right ? 75 : 64;
+		const float heightAttack = m_direction == Direction::Up ? -75 : m_direction == Direction::Down ? 75 : 64;
 
-	case Direction::Up:
-		addWidth = m_playerSprite.getGlobalBounds().width / 4;
-		addHeight = m_playerSprite.getGlobalBounds().height / 2 + 20;
-		break;
+		sf::FloatRect rect(0, 0, widthAttack, heightAttack);
+		float addWidth = 0.f;
+		float addHeight = 0.f;
+		switch (m_direction)
+		{
+		case Direction::Left:
+			addWidth = m_playerSprite.getGlobalBounds().width / 2 + 20;
+			addHeight = m_playerSprite.getGlobalBounds().height / 4;
+			break;
 
-	case Direction::Down:
-		addWidth = m_playerSprite.getGlobalBounds().width / 4;
-		addHeight = m_playerSprite.getGlobalBounds().height / 4 + 10;
-		break;
+		case Direction::Right:
+			addWidth = m_playerSprite.getGlobalBounds().width / 2 - 20;
+			addHeight = m_playerSprite.getGlobalBounds().height / 4;
+			break;
+
+		case Direction::Up:
+			addWidth = m_playerSprite.getGlobalBounds().width / 4;
+			addHeight = m_playerSprite.getGlobalBounds().height / 2 + 20;
+			break;
+
+		case Direction::Down:
+			addWidth = m_playerSprite.getGlobalBounds().width / 4;
+			addHeight = m_playerSprite.getGlobalBounds().height / 4 + 10;
+			break;
+		}
+
+		rect.left += m_playerSprite.getGlobalBounds().left + addWidth;
+		rect.top += m_playerSprite.getGlobalBounds().top + addHeight;
+		if (rect.intersects(enemyRect))
+			m_collisionEntities.push_back(entity);
+
+		/*sf::RectangleShape recta;
+		recta.setSize(sf::Vector2f(rect.width, rect.height));
+		recta.setOrigin(sf::Vector2f(rect.width / 2, rect.height / 2));
+		recta.setOutlineThickness(-1);
+		recta.setFillColor(sf::Color(0, 0, 0, 0));
+		recta.setOutlineColor(sf::Color(0, 255, 0));
+		recta.setPosition(sf::Vector2f(rect.left + rect.width / 2, rect.top + rect.height / 2));
+
+		g_window->draw(recta);*/
 	}
-
-	rect.left +=  m_playerSprite.getGlobalBounds().left + addWidth;
-	rect.top += m_playerSprite.getGlobalBounds().top + addHeight;
-	if (rect.intersects(enemyRect))
-		m_collisionEntity = entity;
-
-	sf::RectangleShape recta;
-	recta.setSize(sf::Vector2f(rect.width, rect.height));
-	recta.setOrigin(sf::Vector2f(rect.width / 2, rect.height / 2));
-	recta.setOutlineThickness(-1);
-	recta.setFillColor(sf::Color(0, 0, 0, 0));
-	recta.setOutlineColor(sf::Color(0, 255, 0));
-	recta.setPosition(sf::Vector2f(rect.left + rect.width / 2, rect.top + rect.height / 2));
-
-	g_window->draw(recta);
 }
 //-------------------------------------------------------
-void Player::Collision(Entity* entity)
+void Player::Collision(const std::vector<Skelet*>& enetities)
 {
-	const sf::FloatRect enemyRect = entity->GetRect();
-
 	Entity::Collision();
-	
-	m_box.top += m_speed;
-	if(GetRect().intersects(enemyRect) )
-	{
-		m_box.top -= m_speed;
-	}
-	m_box.top -= m_speed;
 
-	m_box.left += m_speed;
-	if(GetRect().intersects(enemyRect) )
+	for (const auto& entity : enetities)
 	{
+		if (!entity->IsAlive())
+			continue;
+
+		const sf::FloatRect enemyRect = entity->GetRect();
+
+		m_box.top += m_speed;
+		if (GetRect().intersects(enemyRect))
+		{
+			m_box.top -= m_speed;
+		}
+		m_box.top -= m_speed;
+
+		m_box.left += m_speed;
+		if (GetRect().intersects(enemyRect))
+		{
+			m_box.left -= m_speed;
+
+		}
 		m_box.left -= m_speed;
 
-	}
-	m_box.left -= m_speed;
+		m_box.left -= m_speed;
+		if (GetRect().intersects(enemyRect))
+		{
+			m_box.left += m_speed;
 
-	m_box.left -= m_speed;
-	if(GetRect().intersects(enemyRect) )
-	{
+		}
 		m_box.left += m_speed;
 
-	}
-	m_box.left += m_speed;
-
-	m_box.top -= m_speed;
-	if(GetRect().intersects(enemyRect) )
-	{
+		m_box.top -= m_speed;
+		if (GetRect().intersects(enemyRect))
+		{
+			m_box.top += m_speed;
+		}
 		m_box.top += m_speed;
 	}
-	m_box.top += m_speed;
-
 }
 //-------------------------------------------------------
 void Player::Attack()
@@ -383,8 +392,8 @@ void Player::Attack()
 		m_attackState = ActionState::Idle;
 		m_curAnimState = AnimState::Idle;
 
-		if(m_collisionEntity != nullptr)
-			m_collisionEntity->SetDamage(10.f);
+		for(const auto& entity : m_collisionEntities)
+			entity->SetDamage(10.f);
 	}
 
 }

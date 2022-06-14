@@ -9,8 +9,6 @@ namespace tinyxml2
 	class XMLElement;
 }
 
-const int LEVEL_WIDTH = 3200;
-const int LEVEL_HEIGHT = 3200;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
@@ -67,6 +65,7 @@ public:
     sf::Vector2f GetTilemapSize() const;
 
     void Draw();
+    void Draw(int level);
 
 private:
     sf::Clock   m_clock;

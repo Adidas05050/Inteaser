@@ -7,8 +7,6 @@
 #include <fstream>
 #include <cstring>
 #include <iostream> //DEBUG
-extern const int LEVEL_WIDTH;
-extern const int LEVEL_HEIGHT;
 const int MAX_LINE_IN_DIALOG = 5;
 class ControlLight
 {

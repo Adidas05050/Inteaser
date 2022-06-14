@@ -5,7 +5,7 @@ World::World()
 {
 	srand(time(nullptr));
 
-	m_tick = 0.1f;
+	m_tick = 0.01f;
 	m_time = 6.f;
 }
 //---------------------------------------------
@@ -14,10 +14,12 @@ void World::OnFrame(sf::RenderWindow* Window, sf::View* view)
 	if (m_time > 20)
 	{
 		m_tick = -m_tick;
+		m_isRain = rand() % 100 > 80 ? true : false;
 	}
 	else if (m_time < 2)
 	{
 		m_tick = -m_tick;
+		m_isRain = rand() % 100 > 80 ? true : false;
 	}
 
 	// ”правление дождЄм

@@ -15,7 +15,9 @@ class TApplication
 public:
 	TApplication();
 	void Init();
+	void StartLevel(int level);
 	void Run();
+	void CheckPortal();
 	void End();
 	void setInventory();
 	void SmoothCamera();
@@ -25,9 +27,13 @@ private:
 	sf::Vector2f m_viewPosition;
 
 	Inventory *inventory;
-	Tile *level;
+	std::vector<Tile> levels;
+	int m_currentLevel = 2;
+	std::vector<int> enemiesInLevels;
+	int enemiesInLevelRemained = 0;
+	bool m_isUsedPortal = false;
 	Player *player;
-	Skelet *skelet;
+	std::vector<Skelet*> m_enemies;
 	Music *musicControl;
 	ControlLight *interface;
 	Interactions *Interaction;
@@ -36,5 +42,7 @@ private:
 	sf::View miniMap;
 	sf::Font font;
 	sf::Text textMission;
+	sf::Text Tips;
+	bool m_isShowTips = true;
 };
 #endif

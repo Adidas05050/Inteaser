@@ -16,7 +16,7 @@ private:
 	float	m_time;
 	float	m_tick;
 	bool	m_isRain = false;
-	bool	m_isTickingTime = false;
+	bool	m_isTickingTime = true;
 
 	Weather::Rain m_rain;
 };

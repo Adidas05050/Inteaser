@@ -192,11 +192,10 @@ void Tile::LoadImages(XMLElement* map, const std::string& filepath)
         TileInfo tileInfo(tileWidth, tileHeight, firstTileID, size, texture, subRects);
 
         //  Заполнение анимаций тайла
-        const auto& animationElement = element->FirstChildElement("tile");
-        if (animationElement != nullptr)
+        for (XMLElement* animation = element->FirstChildElement("tile"); animation != nullptr; animation = animation->NextSiblingElement("tile"))
         {
-            const int parentTileId = std::stoi(animationElement->Attribute("id"));
-            tileInfo.Animations[parentTileId] = LoadAnimation(animationElement->FirstChildElement("animation"));
+            const int parentTileId = std::stoi(animation->Attribute("id"));
+            tileInfo.Animations[parentTileId] = LoadAnimation(animation->FirstChildElement("animation"));
         }
 
         m_tileInfo.emplace_back(tileInfo);
@@ -497,5 +496,35 @@ void Tile::Draw()
             
         }
     }
+    m_prevTime = time;
+}
+//-------------------------------------------------------
+void Tile::Draw(int level)
+{
+	float time = m_clock.getElapsedTime().asSeconds();
+    const sf::FloatRect viewportRect = g_window->getView().getViewport();
+
+    // Draw all tiles (and don't draw objects)
+    const auto& layer = m_layers[level];
+    
+
+    for (const auto& tiles : layer.tiles)
+    {
+        tiles.ElapsedTime += time - m_prevTime;
+        if (tiles.TileSprite[tiles.CurrentTile].Duration > 0.f && tiles.ElapsedTime > tiles.TileSprite[tiles.CurrentTile].Duration)
+        {
+            tiles.CurrentTile += 1;
+            if (tiles.CurrentTile >= tiles.TileSprite.size())
+                tiles.CurrentTile = 0;
+            tiles.ElapsedTime = 0;
+        }
+
+        if (viewportRect.intersects(tiles.TileSprite[tiles.CurrentTile].TileSprite.getLocalBounds()))
+        {
+            g_window->draw(tiles.TileSprite[tiles.CurrentTile].TileSprite);
+        }
+        
+    }
+    
     m_prevTime = time;
 }

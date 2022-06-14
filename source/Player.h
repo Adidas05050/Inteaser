@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Music.h"
+#include "Skelet.h"
 
 
 class Player : public Entity, public Music 
@@ -17,10 +18,10 @@ public:
 	void Draw(float scaleX, float scaleY);
 			
 		 // Перемещение персонажа
-	void Move(Entity* entity);
+	void Move(const std::vector<Skelet*>& entities);
 
 		 // Проверка столкновений с объектами
-	void Collision(Entity* entity);
+	void Collision(const std::vector<Skelet*>& entities);
 
 		 // Раздача снижающая прочность
 	void Attack() override;
@@ -41,7 +42,7 @@ private:
 
 	void PickUp();
 
-	void CollisionAttack(Entity* entity);
+	void CollisionAttack(const std::vector<Skelet*>&);
 
 	std::vector<TmxObject> m_objectsSound;
 		

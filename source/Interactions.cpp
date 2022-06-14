@@ -41,12 +41,12 @@ int Interactions::Interact(Player* player, Tile *level) {
 	
 	item.setPosition(player->GetRect().left + player->GetRect().width / 2, player->GetRect().top + player->GetRect().height / 2);
 	
-	recta.setSize(sf::Vector2f(interactTrigger.width, interactTrigger.height));
+	/*recta.setSize(sf::Vector2f(interactTrigger.width, interactTrigger.height));
 	recta.setOrigin(sf::Vector2f(interactTrigger.width / 2, interactTrigger.height / 2));
 	recta.setOutlineThickness(-1);
 	recta.setFillColor(sf::Color(0, 0, 0, 0));
 	recta.setOutlineColor(sf::Color(255, 0, 0));
-	recta.setPosition(sf::Vector2f(player->GetRect().left + player->GetRect().width / 2, player->GetRect().top + player->GetRect().height / 2));
+	recta.setPosition(sf::Vector2f(player->GetRect().left + player->GetRect().width / 2, player->GetRect().top + player->GetRect().height / 2));*/
 
 	textForInteractibleObject.setFillColor(sf::Color(235, 235, 235, 0));
 	//======================================================================================================================================
@@ -86,24 +86,25 @@ int Interactions::Interact(Player* player, Tile *level) {
 		
 		if(player->IsInteract() && !press_check) {
 			press_check = true;
-			switch(close_object) {
-				case 0: {	// don't touch this, because I did it to show you how each object can be unique !!!!!!!!!
-					std::cout << "You are looking at the object with ID 0\n";
-					return 0;
-				}
-				case 1: {
-					std::cout << "You are looking at the object with ID 1\n";
-					return 1;
-				}
-				case 2: {
-					std::cout << "You are looking at the object with ID 2\n";
-					return 2;
-				}
-				case 3: {
-					std::cout << "You are looking at the object with ID 3\n";
-					return 3;
-				}
-			}
+			return 0; //Только лимоны
+			//switch(close_object) {
+			//	case 0: {	// don't touch this, because I did it to show you how each object can be unique !!!!!!!!!
+			//		std::cout << "You are looking at the object with ID 0\n";
+			//		return 0;
+			//	}
+			//	case 1: {
+			//		std::cout << "You are looking at the object with ID 1\n";
+			//		return 1;
+			//	}
+			//	case 2: {
+			//		std::cout << "You are looking at the object with ID 2\n";
+			//		return 2;
+			//	}
+			//	case 3: {
+			//		std::cout << "You are looking at the object with ID 3\n";
+			//		return 3;
+			//	}
+			//}
 		} else {
 			if(press_check && !player->IsInteract()) press_check = false;
 		}

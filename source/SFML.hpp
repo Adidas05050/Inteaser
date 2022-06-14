@@ -8,4 +8,7 @@
 #include <SFML/System.hpp>
 #include <iostream>
 inline sf::RenderWindow* g_window = nullptr;
+
+inline int LevelWidth = 3200;
+inline int LevelHeight = 3200;
 #endif
